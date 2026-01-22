@@ -19,13 +19,13 @@ const TopNavbar = () => {
 
             {/* Global Navigation */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-                <Link to={`/${tenantId}/contract`} className="hover:text-blue-600 transition-colors">
+                <Link to={`/contract`} className="hover:text-blue-600 transition-colors">
                     Contracts
                 </Link>
-                <Link to={`/${tenantId}/compliance`} className="hover:text-blue-600 transition-colors">
+                <Link to={`/compliance`} className="hover:text-blue-600 transition-colors">
                     Compliance
                 </Link>
-                <Link to={`/${tenantId}/report`} className="hover:text-blue-600 transition-colors">
+                <Link to={`/report`} className="hover:text-blue-600 transition-colors">
                     Reports
                 </Link>
             </nav>
