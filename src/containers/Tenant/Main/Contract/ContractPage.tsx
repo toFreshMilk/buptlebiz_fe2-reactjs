@@ -43,7 +43,7 @@ const ContractPage = () => {
         <ContractMain sidebar={<ContractSidebar />}>
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Contracts</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">Contractsㅇㅇㅇ</h1>
                     <p className="text-sm text-gray-500 mt-1">
                         Dynamic Loader: <span className="font-semibold text-blue-600 uppercase">{tenantId}</span>
                     </p>

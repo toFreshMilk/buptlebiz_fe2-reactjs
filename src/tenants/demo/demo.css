@@ -1,2 +1,31 @@
-﻿// File: src/tenants/demo/demo.css
-// Generated for buptlebiz (React Renewal)
+﻿/* === Demo Tenant Overrides === */
+
+:root {
+    --primary-color: #8b5cf6; /* Violet-500 */
+    --primary-color-hover: #7c3aed; /* Violet-600 */
+}
+
+/* Demo 환경임을 표시하는 배경 패턴 */
+body {
+    background-image: radial-gradient(#ddd 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* 버튼을 더 둥글게 */
+button {
+    border-radius: 9999px !important; /* Fully rounded */
+}
+
+/* 상단바에 데모 뱃지 표시용 가상 요소 */
+header::after {
+    content: "DEMO ENV";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #fbbf24;
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-bottom-left-radius: 8px;
+}

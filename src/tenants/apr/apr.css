@@ -1,2 +1,22 @@
-﻿// File: src/tenants/apr/apr.css
-// Generated for buptlebiz (React Renewal)
+﻿/* === APR Tenant Overrides === */
+
+/* 1. 색상 변수 재정의 */
+:root {
+    --primary-color: #e11d48; /* Rose-600 */
+    --primary-color-hover: #be123c; /* Rose-700 */
+}
+
+/* 2. 전역 스타일 변경 (예: APR은 폰트가 더 작고 조밀함) */
+body {
+    font-size: 0.95rem;
+}
+
+/* 3. 특정 컴포넌트 강제 오버라이드 (CSS Module이 아닐 경우) */
+/* 예: APR 사이드바는 항상 어두운 색 */
+aside {
+    @apply bg-slate-900 border-r-slate-800 text-slate-200 !important;
+}
+
+aside a:hover {
+    @apply bg-slate-800 text-white !important;
+}
