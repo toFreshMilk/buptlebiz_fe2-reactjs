@@ -1,46 +1,46 @@
 ﻿// src/containers/Tenant/TenantLayout.tsx
 import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
-import { loadTenantConfig } from '@/core/config/tenant.config';
-import { getTenantFromSubdomain } from '@/core/utils/auth.guard'; // [추가]
 
 const TenantLayout = () => {
-    const navigate = useNavigate();
-    const { setTenantConfig } = useAppConfig();
+    // AppConfigContext가 이미 tenantId 감지 및 config 로딩을 완료했거나 진행 중임.
+    // 여기서 직접 loadTenantConfig를 호출하거나 set할 필요가 없음.
+    const { config, isLoading, error } = useAppConfig();
 
-    // [변경] URL 파라미터가 아닌 서브도메인에서 추출
-    const tenantId = getTenantFromSubdomain();
-
-    // 얘가 필요한가 ?
+    // [Theme 적용] config가 로드되면 테마 색상 적용
     useEffect(() => {
-        // 1. 테넌트가 없거나 유효하지 않으면 404 처리 혹은 랜딩 페이지로 이동
-        if (!tenantId) {
-            console.error("Invalid Tenant Subdomain");
-            // navigate('/not-found', { replace: true }); // 또는 회사 소개 페이지로 리다이렉트
-            return;
+        if (config?.theme?.primaryColor) {
+            document.documentElement.style.setProperty('--color-primary', config.theme.primaryColor);
         }
+    }, [config]);
 
-        // 2. Tenant Config 로드
-        loadTenantConfig(tenantId)
-            .then((config) => {
-                setTenantConfig(tenantId, config);
-                // Theme 적용
-                if (config.theme?.primaryColor) {
-                    document.documentElement.style.setProperty('--primary-color', config.theme.primaryColor);
-                }
-            })
-            .catch((err) => {
-                console.error("Failed to load config", err);
-            });
-
-    }, [tenantId, navigate, setTenantConfig]);
-
-    if (!tenantId) {
-        // 서브도메인이 없을 때 보여줄 화면 (예: "존재하지 않는 기업입니다")
-        return <div className="p-10 text-center">Invalid Workspace</div>;
+    // 1. 에러 처리 (AppConfigContext에서 throw 하지 않았을 경우 대비)
+    if (error) {
+        console.error("Failed to load tenant config:", error);
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-xl font-bold text-red-600">Configuration Error</h1>
+                    <p className="mt-2 text-gray-600">{error.message}</p>
+                    <p className="mt-1 text-sm text-gray-400">Please check your URL or contact support.</p>
+                </div>
+            </div>
+        );
     }
 
+    // 2. 로딩 처리
+    if (isLoading || !config) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <div className="animate-pulse text-lg font-medium text-gray-500">
+                    Loading Workspace...
+                </div>
+            </div>
+        );
+    }
+
+    // 3. 정상 렌더링
     return <Outlet />;
 };
 

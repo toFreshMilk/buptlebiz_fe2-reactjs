@@ -11,12 +11,12 @@ const MainLayout = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <TopNavbar />ㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍ
+            <TopNavbar />
 
             {/* 컴포넌트 로딩이 완료되고, 설정상 켜져있을 때만 렌더링 */}
             {WorkspaceBanner && (
                 <React.Suspense fallback={<div className="h-12 bg-gray-100 animate-pulse" />}>
-                    <WorkspaceBanner />ㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊ
+                    <WorkspaceBanner />
                 </React.Suspense>
             )}
 
