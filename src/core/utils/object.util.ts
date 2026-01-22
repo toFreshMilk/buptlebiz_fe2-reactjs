@@ -1,2 +1,3 @@
-﻿// File: src/core/utils/object.util.ts
-// Generated for buptlebiz (React Renewal)
+﻿export const isEmptyObject = (obj: object) => {
+    return Object.keys(obj).length === 0;
+};

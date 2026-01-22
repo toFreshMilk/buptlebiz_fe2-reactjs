@@ -1,2 +1,12 @@
-﻿// File: src/containers/RootLayout.tsx
-// Generated for buptlebiz (React Renewal)
+﻿import React from 'react';
+import { Outlet } from 'react-router-dom';
+
+const RootLayout = () => {
+    return (
+        <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+            <Outlet />
+        </div>
+    );
+};
+
+export default RootLayout;

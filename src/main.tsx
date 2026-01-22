@@ -1,2 +1,10 @@
-﻿// File: src/main.tsx
-// Generated for buptlebiz (React Renewal)
+﻿import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import '@/standard/standard.css'; // 기본 스타일 로드
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+);
