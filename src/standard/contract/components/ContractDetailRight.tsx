@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import Section from '@/uikit/layout/Section';
+﻿import Section from '@/uikit/layout/Section';
 
 const ContractDetailRight = () => {
     return (

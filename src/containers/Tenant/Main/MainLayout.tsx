@@ -1,24 +1,23 @@
-﻿import { Outlet } from 'react-router-dom';
-import TopNavbar from '@/standard/shared/components/TopNavbar';
-import WorkspaceBanner from '@/standard/shared/components/WorkspaceBanner';
-import { useAppConfig } from '@/core/contexts/AppConfigContext';
-
-// Tenant별 오버라이드 컴포넌트 (Lazy Loading 권장하나 여기선 정적 import 예시)
-// 실제로는 Config에 따라 동적 컴포넌트 매핑을 구현할 수 있습니다.
-import AprWorkspaceBanner from '@/tenants/apr/shared/components/WorkspaceBanner';
+﻿import React from 'react';
+import { Outlet } from 'react-router-dom';
+import TopNavbar from '@/standard/shared/components/TopNavbar'; // TopNavbar는 공통이라 정적 import도 무방하지만 일관성을 위해 동적 로드 가능
+import { useTenantComponent } from '@/core/hooks/useTenantModule';
 
 const MainLayout = () => {
-    const { config, tenantId } = useAppConfig();
-
-    // Tenant별 Banner 컴포넌트 선택 로직
-    const BannerComponent = tenantId === 'apr' ? AprWorkspaceBanner : WorkspaceBanner;
-
-    const showBanner = config?.features.workspaceBanner;
+    // WorkspaceBanner 동적 로드
+    // 없으면 null(fallback) 처리가 필요하거나 config에서 기본값 지정
+    const { Component: WorkspaceBanner } = useTenantComponent('WorkspaceBanner');
 
     return (
         <div className="flex flex-col min-h-screen">
             <TopNavbar />
-            {showBanner && <BannerComponent />}
+
+            {/* 컴포넌트 로딩이 완료되고, 설정상 켜져있을 때만 렌더링 */}
+            {WorkspaceBanner && (
+                <React.Suspense fallback={<div className="h-12 bg-gray-100 animate-pulse" />}>
+                    <WorkspaceBanner />
+                </React.Suspense>
+            )}
 
             <main className="flex-1 bg-gray-50">
                 <Outlet />

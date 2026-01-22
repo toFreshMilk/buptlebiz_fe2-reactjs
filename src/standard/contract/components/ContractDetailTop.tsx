@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { Contract } from '../types';
+﻿import { Contract } from '../types';
 import Button from '@/uikit/form/Button';
 
 interface Props {

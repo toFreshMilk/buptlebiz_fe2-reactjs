@@ -1,6 +1,4 @@
-﻿import React from 'react';
-
-interface BarChartProps {
+﻿interface BarChartProps {
     data: { label: string; value: number }[];
     height?: number;
     color?: string;

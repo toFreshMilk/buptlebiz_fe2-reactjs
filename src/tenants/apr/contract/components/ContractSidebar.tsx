@@ -1,9 +1,4 @@
-﻿import React from 'react';
-import { useAppConfig } from '@/core/contexts/AppConfigContext';
-
-const AprContractSidebar = () => {
-    const { tenantId } = useAppConfig();
-
+﻿const AprContractSidebar = () => {
     return (
         <aside className="w-64 bg-gray-900 text-white min-h-[calc(100vh-64px)] hidden lg:block">
             <div className="p-4">

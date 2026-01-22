@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { Contract } from '../types';
 import { formatDate } from '@/core/utils/date.util';
 

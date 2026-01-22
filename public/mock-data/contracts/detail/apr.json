@@ -1,0 +1,41 @@
+[
+  {
+    "id": 201,
+    "title": "[APR] 2024 글로벌 뷰티 파트너십",
+    "status": "Active",
+    "partner": "Global Beauty Inc.",
+    "date": "2024-01-20",
+    "amount": "$500,000",
+    "category": "해외영업",
+    "templateName": "Partnership Agreement En",
+    "requester": "James Kim",
+    "reviewer": "Sarah Lee",
+    "documentCode": "APR-2024-001"
+  },
+  {
+    "id": 202,
+    "title": "[APR] 메디큐브 광고 모델 계약",
+    "status": "Done",
+    "partner": "스타 엔터테인먼트",
+    "date": "2024-02-28",
+    "amount": "300,000,000",
+    "category": "마케팅",
+    "templateName": "모델출연계약서",
+    "requester": "Marketing Team",
+    "reviewer": "Legal Team",
+    "documentCode": "APR-2024-002"
+  },
+  {
+    "id": 203,
+    "title": "[APR] 물류 창고 확장 공사 계약",
+    "status": "Review",
+    "partner": "건설사 A",
+    "date": "2024-03-10",
+    "amount": "1,500,000,000",
+    "category": "시설",
+    "templateName": "공사도급계약서",
+    "requester": "Facility Mgr",
+    "reviewer": "Finance Mgr",
+    "documentCode": "APR-2024-003"
+  }
+]

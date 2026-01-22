@@ -1,22 +1,33 @@
-﻿import { IContractService } from '@/standard/contract/types';
-import { StandardContractService } from '@/standard/contract/services/contract.service';
+﻿// src/tenants/apr/contract/services/contract.service.ts
+import { apiGet, apiPost } from '@/core/services/apiClient';
+// DTO는 Standard의 것을 재사용 (필요시 확장)
+import type { StandardContractDto } from '@/standard/contract/services/contract.service';
 
-// APR은 표준 로직을 상속받되, 일부만 변경한다고 가정
-export const AprContractService: IContractService = {
-    ...StandardContractService,
+async function getContracts(tenant: string): Promise<StandardContractDto[]> {
+    return await apiGet<StandardContractDto[]>('contracts', tenant);
+}
 
-    getContracts: async () => {
-        // APR 전용 API 호출 혹은 데이터 가공
-        console.log('[APR] Fetching contracts with special logic...');
-        const result = await StandardContractService.getContracts();
+async function getContractsDetail(tenant: string): Promise<StandardContractDto[]> {
+    return await apiGet<StandardContractDto[]>('contracts/detail', tenant);
+}
 
-        // APR은 제목에 접두사를 붙임 (예시)
-        return {
-            ...result,
-            items: result.items.map(item => ({
-                ...item,
-                title: `[APR] ${item.title}`
-            }))
-        };
-    }
+async function getContractsDetail2(tenant: string): Promise<StandardContractDto[]> {
+    return await apiGet<StandardContractDto[]>('contracts/detail2', tenant);
+}
+
+async function approve(tenant: string, contractId: string): Promise<void> {
+    await apiPost('contracts/validate', tenant, { contractId });
+    await apiPost('contracts/approve', tenant, {
+        contractId,
+        status: 'APPROVED',
+    });
+}
+
+const contractService = {
+    getContracts,
+    getContractsDetail,
+    getContractsDetail2,
+    approve,
 };
+
+export default contractService;

@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { Contract } from '../types';
+﻿import { Contract } from '../types';
 import Section from '@/uikit/layout/Section';
 
 const ContractDetailLeft = ({ contract }: { contract: Contract }) => {

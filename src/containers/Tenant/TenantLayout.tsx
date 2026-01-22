@@ -1,32 +1,43 @@
 ﻿import { useEffect } from 'react';
-import { Outlet, useParams, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
-import { getTenantConfig } from '@/core/config/tenant.config';
-import { isValidTenant } from '@/core/utils/auth.guard';
+import { loadTenantConfig } from '@/core/config/tenant.config';
+import { getTenantFromSubdomain } from '@/core/utils/auth.guard'; // [추가]
 
 const TenantLayout = () => {
-    const { tenantId } = useParams<{ tenantId: string }>();
     const navigate = useNavigate();
     const { setTenantConfig } = useAppConfig();
 
+    // [변경] URL 파라미터가 아닌 서브도메인에서 추출
+    const tenantId = getTenantFromSubdomain();
+
     useEffect(() => {
-        // 1. Tenant 유효성 검사
-        if (!isValidTenant(tenantId)) {
-            navigate('/not-found', { replace: true });
+        // 1. 테넌트가 없거나 유효하지 않으면 404 처리 혹은 랜딩 페이지로 이동
+        if (!tenantId) {
+            console.error("Invalid Tenant Subdomain");
+            // navigate('/not-found', { replace: true }); // 또는 회사 소개 페이지로 리다이렉트
             return;
         }
 
-        // 2. Tenant Config 로드 (동기 or 비동기)
-        const config = getTenantConfig(tenantId!);
-        if (config) {
-            setTenantConfig(tenantId!, config);
+        // 2. Tenant Config 로드
+        loadTenantConfig(tenantId)
+            .then((config) => {
+                setTenantConfig(tenantId, config);
+                // Theme 적용
+                if (config.theme?.primaryColor) {
+                    document.documentElement.style.setProperty('--primary-color', config.theme.primaryColor);
+                }
+            })
+            .catch((err) => {
+                console.error("Failed to load config", err);
+            });
 
-            // 3. CSS 변수 등으로 테마 주입 (선택적)
-            document.documentElement.style.setProperty('--primary-color', config.theme.primaryColor);
-        }
     }, [tenantId, navigate, setTenantConfig]);
 
-    if (!isValidTenant(tenantId)) return null;
+    if (!tenantId) {
+        // 서브도메인이 없을 때 보여줄 화면 (예: "존재하지 않는 기업입니다")
+        return <div className="p-10 text-center">Invalid Workspace</div>;
+    }
 
     return <Outlet />;
 };

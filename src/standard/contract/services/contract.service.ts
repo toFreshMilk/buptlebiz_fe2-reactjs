@@ -1,34 +1,50 @@
-﻿import { apiClient } from '@/core/services/apiClient';
-import { IContractService, ContractListResponse, Contract } from '../types';
+﻿// src/standard/contract/services/contract.service.ts
+import { apiGet, apiPost } from '@/core/services/apiClient';
 
-// Mock Data 사용 (실제 API 연동 시 엔드포인트 호출로 변경)
-const MOCK_CONTRACTS: Contract[] = Array.from({ length: 10 }).map((_, i) => ({
-    id: `cnt-${i + 1}`,
-    title: `Standard Service Agreement ${i + 1}`,
-    status: i % 3 === 0 ? 'active' : 'draft',
-    startDate: '2024-01-01',
-    endDate: '2024-12-31',
-    amount: (i + 1) * 1000000,
-    counterparty: `Partner Corp ${i + 1}`,
-    createdAt: new Date().toISOString(),
-}));
+// [핵심] 서비스 DTO 정의 (Colocation)
+export type ContractStatus = 'Active' | 'Draft' | 'Review' | 'APPROVED' | 'REJECTED' | (string & {});
 
-export const StandardContractService: IContractService = {
-    getContracts: async () => {
-        // 실제: return apiClient.get('/contracts').then(res => res.data);
-        await new Promise(resolve => setTimeout(resolve, 500)); // Latency sim
-        return {
-            items: MOCK_CONTRACTS,
-            total: MOCK_CONTRACTS.length,
-            page: 1,
-            pageSize: 10,
-        };
-    },
+export interface StandardContractDto {
+    id: number | string;
+    title: string;
+    status: ContractStatus;
+    partner?: string;
+    date?: string;
+    amount?: string;
+    category?: string;
+    templateName?: string;
+    requester?: string;
+    reviewer?: string;
+    documentCode?: string;
+}
 
-    getContractDetail: async (id: string) => {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        const contract = MOCK_CONTRACTS.find(c => c.id === id);
-        if (!contract) throw new Error('Contract not found');
-        return contract;
-    },
+async function getContracts(tenant: string): Promise<StandardContractDto[]> {
+    return await apiGet<StandardContractDto[]>('/contracts', tenant);
+}
+
+async function getContractsDetail(tenant: string): Promise<StandardContractDto[]> {
+    return await apiGet<StandardContractDto[]>('/contracts/detail', tenant);
+}
+
+async function getContractsDetail2(tenant: string): Promise<StandardContractDto[]> {
+    return await apiGet<StandardContractDto[]>('/contracts/detail2', tenant);
+}
+
+async function approve(tenant: string, contractId: string): Promise<void> {
+    await apiPost('/contracts/approve', tenant, {
+        contractId,
+        status: 'APPROVED',
+    });
+}
+
+const contractService = {
+    getContracts,
+    getContractsDetail,
+    getContractsDetail2,
+    approve,
 };
+
+// [핵심] 서비스 타입 export
+export type StandardContractService = typeof contractService;
+
+export default contractService;

@@ -1,9 +1,9 @@
-﻿import React, { createContext, useContext, ReactNode, useState } from 'react';
-import { TenantConfig } from '../config/tenant.config'; // Config 타입은 여기만 의존
+﻿import { createContext, useContext, ReactNode, useState } from 'react';
+import type { TenantConfig } from '@/core/config/tenant.types'; // [수정] 타입 파일에서 인터페이스 import
 
 interface AppConfigContextValue {
     tenantId: string | null;
-    config: TenantConfig | null;
+    config: TenantConfig | null; // [수정] 함수가 아니라 데이터 객체 타입 사용
     setTenantConfig: (tenantId: string, config: TenantConfig) => void;
 }
 
