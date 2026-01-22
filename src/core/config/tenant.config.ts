@@ -58,10 +58,14 @@ const StandardServices: Record<string, ServiceLoader> = {
     ContractService: () => import('@/standard/contract/services/contract.service'),
 };
 
+/**
+ * 서비스 클래스(Constructor)를 비동기로 로드하여 반환합니다.
+ * 인스턴스화는 Hook에서 수행합니다.
+ */
 export async function getTenantService<T = any>(
     tenantId: string,
     key: string,
-): Promise<T> {
+): Promise<{ new (tenantId: string): T }> {
     const config = await loadTenantConfig(tenantId);
 
     // 테넌트별 커스텀 서비스가 있는지 확인
@@ -70,7 +74,7 @@ export async function getTenantService<T = any>(
     if (tenantLoader) {
         console.log(`[Service] Custom Loaded: ${tenantId}:${key}`);
         const moduleData = await tenantLoader();
-        return moduleData.default as T;
+        return moduleData.default as { new (tenantId: string): T };
     }
 
     // 없으면 표준 서비스 로드
@@ -81,5 +85,6 @@ export async function getTenantService<T = any>(
 
     console.log(`[Service] Standard Loaded: ${tenantId}:${key}`);
     const moduleData = await standardLoader();
-    return moduleData.default as T;
+    // Class Constructor 반환
+    return moduleData.default as { new (tenantId: string): T };
 }

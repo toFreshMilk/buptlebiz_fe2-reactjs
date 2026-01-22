@@ -18,33 +18,40 @@ export interface StandardContractDto {
     documentCode?: string;
 }
 
-async function getContracts(tenant: string): Promise<StandardContractDto[]> {
-    return await apiGet<StandardContractDto[]>('/contracts', tenant);
+/**
+ * [변경] Class 기반 서비스
+ * 테넌트 ID를 상태로 보유하여 메서드 호출 시 반복적인 인자 전달을 제거함
+ */
+export class ContractService {
+    private tenantId: string;
+
+    constructor(tenantId: string) {
+        this.tenantId = tenantId;
+    }
+
+    async getContracts(): Promise<StandardContractDto[]> {
+        // this.tenantId를 사용하여 호출
+        return await apiGet<StandardContractDto[]>('/contracts', this.tenantId);
+    }
+
+    async getContractsDetail(): Promise<StandardContractDto[]> {
+        return await apiGet<StandardContractDto[]>('/contracts/detail', this.tenantId);
+    }
+
+    async getContractsDetail2(): Promise<StandardContractDto[]> {
+        return await apiGet<StandardContractDto[]>('/contracts/detail2', this.tenantId);
+    }
+
+    async approve(contractId: string): Promise<void> {
+        await apiPost('/contracts/approve', this.tenantId, {
+            contractId,
+            status: 'APPROVED',
+        });
+    }
 }
 
-async function getContractsDetail(tenant: string): Promise<StandardContractDto[]> {
-    return await apiGet<StandardContractDto[]>('/contracts/detail', tenant);
-}
+// [핵심] 서비스 타입 export (인스턴스 타입)
+export type IContractService = ContractService;
 
-async function getContractsDetail2(tenant: string): Promise<StandardContractDto[]> {
-    return await apiGet<StandardContractDto[]>('/contracts/detail2', tenant);
-}
-
-async function approve(tenant: string, contractId: string): Promise<void> {
-    await apiPost('/contracts/approve', tenant, {
-        contractId,
-        status: 'APPROVED',
-    });
-}
-
-const contractService = {
-    getContracts,
-    getContractsDetail,
-    getContractsDetail2,
-    approve,
-};
-
-// [핵심] 서비스 타입 export
-export type StandardContractService = typeof contractService;
-
-export default contractService;
+// Default Export는 클래스 자체
+export default ContractService;

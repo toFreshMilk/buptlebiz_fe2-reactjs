@@ -30,7 +30,7 @@ export function useTenantComponent<T = any>(componentKey: string) {
 }
 
 /**
- * 테넌트 설정에 맞는 서비스를 비동기로 로드합니다.
+ * 테넌트 설정에 맞는 서비스를 비동기로 로드하고 인스턴스화합니다.
  */
 export function useTenantService<T = any>(serviceKey: string) {
     const { tenantId } = useAppConfig();
@@ -41,9 +41,16 @@ export function useTenantService<T = any>(serviceKey: string) {
         if (!tenantId) return;
 
         let isMounted = true;
+
+        // Service Class(Constructor)를 가져옵니다.
         getTenantService<T>(tenantId, serviceKey)
-            .then((svc) => {
-                if (isMounted) setService(svc);
+            .then((ServiceClass) => {
+                if (isMounted) {
+                    // [핵심] 여기서 인스턴스화(Instantiation) 수행
+                    // tenantId를 생성자에 주입하여 서비스를 초기화합니다.
+                    const instance = new ServiceClass(tenantId);
+                    setService(instance);
+                }
             })
             .catch((err) => {
                 if (isMounted) setError(err);

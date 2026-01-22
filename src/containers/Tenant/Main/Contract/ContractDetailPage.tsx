@@ -4,39 +4,49 @@ import { useQuery } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import PageContainer from '@/uikit/layout/PageContainer';
 
-// [변경] 정적 import 제거 (에러 원인 제거)
-// import { StandardContractService } ... (삭제)
-// import { DemoContractService } ... (삭제)
+// [변경] 정적 Import 제거 -> 동적 로딩을 위해 삭제
+// import ContractDetailTop from '@/standard/contract/components/ContractDetailTop'; ... (삭제)
 
-// [추가] 동적 훅 import
-import { useTenantService } from '@/core/hooks/useTenantModule';
-import { IContractService } from '@/standard/contract/types';
-
-import ContractDetailTop from '@/standard/contract/components/ContractDetailTop';
-import ContractDetailLeft from '@/standard/contract/components/ContractDetailLeft';
-import ContractDetailRight from '@/standard/contract/components/ContractDetailRight';
+// [추가] 동적 훅 및 타입 Import
+import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
+import type { IContractService } from '@/standard/contract/services/contract.service';
 
 const ContractDetailPage = () => {
     const { tenantId } = useAppConfig();
     const { id } = useParams<{ id: string }>();
 
-    // [변경] 동적 서비스 로드
+    // 1. Dynamic Service Loading
+    // 서비스 클래스가 인스턴스화되어 반환됨 (tenantId 주입 완료 상태)
     const { service, isLoading: isServiceLoading, error: serviceError } = useTenantService<IContractService>('ContractService');
 
-    const { data: contract, isLoading: isDataLoading } = useQuery({
+    // 2. Dynamic Component Loading
+    // 테넌트별로 오버라이드 가능한 컴포넌트들을 동적으로 로드
+    const { Component: ContractDetailTop } = useTenantComponent('ContractDetailTop');
+    const { Component: ContractDetailLeft } = useTenantComponent('ContractDetailLeft');
+    const { Component: ContractDetailRight } = useTenantComponent('ContractDetailRight');
+
+    // 3. Data Fetching
+    const { data: contract, isLoading: isDataLoading, error: dataError } = useQuery({
         queryKey: ['contract', tenantId, id],
-        // 서비스가 로드된 후에만 호출
-        queryFn: () => service!.getContractDetail(id!),
+        // [변경] 서비스 인스턴스 메서드 호출 (tenantId 인자 불필요)
+        queryFn: () => service!.getContractsDetail(), // id는 필수
         enabled: !!service && !!id,
     });
 
-    // 로딩 상태 처리
-    if (isServiceLoading || isDataLoading) return <PageContainer>Loading...</PageContainer>;
+    // 4. Loading State Check (서비스, 컴포넌트, 데이터 모두 체크)
+    const isResourcesLoading = isServiceLoading || !ContractDetailTop || !ContractDetailLeft || !ContractDetailRight;
 
-    // 에러 처리
-    if (serviceError) return <PageContainer>Error loading service</PageContainer>;
-    if (!contract) return <PageContainer>Contract not found</PageContainer>;
+    if (isResourcesLoading || isDataLoading) {
+        return <PageContainer>Loading Contract Details...</PageContainer>;
+    }
 
+    // 5. Error Handling
+    if (serviceError) return <PageContainer>Error loading service module.</PageContainer>;
+    if (dataError) return <PageContainer>Error fetching data: {(dataError as Error).message}</PageContainer>;
+    if (!contract) return <PageContainer>Contract not found.</PageContainer>;
+
+    // 6. Render
+    // 로드된 동적 컴포넌트들로 렌더링
     return (
         <div className="min-h-screen bg-gray-50 pb-12">
             <ContractDetailTop contract={contract} />
