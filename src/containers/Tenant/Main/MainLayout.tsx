@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { Outlet } from 'react-router-dom';
+﻿import { Outlet } from 'react-router-dom';
 import TopNavbar from '@/standard/shared/components/TopNavbar';
 import WorkspaceBanner from '@/standard/shared/components/WorkspaceBanner';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';

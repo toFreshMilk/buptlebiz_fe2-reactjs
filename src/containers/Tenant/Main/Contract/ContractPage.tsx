@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+﻿import { useQuery } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 
 // UI Kit

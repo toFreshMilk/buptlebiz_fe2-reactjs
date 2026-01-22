@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { getTenantConfig } from '@/core/config/tenant.config';

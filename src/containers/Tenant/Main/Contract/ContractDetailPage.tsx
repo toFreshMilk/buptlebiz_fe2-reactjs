@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { useParams } from 'react-router-dom';
+﻿import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import PageContainer from '@/uikit/layout/PageContainer';
