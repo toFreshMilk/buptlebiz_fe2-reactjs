@@ -1,4 +1,5 @@
-﻿interface BarChartProps {
+﻿// src/uikit/chart/BarChart.tsx
+interface BarChartProps {
     data: { label: string; value: number }[];
     height?: number;
     color?: string;

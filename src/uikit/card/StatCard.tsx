@@ -1,4 +1,5 @@
-﻿
+﻿// src/uikit/card/StatCard.tsx
+
 interface StatCardProps {
     title: string;
     value: string | number;

@@ -1,4 +1,5 @@
-﻿import React from 'react';
+﻿// src/uikit/layout/Section.tsx
+import React from 'react';
 
 interface SectionProps {
     title?: string;

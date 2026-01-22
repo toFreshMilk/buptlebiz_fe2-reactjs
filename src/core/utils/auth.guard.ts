@@ -1,4 +1,5 @@
-﻿// 유효한 테넌트 목록
+﻿// src/core/utils/auth.guard.ts
+// 유효한 테넌트 목록
 const VALID_TENANTS = ['apr', 'demo', 'samsung', 'lg'];
 
 /**

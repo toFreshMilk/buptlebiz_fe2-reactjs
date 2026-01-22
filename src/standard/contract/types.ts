@@ -1,4 +1,5 @@
-﻿// Contract 도메인 엔티티
+﻿// src/standard/contract/types.ts
+// Contract 도메인 엔티티
 export interface Contract {
     id: string;
     title: string;

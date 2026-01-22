@@ -1,4 +1,5 @@
-﻿import { ReactNode } from 'react';
+﻿// src/tenants/apr/contract/components/ContractMain.tsx
+import { ReactNode } from 'react';
 
 interface Props {
     sidebar: ReactNode;

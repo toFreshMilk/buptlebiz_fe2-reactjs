@@ -1,4 +1,5 @@
-﻿export async function apiGet<T>(path: string, tenantId: string): Promise<T> {
+﻿// src/core/services/apiClient.ts
+export async function apiGet<T>(path: string, tenantId: string): Promise<T> {
     // 1. 서버(SSR)인가? -> http://localhost:3000 붙여서 절대경로 (CORS 상관없음)
     if (typeof window === 'undefined') {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';

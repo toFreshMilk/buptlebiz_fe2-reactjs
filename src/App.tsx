@@ -1,4 +1,5 @@
-﻿import { QueryClientProvider } from '@tanstack/react-query';
+﻿// src/App.tsx
+import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { queryClient } from '@/core/services/queryClient';
 import { AppConfigProvider } from '@/core/contexts/AppConfigContext';

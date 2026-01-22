@@ -1,4 +1,5 @@
-﻿/* === Demo Tenant Overrides === */
+﻿/* src/tenants/demo/demo.css */
+/* === Demo Tenant Overrides === */
 
 :root {
     --primary-color: #8b5cf6; /* Violet-500 */

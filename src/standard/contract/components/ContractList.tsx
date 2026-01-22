@@ -1,4 +1,5 @@
-﻿import { Link } from 'react-router-dom';
+﻿// src/standard/contract/components/ContractList.tsx
+import { Link } from 'react-router-dom';
 import { Contract } from '../types';
 import { formatDate } from '@/core/utils/date.util';
 

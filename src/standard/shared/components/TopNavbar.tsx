@@ -1,4 +1,5 @@
-﻿import { Link } from 'react-router-dom';
+﻿// src/standard/shared/components/TopNavbar.tsx
+import { Link } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 
 const TopNavbar = () => {
@@ -31,11 +32,6 @@ const TopNavbar = () => {
 
             {/* User Menu */}
             <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
-                    <svg className="w-full h-full text-gray-400 p-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                    </svg>
-                </div>
                 <span className="text-sm font-medium text-gray-700 hidden sm:block">Admin User</span>
             </div>
         </header>

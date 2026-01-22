@@ -1,4 +1,5 @@
-﻿import { ButtonHTMLAttributes } from 'react';
+﻿// src/uikit/form/Button.tsx
+import { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'outline' | 'danger';

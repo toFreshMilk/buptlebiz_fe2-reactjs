@@ -1,4 +1,5 @@
-﻿import { useEffect } from 'react';
+﻿// src/containers/Tenant/TenantLayout.tsx
+import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { loadTenantConfig } from '@/core/config/tenant.config';
@@ -11,6 +12,7 @@ const TenantLayout = () => {
     // [변경] URL 파라미터가 아닌 서브도메인에서 추출
     const tenantId = getTenantFromSubdomain();
 
+    // 얘가 필요한가 ?
     useEffect(() => {
         // 1. 테넌트가 없거나 유효하지 않으면 404 처리 혹은 랜딩 페이지로 이동
         if (!tenantId) {

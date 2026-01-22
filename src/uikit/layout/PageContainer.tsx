@@ -1,4 +1,5 @@
-﻿import React from 'react';
+﻿// src/uikit/layout/PageContainer.tsx
+import React from 'react';
 
 interface PageContainerProps {
     children: React.ReactNode;

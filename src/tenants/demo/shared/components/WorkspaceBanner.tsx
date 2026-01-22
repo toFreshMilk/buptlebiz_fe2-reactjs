@@ -1,4 +1,5 @@
-﻿const AprWorkspaceBanner = () => {
+﻿// src/tenants/demo/shared/components/WorkspaceBanner.tsx
+const AprWorkspaceBanner = () => {
     return (
         <div className="bg-red-50 border-b border-red-100 p-6">
             <div className="max-w-7xl mx-auto">

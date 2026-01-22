@@ -1,4 +1,5 @@
-﻿import { Contract } from '../types';
+﻿// src/standard/contract/components/ContractDetailTop.tsx
+import { Contract } from '../types';
 import Button from '@/uikit/form/Button';
 
 interface Props {

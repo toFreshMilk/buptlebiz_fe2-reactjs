@@ -1,4 +1,5 @@
-﻿import { useQuery } from '@tanstack/react-query';
+﻿// src/containers/Tenant/Main/Contract/ContractPage.tsx
+import { useQuery } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
 

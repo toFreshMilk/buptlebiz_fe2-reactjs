@@ -1,4 +1,5 @@
-﻿import { Link } from 'react-router-dom';
+﻿// src/standard/contract/components/ContractSidebar.tsx
+import { Link } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 
 const ContractSidebar = () => {

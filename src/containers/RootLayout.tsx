@@ -1,4 +1,5 @@
-﻿import { Outlet } from 'react-router-dom';
+﻿// src/containers/RootLayout.tsx
+import { Outlet } from 'react-router-dom';
 
 const RootLayout = () => {
     return (

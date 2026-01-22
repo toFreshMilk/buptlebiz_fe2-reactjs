@@ -1,4 +1,5 @@
-﻿import { ComponentType } from 'react';
+﻿// src/core/config/tenant.config.ts
+import { ComponentType } from 'react';
 import type { TenantConfig, ComponentLoader, ServiceLoader, ModuleWithDefault } from '@/core/config/tenant.types';
 
 // === 1. Loaders ===

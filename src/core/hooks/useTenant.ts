@@ -1,4 +1,5 @@
-﻿import { useParams } from 'react-router-dom';
+﻿// src/core/hooks/useTenant.ts
+import { useParams } from 'react-router-dom';
 
 /**
  * URL 파라미터에서 tenantId를 안전하게 추출합니다.

@@ -1,4 +1,5 @@
-﻿import { Contract } from '../types';
+﻿// src/standard/contract/components/ContractDetailLeft.tsx
+import { Contract } from '../types';
 import Section from '@/uikit/layout/Section';
 
 const ContractDetailLeft = ({ contract }: { contract: Contract }) => {

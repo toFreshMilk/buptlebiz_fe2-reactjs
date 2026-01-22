@@ -1,4 +1,5 @@
-﻿import { useState, useEffect, ComponentType } from 'react';
+﻿// src/core/hooks/useTenantModule.ts
+import { useState, useEffect, ComponentType } from 'react';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { getTenantComponent, getTenantService } from '@/core/config/tenant.config';
 

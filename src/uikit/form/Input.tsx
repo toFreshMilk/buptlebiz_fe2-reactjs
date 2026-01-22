@@ -1,4 +1,5 @@
-﻿import { InputHTMLAttributes, forwardRef } from 'react';
+﻿// src/uikit/form/Input.tsx
+import { InputHTMLAttributes, forwardRef } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;

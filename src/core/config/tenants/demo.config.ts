@@ -1,4 +1,5 @@
-﻿import { TenantConfig } from '../tenant.types';
+﻿// src/core/config/tenants/demo.config.ts
+import { TenantConfig } from '../tenant.types';
 import '@/tenants/demo/demo.css'; // [추가]
 
 const config: TenantConfig = {

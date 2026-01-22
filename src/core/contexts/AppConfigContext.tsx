@@ -1,4 +1,5 @@
-﻿import { createContext, useContext, ReactNode, useState } from 'react';
+﻿// src/core/contexts/AppConfigContext.tsx
+import { createContext, useContext, ReactNode, useState } from 'react';
 import type { TenantConfig } from '@/core/config/tenant.types'; // [수정] 타입 파일에서 인터페이스 import
 
 interface AppConfigContextValue {

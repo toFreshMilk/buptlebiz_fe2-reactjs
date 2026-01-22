@@ -1,4 +1,5 @@
-﻿import { SelectHTMLAttributes, forwardRef } from 'react';
+﻿// src/uikit/form/Select.tsx
+import { SelectHTMLAttributes, forwardRef } from 'react';
 
 interface Option {
     label: string;

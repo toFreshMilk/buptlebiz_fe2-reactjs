@@ -1,4 +1,5 @@
-﻿import Section from '@/uikit/layout/Section';
+﻿// src/standard/contract/components/ContractDetailRight.tsx
+import Section from '@/uikit/layout/Section';
 
 const ContractDetailRight = () => {
     return (

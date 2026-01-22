@@ -1,4 +1,5 @@
-﻿import { RouteObject, Navigate } from 'react-router-dom';
+﻿// src/routes.tsx
+import { RouteObject, Navigate } from 'react-router-dom';
 
 // Layouts
 import RootLayout from '@/containers/RootLayout';
