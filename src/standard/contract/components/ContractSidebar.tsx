@@ -21,7 +21,7 @@ export default function ContractSidebar() {
   };
 
   return (
-    <aside className="w-72 shrink-0 space-y-4">
+    <aside className="shrink-0 space-y-4">
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
         <div className="text-lg font-black text-slate-900 mb-3">계약</div>
         <Button
