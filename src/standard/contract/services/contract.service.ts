@@ -23,7 +23,7 @@ export interface StandardContractDto {
  * 테넌트 ID를 상태로 보유하여 메서드 호출 시 반복적인 인자 전달을 제거함
  */
 export class ContractService {
-    private tenantId: string;
+    protected tenantId: string;
 
     constructor(tenantId: string) {
         this.tenantId = tenantId;
