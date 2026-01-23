@@ -57,5 +57,6 @@ export class ContractService {
   }
 }
 
+// 컨테이너/코어에서는 이 타입만 알고 있음
 export type IContractService = ContractService;
 export default ContractService;

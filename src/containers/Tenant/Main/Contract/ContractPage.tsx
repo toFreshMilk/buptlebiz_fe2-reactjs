@@ -1,51 +1,35 @@
 ﻿// src/containers/Tenant/Main/Contract/ContractPage.tsx
-import { useQuery } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/hooks/useAppConfig';
-import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
-import type { IContractService } from '@/standard/contract/services/contract.service';
+import { useTenantComponent } from '@/core/hooks/useTenantModule';
 import PageContainer from '@/uikit/layout/PageContainer';
 
 const ContractPage = () => {
   const { tenantId } = useAppConfig();
 
-  // 1. Load Resources (Service & Components)
-  const { service, isLoading: isServiceLoading } = useTenantService<IContractService>('ContractService');
-  const { Component: ContractMain } = useTenantComponent('ContractMain');
+  // 1. Load Components (Only Components, No Service needed here)
+  const { Component: ContractMain, isLoading: isMainLoading } = useTenantComponent('ContractMain');
   const { Component: ContractSidebar } = useTenantComponent('ContractSidebar');
+
+  // Sidebar와 List를 여기서 조합할지, Main 안에서 할지는 선택이지만
+  // "Colocation" 원칙상 Main이 List를 스스로 결정하는 게 더 강력할 수 있음.
+  // 하지만 여기서는 기존 구조(Slot 주입)를 유지하면서 데이터 책임만 넘겨보겠습니다.
   const { Component: ContractList } = useTenantComponent('ContractList');
 
-  // 2. Fetch Data
-  const {
-    data,
-    isLoading: isDataLoading,
-    error,
-  } = useQuery({
-    queryKey: ['contracts', tenantId],
-    queryFn: () => service!.getContracts(),
-    enabled: !!service,
-  });
-
-  // 3. Loading & Error
-  if (isServiceLoading || !ContractMain || !ContractSidebar || !ContractList) {
+  // 2. Loading
+  if (isMainLoading || !ContractMain || !ContractSidebar || !ContractList) {
     return <PageContainer>Loading Resources...</PageContainer>;
   }
-  if (error) {
-    return <PageContainer>Error: {(error as Error).message}</PageContainer>;
-  }
 
-  // 4. Render (Delegation)
-  // [핵심] UI 구현을 제거하고 데이터와 슬롯만 주입
+  // 3. Render (Composition only)
+  // Page는 데이터를 모름. 그냥 컴포넌트끼리 인사만 시켜줌.
   return (
     <ContractMain
-      // 데이터 주입
-      contracts={data || []}
-      isLoading={isDataLoading}
       tenantId={tenantId}
-      // 동작 주입 (Event Handler)
-      onCreate={() => console.log('Create Contract Clicked')}
-      // 슬롯 주입 (Composition)
+      // Slot 주입 (제어의 역전)
       sidebar={<ContractSidebar />}
-      list={<ContractList contracts={data || []} />}
+      // List에게도 데이터를 Page가 주지 않음. List 스스로 데이터를 가져오거나 Main이 관장함.
+      // 여기서는 List 컴포넌트 자체를 넘겨서 Main이 렌더링하도록 함
+      listComponent={ContractList}
     />
   );
 };

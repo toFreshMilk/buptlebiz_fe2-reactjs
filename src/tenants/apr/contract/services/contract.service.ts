@@ -1,17 +1,31 @@
 ﻿// src/tenants/apr/contract/services/contract.service.ts
-import { apiPost } from '@/core/services/apiClient';
-import { ContractService as StandardContractService } from '@/standard/contract/services/contract.service';
-import type { ApproveResultDto } from '@/standard/contract/services/contract.service';
+import { apiPost, apiGet } from '@/core/services/apiClient';
+import {
+  ContractService as StandardContractService,
+  type IContractService,
+  type StandardContractDto,
+  type ApproveResultDto,
+} from '@/standard/contract/services/contract.service';
+
+/**
+ * APR 전용 계약 서비스 인터페이스
+ * - Standard 계약 서비스 기능 + APR 전용 기능
+ */
+export interface IAprContractService extends IContractService {
+  /**
+   * APR 전용: 결재 상태가 'Review' 인 문서만 필터링해서 가져오는 API라고 가정
+   * (스탠다드에는 없는 메서드)
+   */
+  getAprSpecialContracts(): Promise<StandardContractDto[]>;
+}
 
 /**
  * APR 전용 계약 서비스
  */
-export class AprContractService extends StandardContractService {
+export class AprContractService extends StandardContractService implements IAprContractService {
   // [Override] 승인 로직 변경 (유효성 검사 추가 + 결과 반환)
   async approve(contractId: string): Promise<ApproveResultDto> {
     // 1. APR 전용 유효성 검사 API 호출
-    // (this.tenantId는 protected이므로 접근 가능하지만, 타입 안전성을 위해 this['tenantId'] 대신 그냥 this.tenantId 사용 권장.
-    // 만약 Standard에서 protected로 선언했다면 this.tenantId로 바로 접근 가능)
     await apiPost('/contracts/validate', this['tenantId'], { contractId });
 
     // 2. 승인 요청 (결과값 받기)
@@ -19,10 +33,15 @@ export class AprContractService extends StandardContractService {
       contractId,
       status: 'APPROVED',
     });
-    // console.log(result);
 
-    // 3. 결과 반환 (Container에서 비즈니스 로직 처리에 사용)
     return result;
+  }
+
+  // [APR 전용 메서드] 스탠다드에는 없는 기능
+  async getAprSpecialContracts(): Promise<StandardContractDto[]> {
+    // 예시: APR만 사용하는 별도 엔드포인트
+    const ff = await apiGet<StandardContractDto[]>('/contracts', this['tenantId']);
+    return ff;
   }
 }
 
