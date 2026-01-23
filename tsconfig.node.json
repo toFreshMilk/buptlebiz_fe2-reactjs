@@ -1,10 +1,26 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
+    /* [Node.js 환경 타겟] */
+    "target": "ES2022",
+    "lib": ["ESNext"],
     "module": "ESNext",
+
+    /* [Vite 설정 파일 처리] */
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* [Strictness] */
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "vite-env.d.ts",
+    "tailwind.config.ts",
+    "eslint.config.js" // JS파일이지만 포함해주면 좋음
+  ]
 }
