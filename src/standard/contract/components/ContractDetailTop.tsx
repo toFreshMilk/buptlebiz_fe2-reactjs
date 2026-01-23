@@ -1,9 +1,7 @@
 ﻿// src/standard/contract/components/ContractDetailTop.tsx
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/hooks/useAppConfig';
-import { useTenantService } from '@/core/hooks/useTenantModule';
-import type { IContractService, StandardContractDto } from '@/standard/contract/services/contract.service';
+import type { StandardContractDto } from '@/standard/contract/services/contract.service';
 
 type StepKey = 'draft' | 'review' | 'active' | 'done';
 
@@ -32,35 +30,14 @@ function getStatusLabel(status: string) {
 
 interface Props {
   contract: StandardContractDto;
+  // [추가] 부모로부터 주입받는 액션 핸들러
+  onApprove: () => void;
+  isApproving: boolean;
 }
 
-export default function ContractDetailTop({ contract }: Props) {
+export default function ContractDetailTop({ contract, onApprove, isApproving }: Props) {
   const navigate = useNavigate();
-  const { config } = useAppConfig();
-  const queryClient = useQueryClient();
-  const { tenantId } = useAppConfig();
-
-  // 서비스 인스턴스 가져오기 (이미 상위 페이지에서 로드되었으므로 캐시된 것 사용 가능)
-  // 실제로는 useTenantService로 다시 가져와도 되고, Props로 서비스 메서드만 넘겨받아도 됨.
-  // 여기서는 훅 재사용.
-  const { service } = useTenantService<IContractService>('ContractService');
-
-  // [변경] Next.js Server Action -> React Query Mutation
-  const mutation = useMutation({
-    mutationFn: async () => {
-      if (!service) throw new Error('Service not loaded');
-      // service 인스턴스는 이미 tenantId를 가지고 있음
-      await service.approve(String(contract.id));
-    },
-    onSuccess: () => {
-      // 데이터 갱신
-      queryClient.invalidateQueries({ queryKey: ['contract', tenantId] });
-      alert('승인되었습니다.');
-    },
-    onError: (err) => {
-      alert(`오류 발생: ${(err as Error).message}`);
-    },
-  });
+  const { config } = useAppConfig(); // Theme Config용 (UI 관련이라 허용)
 
   const step = statusToStep(contract?.status ?? '');
   const stepMap = { draft: 0, review: 1, active: 2, done: 3 };
@@ -94,14 +71,14 @@ export default function ContractDetailTop({ contract }: Props) {
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          {/* 승인 버튼 (상태가 APPROVED가 아닐 때만 표시) */}
+          {/* 승인 버튼: 직접 Mutation을 부르지 않고 props.onApprove 호출 */}
           {contract.status !== 'APPROVED' && (
             <button
-              onClick={() => mutation.mutate()}
-              disabled={mutation.isPending}
+              onClick={onApprove}
+              disabled={isApproving}
               className="px-3 py-2 rounded-lg border border-blue-200 bg-blue-600 font-bold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {mutation.isPending ? '처리중...' : '승인하기'}
+              {isApproving ? '처리중...' : '승인하기'}
             </button>
           )}
 

@@ -1,57 +1,61 @@
 ﻿// src/standard/contract/services/contract.service.ts
 import { apiGet, apiPost } from '@/core/services/apiClient';
 
-// [핵심] 서비스 DTO 정의 (Colocation)
+// 서비스 DTO 정의
 export type ContractStatus = 'Active' | 'Draft' | 'Review' | 'APPROVED' | 'REJECTED' | (string & {});
 
 export interface StandardContractDto {
-    id: number | string;
-    title: string;
-    status: ContractStatus;
-    partner?: string;
-    date?: string;
-    amount?: string;
-    category?: string;
-    templateName?: string;
-    requester?: string;
-    reviewer?: string;
-    documentCode?: string;
+  id: number | string;
+  title: string;
+  status: ContractStatus;
+  partner?: string;
+  date?: string;
+  amount?: string;
+  category?: string;
+  templateName?: string;
+  requester?: string;
+  reviewer?: string;
+  documentCode?: string;
+}
+
+// [추가] 승인 결과 DTO 정의
+export interface ApproveResultDto {
+  success: boolean;
+  approvedAt: string;
+  newStatus: string;
+  message?: string;
 }
 
 /**
- * [변경] Class 기반 서비스
- * 테넌트 ID를 상태로 보유하여 메서드 호출 시 반복적인 인자 전달을 제거함
+ * Class 기반 서비스
  */
 export class ContractService {
-    protected tenantId: string;
+  protected tenantId: string;
 
-    constructor(tenantId: string) {
-        this.tenantId = tenantId;
-    }
+  constructor(tenantId: string) {
+    this.tenantId = tenantId;
+  }
 
-    async getContracts(): Promise<StandardContractDto[]> {
-        // this.tenantId를 사용하여 호출
-        return await apiGet<StandardContractDto[]>('/contracts', this.tenantId);
-    }
+  async getContracts(): Promise<StandardContractDto[]> {
+    const ff = await apiGet<StandardContractDto[]>('/contracts', this.tenantId);
+    return ff;
+  }
 
-    async getContractsDetail(): Promise<StandardContractDto[]> {
-        return await apiGet<StandardContractDto[]>('/contracts/detail', this.tenantId);
-    }
+  async getContractsDetail(id?: string): Promise<StandardContractDto> {
+    const url = 'contracts/detail';
+    const ff = await apiGet<StandardContractDto>(url, this.tenantId);
+    return ff;
+  }
 
-    async getContractsDetail2(): Promise<StandardContractDto[]> {
-        return await apiGet<StandardContractDto[]>('/contracts/detail2', this.tenantId);
-    }
-
-    async approve(contractId: string): Promise<void> {
-        await apiPost('/contracts/approve', this.tenantId, {
-            contractId,
-            status: 'APPROVED',
-        });
-    }
+  // [수정] 반환 타입을 Promise<void> -> Promise<ApproveResultDto>로 변경
+  async approve(contractId: string): Promise<ApproveResultDto> {
+    const ff = await apiPost<ApproveResultDto>('/contracts/approve', this.tenantId, {
+      contractId,
+      status: 'APPROVED',
+    });
+    return ff;
+  }
 }
 
-// [핵심] 서비스 타입 export (인스턴스 타입)
 export type IContractService = ContractService;
-
-// Default Export는 클래스 자체
 export default ContractService;
