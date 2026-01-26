@@ -1,6 +1,6 @@
 ﻿// src/core/contexts/AppConfigProvider.tsx
-import React, { useEffect, useMemo, useState } from 'react';
-import { AppConfigContext } from './AppConfigContext'; // 위에서 만든 Context import
+import React, { useEffect, useState } from 'react';
+import { AppConfigContext } from './AppConfigContext';
 import { loadTenantConfig } from '@/core/config/tenant.config';
 import { useTenant } from '@/core/hooks/useTenant';
 import type { TenantConfig } from '@/core/config/tenant.types';
@@ -13,43 +13,53 @@ export function AppConfigProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
+
     async function run() {
+      // tenantId가 없으면 로딩 종료 및 에러 처리
       if (!tenantId) {
         if (mounted) {
-          setError(new Error('[AppConfig] Tenant ID is missing in URL.'));
+          setError(new Error('[AppConfig] Tenant ID is missing.'));
           setIsLoading(false);
         }
         return;
       }
+
       try {
         setIsLoading(true);
         setError(null);
+
         const loaded = await loadTenantConfig(tenantId);
-        if (mounted) setConfig(loaded);
+
+        if (mounted) {
+          setConfig(loaded);
+        }
       } catch (e) {
         if (mounted) {
           setError(e as Error);
           setConfig(null);
         }
       } finally {
-        if (mounted) setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     }
+
     run();
+
     return () => {
       mounted = false;
     };
   }, [tenantId]);
 
-  const value = useMemo(
-    () => ({
-      tenantId: tenantId || '',
-      config,
-      isLoading,
-      error,
-    }),
-    [tenantId, config, isLoading, error],
-  );
+  // [React 19] useMemo 제거: 컴파일러가 자동으로 최적화함
+  const value = {
+    tenantId: tenantId || '',
+    config,
+    isLoading,
+    error,
+  };
 
-  return <AppConfigContext.Provider value={value}>{children}</AppConfigContext.Provider>;
+  // [React 19] <Context.Provider> 대신 <Context> 바로 사용 가능
+  return <AppConfigContext value={value}>{children}</AppConfigContext>;
 }

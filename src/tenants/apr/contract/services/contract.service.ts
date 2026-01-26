@@ -16,7 +16,7 @@ export interface IAprContractService extends IContractService {
    * APR 전용: 결재 상태가 'Review' 인 문서만 필터링해서 가져오는 API라고 가정
    * (스탠다드에는 없는 메서드)
    */
-  getAprSpecialContracts(): Promise<StandardContractDto[]>;
+  getAprContracts(): Promise<StandardContractDto[]>;
 }
 
 /**
@@ -38,7 +38,7 @@ export class AprContractService extends StandardContractService implements IAprC
   }
 
   // [APR 전용 메서드] 스탠다드에는 없는 기능
-  async getAprSpecialContracts(): Promise<StandardContractDto[]> {
+  async getAprContracts(): Promise<StandardContractDto[]> {
     // 예시: APR만 사용하는 별도 엔드포인트
     const ff = await apiGet<StandardContractDto[]>('/contracts', this['tenantId']);
     return ff;

@@ -18,7 +18,7 @@ const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Co
   // [스탠다드에는 없는 로직] APR 전용 API 사용
   const { data, isLoading } = useQuery({
     queryKey: ['apr-special-contracts', tenantId],
-    queryFn: () => service!.getAprSpecialContracts(),
+    queryFn: () => service!.getAprContracts(),
     enabled: !!service,
   });
 
