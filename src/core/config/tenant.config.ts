@@ -4,19 +4,30 @@ import type { TenantConfig, ComponentLoader, ServiceLoader, ModuleWithDefault } 
 
 // === 1. Loaders ===
 // 테넌트별 설정 파일(*.config.ts)을 비동기로 로드합니다.
-export async function loadTenantConfig(tenantId: string): Promise<TenantConfig> {
-  const loaders: Record<string, () => Promise<ModuleWithDefault<TenantConfig>>> = {
-    demo: () => import('@/core/config/tenants/demo.config'),
-    apr: () => import('@/core/config/tenants/apr.config'),
-  };
+const TenantLoaders: Record<string, () => Promise<ModuleWithDefault<TenantConfig>>> = {
+  demo: () => import('@/core/config/tenants/demo.config'),
+  apr: () => import('@/core/config/tenants/apr.config'),
+};
 
-  const loader = loaders[tenantId];
+/**
+ * 테넌트 ID가 유효한지(설정이 존재하는지) 검사합니다.
+ * useTenant 훅이나 다른 곳에서 검증용으로 씁니다.
+ */
+export function isValidTenantId(id: string): boolean {
+  return Object.prototype.hasOwnProperty.call(TenantLoaders, id);
+}
+
+// === 1. Loaders ===
+export async function loadTenantConfig(tenantId: string): Promise<TenantConfig> {
+  const loader = TenantLoaders[tenantId];
+
   if (!loader) {
-    throw new Error(`[Config Error] Unknown tenant: ${tenantId}`);
+    // 여기서 에러 메시지에 "가능한 목록"을 같이 보여주면 디버깅이 편합니다.
+    const available = Object.keys(TenantLoaders).join(', ');
+    throw new Error(`[Config Error] Invalid TenantID: "${tenantId}". Available: [${available}]`);
   }
 
   const moduleData = await loader();
-  // 설정 파일 내에 id가 누락되었을 경우를 대비해 tenantId 강제 주입
   return { ...moduleData.default, id: tenantId };
 }
 

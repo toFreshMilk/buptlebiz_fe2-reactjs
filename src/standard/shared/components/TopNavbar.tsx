@@ -1,15 +1,12 @@
 ﻿// src/standard/shared/components/TopNavbar.tsx
 import { Link } from 'react-router-dom';
-import { useAppConfig } from '@/core/hooks/useAppConfig';
 
 const TopNavbar = () => {
-  const { tenantId } = useAppConfig();
-
   return (
     <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-50 flex items-center justify-between px-6">
       {/* Logo Area */}
       <div className="flex items-center gap-4">
-        <Link to={`/${tenantId}`} className="flex items-center gap-2">
+        <Link to={`/`} className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">B</div>
           <span className="text-xl font-bold text-gray-800">BuptleBiz</span>
         </Link>

@@ -15,15 +15,6 @@ export function AppConfigProvider({ children }: { children: React.ReactNode }) {
     let mounted = true;
 
     async function run() {
-      // tenantId가 없으면 로딩 종료 및 에러 처리
-      if (!tenantId) {
-        if (mounted) {
-          setError(new Error('[AppConfig] Tenant ID is missing.'));
-          setIsLoading(false);
-        }
-        return;
-      }
-
       try {
         setIsLoading(true);
         setError(null);
