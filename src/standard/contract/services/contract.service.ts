@@ -26,6 +26,15 @@ export interface ApproveResultDto {
   message?: string;
 }
 
+export type ContractRow = {
+  id: number | string;
+  title: string;
+  partner?: string;
+  status: string;
+  date?: string;
+  amount?: string;
+};
+
 /**
  * Class 기반 서비스
  */

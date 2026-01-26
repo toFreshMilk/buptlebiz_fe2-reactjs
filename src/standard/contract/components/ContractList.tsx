@@ -1,14 +1,6 @@
 ﻿// src/standard/contract/components/ContractList.tsx
 import { useNavigate, useLocation } from 'react-router-dom';
-
-type ContractRow = {
-  id: number | string;
-  title: string;
-  partner?: string;
-  status: string;
-  date?: string;
-  amount?: string;
-};
+import { ContractRow } from '@/standard/contract/services/contract.service.ts';
 
 // 상황봐서 uikit으로 빼야겠다.
 
