@@ -1,7 +1,7 @@
 ﻿// src/standard/contract/components/ContractDetailTop.tsx
 import { useNavigate } from 'react-router-dom';
 import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAppConfig } from '@/core/hooks/useAppConfig';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useTenantService } from '@/core/hooks/useTenantModule';
 import type { IContractService, ApproveResultDto } from '@/standard/contract/services/contract.service';
 

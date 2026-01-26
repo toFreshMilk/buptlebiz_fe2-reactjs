@@ -1,6 +1,6 @@
 ﻿// src/standard/contract/components/ContractDetailRight.tsx
 import { useState } from 'react';
-import { useAppConfig } from '@/core/hooks/useAppConfig';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import type { StandardContractDto } from '@/standard/contract/services/contract.service';
 
 function safeText(v?: string) {

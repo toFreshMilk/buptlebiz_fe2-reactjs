@@ -13,9 +13,7 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen">
       <TopNavbar />
       {/*여기서 말고 디테일하게 선별해서 적용*/}
-      <React.Suspense fallback={<div className="h-12 bg-gray-100 animate-pulse">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ </div>}>
-        <WorkspaceBanner />
-      </React.Suspense>
+      <WorkspaceBanner />
       <main className="flex-1 bg-gray-50">
         <Outlet />
       </main>

@@ -1,6 +1,6 @@
 ﻿// src/containers/Tenant/Main/Contract/ContractPage.tsx
-import { useAppConfig } from '@/core/hooks/useAppConfig';
 import { useTenantComponent } from '@/core/hooks/useTenantModule';
+import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 
 const ContractPage = () => {
   const { tenantId } = useAppConfig();

@@ -1,8 +1,8 @@
 ﻿// src/core/hooks/useTenantModule.ts
 import { ComponentType } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useAppConfig } from '@/core/hooks/useAppConfig';
 import { getTenantComponent, getTenantService } from '@/core/config/tenant.config';
+import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 
 /**
  * 테넌트 설정에 맞는 컴포넌트를 비동기로 로드합니다.

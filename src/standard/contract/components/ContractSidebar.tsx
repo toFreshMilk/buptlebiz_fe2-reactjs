@@ -2,7 +2,7 @@
 import { useSearchParams } from 'react-router-dom';
 import Button from '@/uikit/form/Button';
 import Input from '@/uikit/form/Input';
-import { useAppConfig } from '@/core/hooks/useAppConfig';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
 
 export default function ContractSidebar() {
   const { config } = useAppConfig();
