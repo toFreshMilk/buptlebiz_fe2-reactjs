@@ -68,16 +68,15 @@ const ContractDetailPage = () => {
   // [수정] 별도 Layout 컴포넌트 없이 직접 배치
   return (
     <div className="min-h-screen bg-gray-50 pb-12">
-      {/* 상단 영역 (Top Component) */}
-      <ContractDetailTop
-        contract={contract}
-        onApprove={() => approveMutation.mutate()}
-        isApproving={approveMutation.isPending}
-      />
-
       {/* 본문 영역 (직접 레이아웃 구성) */}
       <PageContainer className="mt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* 상단 영역 (Top Component) */}
+        <ContractDetailTop
+          contract={contract}
+          onApprove={() => approveMutation.mutate()}
+          isApproving={approveMutation.isPending}
+        />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           <div className="lg:col-span-2">
             <ContractDetailLeft contract={contract} />
           </div>
