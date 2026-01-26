@@ -12,14 +12,13 @@ interface ContractMainProps {
 }
 
 const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: ContractMainProps) => {
-  // APR 전용 인터페이스로 서비스 주입
-  const { service } = useTenantService<IAprContractService>('ContractService');
+  // 1. 서비스 로딩 (Suspense 적용, 타입 안전)
+  const service = useTenantService<IAprContractService>('ContractService');
 
-  // [스탠다드에는 없는 로직] APR 전용 API 사용
+  // 2. 데이터 페칭 (service!. 불필요)
   const { data, isLoading } = useQuery({
     queryKey: ['apr-special-contracts', tenantId],
-    queryFn: () => service!.getAprContracts(),
-    enabled: !!service,
+    queryFn: () => service.getAprContracts(),
   });
 
   return (
@@ -29,10 +28,9 @@ const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Co
         <div className="mb-8 border-b pb-4 flex justify-between">
           <h2 className="text-3xl font-serif text-rose-700">APR Contracts ({tenantId})</h2>
           <button
-            className="bg-rose-600 text-white px-6 py-2 rounded-full"
+            className="bg-rose-600 text-white px-6 py-2 rounded-full hover:bg-rose-700 transition-colors"
             onClick={async () => {
-              if (!service) return;
-              // 오버라이드된 approve 사용 (APR 전용 validate + approve)
+              // 3. 버튼 클릭 핸들러 (if (!service) 불필요)
               const result = await service.approve('dummy-id');
               console.log('APR approve result', result);
             }}

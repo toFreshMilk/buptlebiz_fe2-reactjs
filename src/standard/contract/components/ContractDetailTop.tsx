@@ -1,8 +1,13 @@
 ﻿// src/standard/contract/components/ContractDetailTop.tsx
 import { useNavigate } from 'react-router-dom';
+import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/hooks/useAppConfig';
-import type { StandardContractDto } from '@/standard/contract/services/contract.service';
+import { useTenantService } from '@/core/hooks/useTenantModule';
+import type { IContractService, ApproveResultDto } from '@/standard/contract/services/contract.service';
 
+// -----------------------------------------------------------------------------
+// Helpers (UI Logic)
+// -----------------------------------------------------------------------------
 type StepKey = 'draft' | 'review' | 'active' | 'done';
 
 function normalizeStatus(s: string) {
@@ -29,22 +34,49 @@ function getStatusLabel(status: string) {
 }
 
 interface Props {
-  contract: StandardContractDto;
-  // [추가] 부모로부터 주입받는 액션 핸들러
-  onApprove: () => void;
-  isApproving: boolean;
+  // [변경] 거대한 객체 대신 ID만 받아서 스스로 데이터를 조회합니다.
+  contractId: string;
 }
 
-export default function ContractDetailTop({ contract, onApprove, isApproving }: Props) {
+export default function ContractDetailTop({ contractId }: Props) {
   const navigate = useNavigate();
-  const { config } = useAppConfig(); // Theme Config용 (UI 관련이라 허용)
+  const { config, tenantId } = useAppConfig();
+  const queryClient = useQueryClient();
 
-  const step = statusToStep(contract?.status ?? '');
+  // 1. 서비스 로드 (Suspense 적용 -> 무조건 존재함)
+  const service = useTenantService<IContractService>('ContractService');
+
+  // 2. 데이터 로드 (Suspense 적용 -> 데이터 무조건 존재함)
+  // 부모나 다른 형제 컴포넌트(Left/Right)에서 동일한 키로 호출해도 React Query가 요청을 하나로 합칩니다.
+  const { data: contract } = useSuspenseQuery({
+    queryKey: ['contract', tenantId, contractId],
+    queryFn: () => service.getContractsDetail(contractId),
+  });
+
+  // 3. 액션 로직 (Mutation)
+  const approveMutation = useMutation({
+    mutationFn: async () => {
+      // service가 확실히 존재하므로 바로 호출
+      return await service.approve(contractId);
+    },
+    onSuccess: (data: ApproveResultDto) => {
+      // 데이터 갱신
+      queryClient.invalidateQueries({ queryKey: ['contract', tenantId, contractId] });
+      alert(`${data.message || '승인되었습니다.'}`);
+    },
+    onError: (err) => {
+      alert(`오류 발생: ${(err as Error).message}`);
+    },
+  });
+
+  // ---------------------------------------------------------------------------
+  // View Logic
+  // ---------------------------------------------------------------------------
+  const step = statusToStep(contract.status);
   const stepMap = { draft: 0, review: 1, active: 2, done: 3 };
   const stepIndex = stepMap[step];
-
-  const title = contract?.title ?? '계약 상세';
-  const statusLabel = getStatusLabel(contract?.status ?? '');
+  const title = contract.title ?? '계약 상세';
+  const statusLabel = getStatusLabel(contract.status);
 
   const steps = [
     { key: 'draft', label: '초안' },
@@ -71,14 +103,14 @@ export default function ContractDetailTop({ contract, onApprove, isApproving }: 
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          {/* 승인 버튼: 직접 Mutation을 부르지 않고 props.onApprove 호출 */}
+          {/* 승인 버튼: 직접 Mutation 호출 */}
           {contract.status !== 'APPROVED' && (
             <button
-              onClick={onApprove}
-              disabled={isApproving}
-              className="px-3 py-2 rounded-lg border border-blue-200 bg-blue-600 font-bold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() => approveMutation.mutate()}
+              disabled={approveMutation.isPending}
+              className="px-3 py-2 rounded-lg border border-blue-200 bg-blue-600 font-bold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {isApproving ? '처리중...' : '승인하기'}
+              {approveMutation.isPending ? '처리중...' : '승인하기'}
             </button>
           )}
 
@@ -91,8 +123,6 @@ export default function ContractDetailTop({ contract, onApprove, isApproving }: 
         </div>
       </div>
 
-      {/* 성공/에러 메시지 표시는 alert로 대체하거나 별도 UI state로 관리 */}
-
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100">
           <div className="text-center font-bold text-slate-900">
@@ -104,7 +134,7 @@ export default function ContractDetailTop({ contract, onApprove, isApproving }: 
           <div className="relative">
             <div className="h-[2px] bg-slate-200" />
             <div
-              className="h-[2px] absolute top-0 left-0"
+              className="h-[2px] absolute top-0 left-0 transition-all duration-500"
               style={{
                 width: `${(stepIndex / 3) * 100}%`,
                 backgroundColor: config.theme.primaryColor,
@@ -117,7 +147,7 @@ export default function ContractDetailTop({ contract, onApprove, isApproving }: 
                 return (
                   <div key={s.key} className="text-center">
                     <div
-                      className="mx-auto h-2 w-2 rounded-full"
+                      className="mx-auto h-2 w-2 rounded-full transition-colors duration-300"
                       style={{
                         backgroundColor: active ? config.theme.primaryColor : '#cbd5e1',
                       }}

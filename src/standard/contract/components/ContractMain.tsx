@@ -1,30 +1,29 @@
 ﻿// src/standard/contract/components/ContractMain.tsx
 import { ReactNode, ComponentType } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useTenantService } from '@/core/hooks/useTenantModule'; // 서비스 hook
+import { useTenantService } from '@/core/hooks/useTenantModule';
 import type { IContractService } from '@/standard/contract/services/contract.service';
 import Button from '@/uikit/form/Button';
 
 interface ContractMainProps {
   tenantId: string;
   sidebar: ReactNode;
-  // List 컴포넌트를 '값'으로 받는 게 아니라 '타입(Component)'으로 받아서 내부에서 렌더링
   listComponent: ComponentType<{ contracts: any[]; isLoading: boolean }>;
 }
 
 const ContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: ContractMainProps) => {
-  // [Self-Contained Logic] 서비스 호출 및 데이터 로딩을 구현체가 직접 수행
-  const { service } = useTenantService<IContractService>('ContractService');
+  // 1. 서비스 로딩 (Suspense가 적용되어 null 가능성 없음)
+  const service = useTenantService<IContractService>('ContractService');
 
+  // 2. 데이터 페칭 (service가 확실히 존재하므로 바로 호출)
   const { data: contracts, isLoading } = useQuery({
     queryKey: ['contracts', tenantId],
-    queryFn: () => service!.getContracts(),
-    enabled: !!service,
+    queryFn: () => service.getContracts(),
   });
 
   const handleCreate = () => {
     console.log('Standard Create Logic');
-    // service?.createContract(...)
+    // service.createContract(...) // 바로 호출 가능
   };
 
   return (
@@ -41,7 +40,6 @@ const ContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Contr
         </div>
 
         <div className="flex-1 bg-white rounded-lg shadow p-4">
-          {/* 데이터 소유권자가 데이터를 하위 컴포넌트에 주입 */}
           <ListComponent contracts={contracts || []} isLoading={isLoading} />
         </div>
       </div>
