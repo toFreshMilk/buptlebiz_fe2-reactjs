@@ -1,5 +1,5 @@
 ﻿// src/tenants/apr/contract/services/contract.service.ts
-import { apiPost, apiGet } from '@/core/services/apiClient';
+import { apiPost, apiGet } from '@/core/hooks/apiClient';
 import {
   ContractService as StandardContractService,
   type IContractService,

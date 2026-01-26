@@ -1,5 +1,5 @@
-﻿// src/standard/contract/services/contract.service.ts
-import { apiGet, apiPost } from '@/core/services/apiClient';
+﻿// src/standard/contract/hooks/contract.service.ts
+import { apiGet, apiPost } from '@/core/hooks/apiClient';
 
 // 서비스 DTO 정의
 export type ContractStatus = 'Active' | 'Draft' | 'Review' | 'APPROVED' | 'REJECTED' | (string & {});

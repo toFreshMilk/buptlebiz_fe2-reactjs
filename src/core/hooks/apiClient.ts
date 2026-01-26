@@ -1,4 +1,4 @@
-﻿// src/core/services/apiClient.ts
+﻿// src/core/hooks/apiClient.ts
 export async function apiGet<T>(path: string, tenantId: string): Promise<T> {
   // http://apr.localhost:3000/mock-data/... 로 요청하게 됨 -> Same Origin -> 성공
   const res = await fetch(`/mock-data/${path.replace(/^\/+/, '')}/${tenantId}.json`);
