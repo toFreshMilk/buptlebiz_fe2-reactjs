@@ -1,4 +1,4 @@
-﻿// src/tenants/apr/contract/services/contract.service.ts
+﻿// src/custom/apr/contract/services/contract.service.ts
 import { apiPost, apiGet } from '@/core/hooks/apiClient';
 import {
   ContractService as StandardContractService,

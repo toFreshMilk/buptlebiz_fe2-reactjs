@@ -1,16 +1,16 @@
-﻿// src/core/config/tenants/demo.config.ts
+﻿// src/core/config/custom/demo.config.ts
 import { TenantConfig } from '../tenant.types';
-import '@/tenants/demo/demo.css'; // [추가]
+import '@/custom/demo/demo.css'; // [추가]
 
 const config: TenantConfig = {
-    id: 'demo',
-    name: 'Buptle Demo',
-    features: { i18n: true, ai: true, sso: true },
-    theme: { primaryColor: '#8b5cf6' },
+  id: 'demo',
+  name: 'Buptle Demo',
+  features: { i18n: true, ai: true, sso: true },
+  theme: { primaryColor: '#8b5cf6' },
 
-    // Demo는 Standard를 유지하고, 눈에 띄는 "부분 UI"만 교체하여 데모임을 표시
-    components: {
-        WorkspaceBanner: () => import('@/tenants/demo/shared/components/WorkspaceBanner'),
-    },
+  // Demo는 Standard를 유지하고, 눈에 띄는 "부분 UI"만 교체하여 데모임을 표시
+  components: {
+    WorkspaceBanner: () => import('@/custom/demo/shared/components/WorkspaceBanner'),
+  },
 };
 export default config;

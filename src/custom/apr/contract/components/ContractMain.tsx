@@ -1,8 +1,8 @@
-﻿// src/tenants/apr/contract/components/AprContractMain.tsx
+﻿// src/custom/apr/contract/components/AprContractMain.tsx
 import { ReactNode, ComponentType } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTenantService } from '@/core/hooks/useTenantModule';
-import type { IAprContractService } from '@/tenants/apr/contract/services/contract.service';
+import type { IAprContractService } from '@/custom/apr/contract/services/contract.service';
 import type { StandardContractDto } from '@/standard/contract/services/contract.service';
 
 interface ContractMainProps {
