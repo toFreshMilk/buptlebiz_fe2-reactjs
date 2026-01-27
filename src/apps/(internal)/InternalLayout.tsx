@@ -1,7 +1,6 @@
 ﻿// src/apps/(internal)/InternalLayout.tsx
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import TopNavbar from '@/standard/shared/components/TopNavbar';
 import { AppConfigProvider } from '@/core/contexts/AppConfigProvider';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 import { useTenantComponent } from '@/core/hooks/useTenantModule';
@@ -10,6 +9,7 @@ import { useTenantComponent } from '@/core/hooks/useTenantModule';
 const InternalLayoutContent = () => {
   const { config } = useAppConfig();
   const { Component: WorkspaceBanner } = useTenantComponent('WorkspaceBanner');
+  const { Component: TopNavbar } = useTenantComponent('TopNavbar');
 
   // Theme 적용
   useEffect(() => {
@@ -19,12 +19,7 @@ const InternalLayoutContent = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <TopNavbar />
-
-      {/* 배너는 비동기 컴포넌트일 수 있으므로 Suspense 처리 */}
-      <Suspense fallback={<div className="h-12 w-full bg-gray-100 animate-pulse" />}>
-        <WorkspaceBanner />
-      </Suspense>
-
+      <WorkspaceBanner />
       <main className="flex-1 bg-gray-50 p-6">
         <Outlet />
       </main>
