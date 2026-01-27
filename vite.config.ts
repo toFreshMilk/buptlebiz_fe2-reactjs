@@ -15,6 +15,7 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+  clearScreen: false,
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
