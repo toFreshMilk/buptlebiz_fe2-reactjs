@@ -1,4 +1,4 @@
-﻿// src/containers/Tenant/Main/Contract/ContractPage.tsx
+﻿// src/apps/(internal)/contract/ContractPage.tsx
 import { useTenantComponent } from '@/core/hooks/useTenantModule';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 

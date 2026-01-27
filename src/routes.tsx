@@ -2,51 +2,64 @@
 import { RouteObject, Navigate } from 'react-router-dom';
 
 // Layouts
-import RootLayout from '@/containers/RootLayout';
-import NotFound from '@/containers/NotFound';
-import TenantLayout from '@/containers/Tenant/TenantLayout';
-import TenantError from '@/containers/Tenant/TenantError';
-import MainLayout from '@/containers/Tenant/Main/MainLayout';
+import RootLayout from '@/apps/RootLayout';
+import NotFound from '@/apps/NotFound';
+import PublicLayout from '@/apps/(public)/PublicLayout';
+import InternalLayout from '@/apps/(internal)/InternalLayout';
+import InternalError from '@/apps/(internal)/InternalError';
 
-// Pages
-import ContractPage from '@/containers/Tenant/Main/Contract/ContractPage';
-import ContractDetailPage from '@/containers/Tenant/Main/Contract/ContractDetailPage';
+// Pages - Internal
+import ContractPage from '@/apps/(internal)/contract/ContractPage';
+import ContractDetailPage from '@/apps/(internal)/contract/ContractDetailPage';
+import RootError from '@/apps/RootError.tsx';
+
+// Pages - Public (예시)
+// import LoginPage from '@/apps/(public)/login/LoginPage';
 
 export const routes: RouteObject[] = [
-    {
-        path: '/',
-        element: <RootLayout />,
-        errorElement: <NotFound />,
+  {
+    path: '/',
+    element: <RootLayout />,
+    errorElement: <RootError />,
+    children: [
+      // [Group 1] Public (로그인, 외부 페이지)
+      // URL: /login, /external/...
+      {
+        element: <PublicLayout />,
         children: [
-            {
-                // [변경] :tenantId 경로 제거 -> 바로 TenantLayout 연결
-                element: <TenantLayout />,
-                errorElement: <TenantError />,
-                children: [
-                    {
-                        path: '',
-                        element: <MainLayout />,
-                        children: [
-                            {
-                                index: true,
-                                element: <Navigate to="contract" replace />,
-                            },
-                            {
-                                path: 'contract',
-                                element: <ContractPage />,
-                            },
-                            {
-                                path: 'contract/:id',
-                                element: <ContractDetailPage />,
-                            },
-                        ],
-                    },
-                ],
-            },
+          // { path: 'login', element: <LoginPage /> },
+          // { path: 'external/*', element: <ExternalSignPage /> },
         ],
-    },
-    {
-        path: '*',
-        element: <NotFound />,
-    },
+      },
+
+      // [Group 2] Internal (업무 공간)
+      // URL: /contract (앞에 tenantId 없음)
+      // Pathless Layout 사용: path 속성 없이 element만 지정하여 레이아웃만 적용
+      {
+        element: <InternalLayout />,
+        errorElement: <InternalError />,
+        children: [
+          // 루트('/') 접근 시 contract로 리다이렉트
+          {
+            index: true,
+            element: <Navigate to="contract" replace />,
+          },
+          {
+            path: 'contract',
+            element: <ContractPage />,
+          },
+          {
+            path: 'contract/:id',
+            element: <ContractDetailPage />,
+          },
+          // { path: 'advice', element: <AdvicePage /> },
+          // { path: 'admin', element: <AdminPage /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
 ];

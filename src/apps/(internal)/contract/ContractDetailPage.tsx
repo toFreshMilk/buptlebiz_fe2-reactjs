@@ -1,4 +1,4 @@
-﻿// src/pages/contract/ContractDetailPage.tsx
+﻿// src/apps/(internal)/contract/ContractDetailPage.tsx
 import { useParams } from 'react-router-dom';
 import { useTenantComponent } from '@/core/hooks/useTenantModule';
 

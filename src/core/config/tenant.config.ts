@@ -5,8 +5,8 @@ import type { TenantConfig, ComponentLoader, ServiceLoader, ModuleWithDefault } 
 // === 1. Loaders ===
 // 테넌트별 설정 파일(*.config.ts)을 비동기로 로드합니다.
 const TenantLoaders: Record<string, () => Promise<ModuleWithDefault<TenantConfig>>> = {
-  demo: () => import('@/core/config/custom/demo.config'),
-  apr: () => import('@/core/config/custom/apr.config'),
+  demo: () => import('@/core/config/tenants/demo.config'),
+  apr: () => import('@/core/config/tenants/apr.config'),
 };
 
 /**
