@@ -1,4 +1,4 @@
-﻿// src/standard/contract/hooks/contract.service.ts
+﻿// src/standard/contract/services/contract.service.ts
 import { apiGet, apiPost } from '@/core/hooks/apiClient';
 
 // 서비스 DTO 정의

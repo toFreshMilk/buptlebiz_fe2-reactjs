@@ -1,4 +1,4 @@
-﻿// src/core/config/custom/demo.config.ts
+﻿// src/core/config/tenants/demo.config.ts
 import { TenantConfig } from '../tenant.types';
 import '@/custom/demo/demo.css'; // [추가]
 

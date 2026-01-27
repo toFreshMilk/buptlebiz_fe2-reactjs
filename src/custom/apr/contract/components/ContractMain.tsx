@@ -1,4 +1,4 @@
-﻿// src/custom/apr/contract/components/AprContractMain.tsx
+﻿// src/custom/apr/contract/components/ContractMain.tsx
 import { ReactNode, ComponentType } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTenantService } from '@/core/hooks/useTenantModule';
