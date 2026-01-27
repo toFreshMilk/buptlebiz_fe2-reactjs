@@ -1,29 +1,34 @@
 ﻿// src/core/hooks/useCoreTranslation.ts
+
 import { useEffect, useRef } from 'react';
 import { useTranslation, UseTranslationOptions } from 'react-i18next';
-
-// [수정] 우리가 만든 인스턴스를 직접 가져옵니다. (가장 확실함)
 import i18nInstance from '../i18n/i18n';
 
+/**
+ * Core 다국어 훅 (동적 주입 지원)
+ * @param ns - 사용할 네임스페이스 (예: 'contract')
+ * @param overrides - (선택) 커스텀 모듈에서 덮어쓸 JSON 데이터
+ */
 export function useCoreTranslation(ns: string, overrides?: Record<string, any>, options?: UseTranslationOptions<any>) {
-  // 컴포넌트 리렌더링을 위해 t 함수는 훅에서 가져옵니다.
   const { t, ready } = useTranslation(ns, options);
-
   const hasInjected = useRef(false);
 
   useEffect(() => {
+    // 오버라이드 데이터가 있고, 아직 주입 안 했으면 실행
     if (overrides && !hasInjected.current) {
       const currentLang = i18nInstance.resolvedLanguage || i18nInstance.language || 'ko';
 
-      // [수정] 직접 가져온 인스턴스의 메서드를 사용합니다.
-      i18nInstance.addResourceBundle(currentLang, ns, overrides, true, true);
-
-      console.log(`[Core-i18n] Injected resources for '${ns}' namespace (${currentLang})`);
+      i18nInstance.addResourceBundle(
+        currentLang,
+        ns,
+        overrides,
+        true, // deep merge
+        true, // overwrite
+      );
 
       hasInjected.current = true;
     }
-  }, [ns, overrides]); // 의존성 배열에서 i18n 제거
+  }, [ns, overrides]);
 
-  // i18n 객체도 필요하다면 직접 가져온 것을 반환
-  return { t, i18n: i18nInstance, ready };
+  return { t, ready, i18n: i18nInstance };
 }
