@@ -2,8 +2,10 @@
 import { ReactNode, ComponentType } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTenantService } from '@/core/hooks/useTenantModule';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import type { IAprContractService } from '@/custom/apr/contract/services/contract.service';
 import type { StandardContractDto } from '@/standard/contract/services/contract.service';
+// import aprLocales from '@custom/apr/shared/locales/ko.json';
 
 interface ContractMainProps {
   tenantId: string;
@@ -21,6 +23,8 @@ const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Co
     queryFn: () => service.getAprContracts(),
   });
 
+  // const { t } = useCoreTranslation('contract', aprLocales);
+
   return (
     <div className="flex w-full bg-gray-100 min-h-screen">
       <div className="border-r border-gray-300 shadow-xl z-10 bg-slate-900 text-white">{sidebar}</div>
@@ -35,7 +39,8 @@ const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Co
               console.log('APR approve result', result);
             }}
           >
-            + 생성하기
+            + apr 등록
+            {/*+ {t('save_btn')}*/}
           </button>
         </div>
 
