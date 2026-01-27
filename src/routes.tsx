@@ -2,19 +2,19 @@
 import { RouteObject, Navigate } from 'react-router-dom';
 
 // Layouts
-import RootLayout from '@/apps/RootLayout';
-import NotFound from '@/apps/NotFound';
-import PublicLayout from '@/apps/(public)/PublicLayout';
-import InternalLayout from '@/apps/(internal)/InternalLayout';
-import InternalError from '@/apps/(internal)/InternalError';
+import RootLayout from '@/app/RootLayout';
+import NotFound from '@/app/NotFound';
+import PublicLayout from '@/app/(public)/PublicLayout';
+import InternalLayout from '@/app/(internal)/InternalLayout';
+import InternalError from '@/app/(internal)/InternalError';
 
 // Pages - Internal
-import ContractPage from '@/apps/(internal)/contract/ContractPage';
-import ContractDetailPage from '@/apps/(internal)/contract/ContractDetailPage';
-import RootError from '@/apps/RootError.tsx';
+import ContractPage from '@/app/(internal)/contract/ContractPage';
+import ContractDetailPage from '@/app/(internal)/contract/ContractDetailPage';
+import RootError from '@/app/RootError.tsx';
 
 // Pages - Public (예시)
-// import LoginPage from '@/apps/(public)/login/LoginPage';
+// import LoginPage from '@/app/(public)/login/LoginPage';
 
 export const routes: RouteObject[] = [
   {

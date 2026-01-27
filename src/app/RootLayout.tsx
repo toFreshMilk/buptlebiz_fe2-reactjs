@@ -1,4 +1,4 @@
-﻿// src/apps/RootLayout.tsx
+﻿// src/app/RootLayout.tsx
 import { Outlet } from 'react-router-dom';
 
 const RootLayout = () => {

@@ -19,7 +19,7 @@ buptlebiz_fe2/
 ├── App.tsx
 ├── routes.tsx
 │
-├── apps/                 # (구조 좋음)
+├── app/                 # (구조 좋음)
 │   ├── RootLayout.tsx
 │   ├── RootError.tsx
 │   ├── NotFound.tsx

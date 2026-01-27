@@ -1,4 +1,4 @@
-﻿// src/apps/(internal)/InternalLayout.tsx
+﻿// src/app/(internal)/InternalLayout.tsx
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppConfigProvider } from '@/core/contexts/AppConfigProvider';

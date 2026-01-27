@@ -1,4 +1,4 @@
-﻿// src/apps/(public)/PublicLayout.tsx
+﻿// src/app/(public)/PublicLayout.tsx
 import { Outlet } from 'react-router-dom';
 
 // [그룹 1] 로그인, 외부 공개 페이지용 레이아웃 (Navbar 없음, 심플함)

@@ -1,4 +1,4 @@
-﻿// src/apps/(internal)/InternalError.tsx
+﻿// src/app/(internal)/InternalError.tsx
 import { useRouteError } from 'react-router-dom';
 import Button from '@/uikit/form/Button';
 
