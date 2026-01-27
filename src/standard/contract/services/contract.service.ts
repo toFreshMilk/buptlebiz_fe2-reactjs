@@ -1,7 +1,8 @@
 ﻿// src/standard/contract/services/contract.service.ts
-import { apiGet, apiPost } from '@/core/hooks/apiClient';
 
 // 서비스 DTO 정의
+import { apiGet, apiPost } from '@/core/service/apiClient.ts';
+
 export type ContractStatus = 'Active' | 'Draft' | 'Review' | 'APPROVED' | 'REJECTED' | (string & {});
 
 export interface StandardContractDto {

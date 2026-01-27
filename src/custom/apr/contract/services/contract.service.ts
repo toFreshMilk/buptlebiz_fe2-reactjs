@@ -1,11 +1,11 @@
 ﻿// src/custom/apr/contract/services/contract.service.ts
-import { apiPost, apiGet } from '@/core/hooks/apiClient';
 import {
   ContractService as StandardContractService,
   type IContractService,
   type StandardContractDto,
   type ApproveResultDto,
 } from '@/standard/contract/services/contract.service';
+import { apiGet, apiPost } from '@/core/service/apiClient.ts';
 
 /**
  * APR 전용 계약 서비스 인터페이스
