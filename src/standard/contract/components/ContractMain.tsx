@@ -27,7 +27,7 @@ const ContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Contr
     // service.createContract(...) // 바로 호출 가능
   };
 
-  const { t } = useCoreTranslation('shared');
+  const { t } = useCoreTranslation('contract');
 
   return (
     <div className="flex h-full min-h-screen bg-gray-50">
@@ -39,7 +39,7 @@ const ContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Contr
             <h1 className="text-2xl font-bold text-gray-800">Standard Contracts</h1>
             <p className="text-sm text-gray-500">Tenant: {tenantId}</p>
           </div>
-          <Button onClick={handleCreate}>{t('save_btn')}</Button>
+          <Button onClick={handleCreate}>{t('title')}</Button>
         </div>
 
         <div className="flex-1 bg-white rounded-lg shadow p-4">

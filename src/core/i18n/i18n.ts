@@ -33,7 +33,7 @@ i18n
   .init({
     // 기본 언어 설정
     lng: 'ko',
-    fallbackLng: 'en',
+    fallbackLng: 'ko',
 
     // 네임스페이스 설정
     // common: 기본 공통어, contract: 계약 모듈 등등
