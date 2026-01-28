@@ -1,7 +1,6 @@
 // src/core/i18n/i18n.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import KoreanPostpositionProcessor from 'i18next-korean-postposition-processor';
 import resourcesToBackend from 'i18next-resources-to-backend';
 
@@ -10,7 +9,6 @@ import resourcesToBackend from 'i18next-resources-to-backend';
 const standardLocales = import.meta.glob('/src/standard/shared/locales/*/*.json');
 
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .use(KoreanPostpositionProcessor as any)
   .use(
@@ -20,11 +18,6 @@ i18n
 
       if (standardLocales[targetKey]) {
         return standardLocales[targetKey]().then((mod: any) => mod.default);
-      }
-
-      // 개발 중에 파일 없으면 경고 로그 (선택사항)
-      if (import.meta.env.DEV) {
-        console.warn(`[i18n] Resource not found: ${targetKey}`);
       }
 
       return Promise.resolve({});
@@ -44,6 +37,12 @@ i18n
     partialBundledLanguages: true,
 
     interpolation: { escapeValue: false },
+
+    // ✅ 핵심: addResourceBundle(=store added) 시점에도 react가 리렌더 되도록
+    react: {
+      bindI18n: 'languageChanged loaded',
+      bindI18nStore: 'added removed',
+    },
   });
 
 export default i18n;

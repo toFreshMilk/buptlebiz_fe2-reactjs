@@ -47,12 +47,12 @@ const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Co
               하지만 보통 UI 버튼 텍스트는 해당 도메인 json에 정의하는 게 좋음.
               예: contract.json 에 "save_btn": "계약 저장"
             */}
-            + {t('title')}ddd
+            + {t('title')}
           </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm p-6 min-h-[500px]">
-          {t('apr_special_field') && <p className="mb-4">{t('apr_special_field')}</p>}
+          <p className="mb-4">{t('apr_special_field')}</p>
           <ListComponent contracts={data || []} isLoading={isLoading} />
         </div>
       </div>
