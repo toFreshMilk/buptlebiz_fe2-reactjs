@@ -1,23 +1,34 @@
 ﻿// src/app/(internal)/contract/ContractPage.tsx
-import { useTenantComponent } from '@/core/hooks/useTenantModule';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
+import { Suspense } from 'react';
 
-const ContractPage = () => {
+const ContractPageContent = () => {
   const { tenantId } = useAppConfig();
+  const service = useTenantService('ContractService');
+
+  const { data: contracts } = useSuspenseQuery({
+    queryKey: ['contracts', tenantId],
+    queryFn: () => service.getContracts(tenantId),
+  });
 
   const { Component: ContractMain } = useTenantComponent('ContractMain');
   const { Component: ContractSidebar } = useTenantComponent('ContractSidebar');
   const { Component: ContractList } = useTenantComponent('ContractList');
 
   return (
-    <ContractMain
-      tenantId={tenantId}
-      // Slot 주입 (제어의 역전)
-      sidebar={<ContractSidebar />}
-      // List 컴포넌트 클래스(함수) 자체를 넘김
-      listComponent={ContractList}
-    />
+    <div className="flex gap-6 -m-10 p-10 bg-slate-50 min-h-[calc(100vh-64px)]">
+      <ContractSidebar />
+      <ContractMain contracts={contracts} ListComponent={ContractList} />
+    </div>
   );
 };
+
+const ContractPage = () => (
+  <Suspense fallback={<div>Loading Contract Page...</div>}>
+    <ContractPageContent />
+  </Suspense>
+);
 
 export default ContractPage;

@@ -1,10 +1,16 @@
-﻿// src/standard/contract/components/ContractList.tsx
-import { useNavigate, useLocation } from 'react-router-dom';
-import { ContractRow } from '@/standard/contract/services/contract.service.ts';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from '@/uikit/form/Button';
 
-// 상황봐서 uikit으로 빼야겠다.
+type ContractRow = {
+  id: number | string;
+  title: string;
+  partner?: string;
+  status: string;
+  date?: string;
+  amount?: string;
+};
 
-export function ContractList({ contracts }: { contracts?: ContractRow[] }) {
+export default function ContractList({ contracts }: { contracts?: ContractRow[] }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +22,6 @@ export function ContractList({ contracts }: { contracts?: ContractRow[] }) {
       Draft: 'bg-slate-100 text-slate-700 ring-slate-600/20',
       Review: 'bg-orange-100 text-orange-700 ring-orange-600/20',
       Expired: 'bg-red-100 text-red-700 ring-red-600/20',
-      APPROVED: 'bg-blue-100 text-blue-700 ring-blue-600/20',
     };
     return styles[status] || styles['Draft'];
   };
@@ -40,13 +45,7 @@ export function ContractList({ contracts }: { contracts?: ContractRow[] }) {
               <tr
                 key={item.id}
                 className="group hover:bg-slate-50/80 transition-colors cursor-pointer"
-                onClick={() => {
-                  // 현재 경로 끝에 id 추가 (trailing slash 처리 주의)
-                  const path = location.pathname.endsWith('/')
-                    ? `${location.pathname}${item.id}`
-                    : `${location.pathname}/${item.id}`;
-                  navigate(path);
-                }}
+                onClick={() => navigate(`${location.pathname}/${item.id}`)}
               >
                 <td className="px-6 py-4 text-slate-400 font-mono">#{item.id}</td>
                 <td className="px-6 py-4 font-medium text-slate-900 group-hover:text-blue-600 transition-colors">
@@ -69,9 +68,15 @@ export function ContractList({ contracts }: { contracts?: ContractRow[] }) {
       </div>
       <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center text-xs text-slate-500">
         <span>Showing {rows.length} results</span>
+        <div className="flex gap-2">
+          <Button variant="outline" tone="slate" size="sm" uniqueClassName="ui-standard-list-prev">
+            Prev
+          </Button>
+          <Button variant="outline" tone="slate" size="sm" uniqueClassName="ui-standard-list-next">
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
 }
-
-export default ContractList;

@@ -1,53 +1,86 @@
-﻿// src/standard/contract/components/ContractMain.tsx
-import { ReactNode, ComponentType } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useTenantService } from '@/core/hooks/useTenantModule';
-import type { IContractService } from '@/standard/contract/services/contract.service';
-import Button from '@/uikit/form/Button';
-import { useCoreTranslation } from '@/core/hooks/useCoreTranslation.ts';
+import { type ComponentType } from 'react';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
+import ContractMainHeader from './main/ContractMainHeader';
+import ContractMainTabs from './main/ContractMainTabs';
+import ContractMainSummary from './main/ContractMainSummary';
+import ContractMainBody from './main/ContractMainBody';
 
-interface ContractMainProps {
-  tenantId: string;
-  sidebar: ReactNode;
-  listComponent: ComponentType<{ contracts: any[]; isLoading: boolean }>;
+function buildUrl(pathname: string, params: URLSearchParams) {
+  const qs = params.toString();
+  return qs ? `${pathname}?${qs}` : pathname;
 }
 
-const ContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: ContractMainProps) => {
-  // 1. 서비스 로딩 (Suspense가 적용되어 null 가능성 없음)
-  const service = useTenantService<IContractService>('ContractService');
-
-  // 2. 데이터 페칭 (service가 확실히 존재하므로 바로 호출)
-  const { data: contracts, isLoading } = useQuery({
-    queryKey: ['contracts', tenantId],
-    queryFn: () => service.getContracts(),
-  });
-
-  const handleCreate = () => {
-    console.log('Standard Create Logic');
-    // service.createContract(...) // 바로 호출 가능
-  };
-
-  const { t } = useCoreTranslation('contract');
-
-  return (
-    <div className="flex h-full min-h-screen bg-gray-50">
-      <div className="w-64 border-r border-gray-200 bg-white">{sidebar}</div>
-
-      <div className="flex-1 flex flex-col p-8">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">Standard Contracts</h1>
-            <p className="text-sm text-gray-500">Tenant: {tenantId}</p>
-          </div>
-          <Button onClick={handleCreate}>{t('title')}</Button>
-        </div>
-
-        <div className="flex-1 bg-white rounded-lg shadow p-4">
-          <ListComponent contracts={contracts || []} isLoading={isLoading} />
-        </div>
-      </div>
-    </div>
-  );
+type TabKey = 'all' | 'draft' | 'review' | 'active';
+type ContractItem = {
+  id: number | string;
+  title: string;
+  status: string;
 };
 
-export default ContractMain;
+export interface ContractMainProps {
+  contracts: ContractItem[];
+  ListComponent: ComponentType<{ contracts?: ContractItem[] }>;
+}
+
+export default function ContractMain({ contracts, ListComponent }: ContractMainProps) {
+  const { t } = useCoreTranslation('contract');
+
+  const { config } = useAppConfig();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const query = searchParams.get('q') ?? '';
+  const tab = (searchParams.get('tab') ?? 'all') as TabKey;
+
+  const q = query.trim().toLowerCase();
+
+  const filtered = (contracts ?? []).filter((c) => {
+    const matchQ = !q || c.title.toLowerCase().includes(q);
+    const matchTab =
+      tab === 'all' ||
+      (tab === 'draft' && c.status.toLowerCase() === 'draft') ||
+      (tab === 'review' && c.status.toLowerCase() === 'review') ||
+      (tab === 'active' && c.status.toLowerCase() === 'active');
+    return matchQ && matchTab;
+  });
+
+  const tabs: { k: TabKey; label: string }[] = [
+    { k: 'all', label: t('main.tabs.all', { defaultValue: '전체' }) },
+    { k: 'draft', label: t('main.tabs.draft', { defaultValue: '초안' }) },
+    { k: 'review', label: t('main.tabs.review', { defaultValue: '검토' }) },
+    { k: 'active', label: t('main.tabs.active', { defaultValue: '서명 및 회수' }) },
+  ];
+
+  return (
+    <section className="flex-1 space-y-4">
+      <ContractMainHeader filteredCount={filtered.length} />
+
+      <ContractMainTabs
+        tabs={tabs}
+        activeTab={tab}
+        primaryColor={config.theme.primaryColor}
+        onSelect={(k) => {
+          const next = new URLSearchParams(searchParams.toString());
+          next.set('tab', k);
+          navigate(buildUrl(location.pathname, next), { replace: true });
+        }}
+      />
+
+      <ContractMainSummary
+        filtered={filtered}
+        chartColor={config.theme.primaryColor}
+        onBarClick={(status) => {
+          const next = new URLSearchParams(searchParams.toString());
+          if (status && status !== 'all') next.set('tab', status);
+          navigate(buildUrl(location.pathname, next), { replace: true });
+        }}
+        onRowClick={(id) => navigate(`${location.pathname}/${id}`)}
+      />
+
+      <ContractMainBody filtered={filtered} ListComponent={ListComponent} />
+    </section>
+  );
+}

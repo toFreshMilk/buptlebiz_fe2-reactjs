@@ -1,6 +1,6 @@
 ﻿// src/app/(internal)/InternalError.tsx
 import { useRouteError } from 'react-router-dom';
-import Button from '@/uikit/form/Button';
+import { Button } from '@/uikit/form/Button';
 
 const InternalError = () => {
   const error: any = useRouteError();

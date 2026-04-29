@@ -1,21 +1,22 @@
-// src/core/i18n/i18n.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import KoreanPostpositionProcessor from 'i18next-korean-postposition-processor';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { I18N_CONFIG } from '@/core/config/tenant.config';
+import { STANDARD_I18N_OWNER_BY_NAMESPACE } from '@/standard/registry';
 
-// [1] Glob 패턴: shared/locales 폴더 구조에 맞춤
-// 예: /src/standard/shared/locales/ko/contract.json
-const standardLocales = import.meta.glob('/src/standard/shared/locales/*/*.json');
+// [1] Glob 패턴: 각 도메인별 폴더에서 locales를 가져옵니다.
+// 예: /src/standard/contract/locales/ko/contract.json
+const standardLocales = import.meta.glob('/src/standard/**/locales/*/*.json');
 
 i18n
   .use(initReactI18next)
   .use(KoreanPostpositionProcessor as any)
   .use(
     resourcesToBackend((language: string, namespace: string) => {
-      // [2] Key 생성: 언어 폴더 -> 네임스페이스 파일
-      const targetKey = `/src/standard/shared/locales/${language}/${namespace}.json`;
+      // Registry에서 해당 네임스페이스의 오너(디렉토리명)를 찾습니다.
+      const owner = (STANDARD_I18N_OWNER_BY_NAMESPACE as Record<string, string>)[namespace] || 'shared';
+      const targetKey = `/src/standard/${owner}/locales/${language}/${namespace}.json`;
 
       if (standardLocales[targetKey]) {
         return standardLocales[targetKey]().then((mod: any) => mod.default);
@@ -25,21 +26,12 @@ i18n
     }),
   )
   .init({
-    // 기본 언어 설정
     lng: I18N_CONFIG.defaultLang,
     fallbackLng: I18N_CONFIG.defaultLang,
-
-    // 네임스페이스 설정
-    // common: 기본 공통어, contract: 계약 모듈 등등
     ns: ['common', 'contract'],
     defaultNS: 'common',
-
-    // 동적 로딩 활성화
     partialBundledLanguages: true,
-
     interpolation: { escapeValue: false },
-
-    // ✅ 핵심: addResourceBundle(=store added) 시점에도 react가 리렌더 되도록
     react: {
       bindI18n: 'languageChanged loaded',
       bindI18nStore: 'added removed',

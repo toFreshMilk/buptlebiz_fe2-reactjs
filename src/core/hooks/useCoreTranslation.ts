@@ -1,85 +1,96 @@
-﻿// src/core/hooks/useCoreTranslation.ts
-
 import { useEffect } from 'react';
-import { useTranslation, UseTranslationOptions } from 'react-i18next';
-import i18nInstance from '../i18n/i18n';
+import { useTranslation, type UseTranslationOptions } from 'react-i18next';
 
-/**
- * Core 다국어 훅 (동적 주입 지원)
- * @param ns - 사용할 네임스페이스 (예: 'contract')
- * @param overrides - (선택) 커스텀 모듈에서 덮어쓸 JSON 데이터
- */
 type Overrides = Record<string, any>;
 
-// ✅ 동일 overrides 객체에 대해 (lang|ns) 조합은 1회만 주입 (부하 최소화)
-const injectedCache = new WeakMap<Overrides, Set<string>>();
+const OVERRIDE_CACHE_SYMBOL = Symbol.for('buptlebiz.i18n.overrideCache');
+const overrideSignatureByIdentity = new WeakMap<Overrides, string>();
 
-function getActiveLang(i18n: typeof i18nInstance) {
-  return i18n.resolvedLanguage || i18n.language || 'ko';
+function getActiveLang(i18n: any) {
+  return i18n?.resolvedLanguage || i18n?.language || 'ko';
 }
 
-function isInjected(overrides: Overrides, lang: string, ns: string) {
-  return injectedCache.get(overrides)?.has(`${lang}__${ns}`) ?? false;
+function getOverrideCache(i18n: any) {
+  const existing = i18n[OVERRIDE_CACHE_SYMBOL] as Set<string> | undefined;
+  if (existing) return existing;
+
+  const created = new Set<string>();
+  i18n[OVERRIDE_CACHE_SYMBOL] = created;
+  return created;
 }
 
-function markInjected(overrides: Overrides, lang: string, ns: string) {
-  const key = `${lang}__${ns}`;
-  const set = injectedCache.get(overrides) ?? new Set<string>();
-  set.add(key);
-  injectedCache.set(overrides, set);
+function stableStringify(value: any) {
+  const seen = new WeakSet<object>();
+  const walk = (v: any): any => {
+    if (v === null || typeof v !== 'object') return v;
+    if (seen.has(v)) return '[Circular]';
+    seen.add(v);
+    if (Array.isArray(v)) return v.map(walk);
+    const out: Record<string, any> = {};
+    for (const k of Object.keys(v).sort()) {
+      out[k] = walk(v[k]);
+    }
+    return out;
+  };
+  try {
+    return JSON.stringify(walk(value));
+  } catch {
+    return String(value);
+  }
+}
+
+function getOverridesSignature(overrides: Overrides) {
+  const cached = overrideSignatureByIdentity.get(overrides);
+  if (cached) return cached;
+  const sig = stableStringify(overrides);
+  overrideSignatureByIdentity.set(overrides, sig);
+  return sig;
 }
 
 export function useCoreTranslation(ns: string, overrides?: Overrides, options?: UseTranslationOptions<any>) {
-  const { t, ready } = useTranslation(ns, options);
+  const { t, i18n, ready } = useTranslation(ns, { ...options, useSuspense: false });
 
   useEffect(() => {
-    // 오버라이드 데이터가 있고, 아직 주입 안 했으면 실행
     if (!overrides) return;
 
-    const inject = () => {
-      const lang = getActiveLang(i18nInstance);
+    let cancelled = false;
 
-      // ✅ 동일 overrides + 동일 (lang,ns)는 최초 1회만 실행
-      if (isInjected(overrides, lang, ns)) return;
+    const run = async () => {
+      const lang = getActiveLang(i18n);
+      const cache = getOverrideCache(i18n);
+      const signature = getOverridesSignature(overrides);
+      const cacheKey = `${lang}__${ns}__${signature}`;
 
-      i18nInstance.addResourceBundle(
-        lang,
-        ns,
-        overrides,
-        true, // deep merge
-        true, // overwrite
-      );
+      if (cache.has(cacheKey)) return;
 
-      markInjected(overrides, lang, ns);
-
-      if (import.meta.env?.DEV) {
-        console.log('[useCoreTranslation] injected', {
-          lang,
-          ns,
-          sample_title: i18nInstance.getResource(lang, ns, 'title'),
-        });
+      try {
+        if (typeof i18n.hasResourceBundle === 'function') {
+          if (!i18n.hasResourceBundle(lang, ns)) {
+            await i18n.loadNamespaces(ns);
+          }
+        } else {
+          await i18n.loadNamespaces(ns);
+        }
+      } finally {
+        if (cancelled) return;
+        i18n.addResourceBundle(lang, ns, overrides, true, true);
+        cache.add(cacheKey);
       }
     };
 
-    // ✅ 핵심: standard(ns) 로딩이 끝난 "뒤"에 override를 마지막으로 주입
-    // ready가 false여도, loadNamespaces 콜백이 ns 로딩 완료를 보장
-    i18nInstance.loadNamespaces(ns).then(() => {
-      inject();
-    });
+    void run();
 
-    // 언어가 바뀌면 해당 언어(ns)에 대해 다시 보장
     const onLanguageChanged = () => {
-      i18nInstance.loadNamespaces(ns).then(() => {
-        inject();
-      });
+      void run();
     };
 
-    i18nInstance.on('languageChanged', onLanguageChanged);
+    i18n.on('languageChanged', onLanguageChanged);
 
     return () => {
-      i18nInstance.off('languageChanged', onLanguageChanged);
+      cancelled = true;
+      i18n.off('languageChanged', onLanguageChanged);
     };
-  }, [ns, overrides]);
+  }, [i18n, ns, overrides]);
 
-  return { t, ready, i18n: i18nInstance };
+  return { t, ready, i18n };
 }

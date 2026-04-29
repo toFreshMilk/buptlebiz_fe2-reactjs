@@ -1,6 +1,9 @@
 {
-  "save": "저장",
-  "cancel": "취소",
-  "confirm": "확인",
-  "delete": "삭제"
+  "app_name": "법틀비즈",
+  "cmmn_label_all": "전체",
+  "cmmn_ok": "확인",
+  "cmmn_cancel": "취소",
+  "workspace_banner": {
+    "demo": "데모 모드입니다."
+  }
 }

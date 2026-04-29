@@ -1,36 +1,105 @@
-﻿// src/uikit/chart/BarChart.tsx
-interface BarChartProps {
-    data: { label: string; value: number }[];
-    height?: number;
-    color?: string;
+import type { ReactNode } from 'react';
+import {
+  ResponsiveContainer,
+  BarChart as RechartsBarChart,
+  Bar,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from 'recharts';
+import type { DataKey } from 'recharts/types/util/types';
+
+export type ChartRow = Record<string, string | number | null | undefined>;
+
+export interface BarSeries<T extends ChartRow> {
+  dataKey: DataKey<T>;
+  name?: string;
+  color?: string;
+  stackId?: string;
+  radius?: [number, number, number, number];
+  minPointSize?: number;
 }
 
-const BarChart = ({ data, height = 300, color = '#3b82f6' }: BarChartProps) => {
-    const maxValue = Math.max(...data.map(d => d.value), 1);
+interface Props<T extends ChartRow> {
+  data: T[];
+  xKey: keyof T & string;
+  series: Array<BarSeries<T>>;
+  height?: number;
+  yAxisWidth?: number;
+  showGrid?: boolean;
+  showLegend?: boolean;
+  showTooltip?: boolean;
+  showXAxis?: boolean;
+  showYAxis?: boolean;
+  uniqueClassName?: string;
+  emptyFallback?: ReactNode;
+  tooltipLabelFormatter?: (label: string | number) => ReactNode;
+  tooltipValueFormatter?: (value: number, name: string) => ReactNode;
+  onBarClick?: (payload: { seriesKey: DataKey<T>; row: T; index: number }) => void;
+}
 
-    return (
-        <div className="w-full flex items-end justify-between gap-2" style={{ height }}>
-            {data.map((item, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center group">
-                    <div
-                        className="w-full rounded-t transition-all duration-300 relative group-hover:opacity-80"
-                        style={{
-                            height: `${(item.value / maxValue) * 100}%`,
-                            backgroundColor: color
-                        }}
-                    >
-                        {/* Tooltip */}
-                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                            {item.value}
-                        </div>
-                    </div>
-                    <span className="text-xs text-gray-500 mt-2 truncate w-full text-center">
-            {item.label}
-          </span>
-                </div>
-            ))}
-        </div>
-    );
-};
+export function BarChart<T extends ChartRow>({
+  data,
+  xKey,
+  series,
+  height = 280,
+  yAxisWidth = 44,
+  showGrid = true,
+  showLegend = true,
+  showTooltip = true,
+  showXAxis = true,
+  showYAxis = true,
+  uniqueClassName,
+  emptyFallback = <div className="text-sm text-slate-400">표시할 데이터가 없습니다.</div>,
+  tooltipLabelFormatter,
+  tooltipValueFormatter,
+  onBarClick,
+}: Props<T>) {
+  if (!data.length || !series.length) {
+    return <div className={uniqueClassName}>{emptyFallback}</div>;
+  }
 
-export default BarChart;
+  return (
+    <div className={uniqueClassName}>
+      <ResponsiveContainer width="100%" height={height}>
+        <RechartsBarChart data={data}>
+          {showGrid && <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />}
+          {showXAxis && <XAxis dataKey={xKey as string} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} />}
+          {showYAxis && <YAxis width={yAxisWidth} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} />}
+          {showTooltip && (
+            <Tooltip
+              cursor={{ fill: '#f8fafc' }}
+              labelFormatter={(label) => (tooltipLabelFormatter ? tooltipLabelFormatter(label) : String(label))}
+              formatter={(value: unknown, name: unknown) => {
+                const numeric = typeof value === 'number' ? value : Number(value ?? 0);
+                const key = String(name ?? '');
+                if (tooltipValueFormatter) return tooltipValueFormatter(numeric, key);
+                return [`${numeric}`, key];
+              }}
+            />
+          )}
+          {showLegend && <Legend />}
+
+          {series.map((s) => (
+            <Bar
+              key={s.dataKey as string}
+              dataKey={s.dataKey}
+              name={s.name ?? (s.dataKey as string)}
+              fill={s.color ?? '#2563eb'}
+              stackId={s.stackId}
+              radius={s.radius ?? [6, 6, 0, 0]}
+              minPointSize={s.minPointSize ?? 0}
+              onClick={(row, index) => {
+                const safeRow = row?.payload as T | undefined;
+                if (!safeRow || typeof index !== 'number') return;
+                onBarClick?.({ seriesKey: s.dataKey, row: safeRow, index });
+              }}
+            />
+          ))}
+        </RechartsBarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}

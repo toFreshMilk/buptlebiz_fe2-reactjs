@@ -26,7 +26,7 @@ export function useTenantComponent<T = any>(componentKey: string) {
 }
 
 /**
- * 테넌트 설정에 맞는 서비스를 비동기로 로드하고 인스턴스화합니다.
+ * 테넌트 설정에 맞는 서비스를 비동기로 로드합니다.
  * - Suspense 적용: 로딩 중에는 상위 Suspense Fallback이 표시됩니다.
  * - Non-Nullable: 반환된 service는 항상 존재합니다.
  */
@@ -38,9 +38,8 @@ export function useTenantService<T = any>(serviceKey: string): T {
     queryFn: async () => {
       if (!tenantId) throw new Error('TenantID is required');
 
-      const ServiceClass = await getTenantService<any>(tenantId, serviceKey);
-      // 인스턴스 생성 후 반환
-      return new ServiceClass(tenantId);
+      const serviceObj = await getTenantService<any>(tenantId, serviceKey);
+      return serviceObj;
     },
     staleTime: Infinity, // 서비스 인스턴스는 런타임 중에 변하지 않음 (싱글톤 취급)
     gcTime: 1000 * 60 * 5, // 언마운트 후 5분 뒤 메모리 해제

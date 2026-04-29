@@ -5,5 +5,19 @@
       "args": ["-y", "react-docs-mcp"]
     }
   },
-  "approvalMode": "yolo"
+  "approvalMode": "yolo",
+  "agents": {
+    "change-verifier": {
+      "description": "Verifies code diffs against project rules (Vite/React 19).",
+      "instructions": ".gemini/agents/change-verifier.md"
+    },
+    "e2e-generator": {
+      "description": "Generates Playwright spec stubs for tenant x locale combinations.",
+      "instructions": ".gemini/agents/e2e-generator.md"
+    },
+    "test-runner": {
+      "description": "Runs scoped Playwright tests based on the diff.",
+      "instructions": ".gemini/agents/test-runner.md"
+    }
+  }
 }

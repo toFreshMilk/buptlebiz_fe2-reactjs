@@ -1,13 +1,11 @@
-﻿// src/standard/contract/components/ContractDetailTop.tsx
+import { useState, useEffect, useActionState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
-import { useTenantService } from '@/core/hooks/useTenantModule';
-import type { IContractService, ApproveResultDto } from '@/standard/contract/services/contract.service';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
+import contractService, { type StandardContractDto } from '@/standard/contract/services/contract.service';
+import { Button } from '@/uikit/form/Button';
+import Modal from '@/uikit/layout/Modal';
 
-// -----------------------------------------------------------------------------
-// Helpers (UI Logic)
-// -----------------------------------------------------------------------------
 type StepKey = 'draft' | 'review' | 'active' | 'done';
 
 function normalizeStatus(s: string) {
@@ -23,79 +21,108 @@ function statusToStep(status: string): StepKey {
   return 'active';
 }
 
-function getStatusLabel(status: string) {
-  const s = normalizeStatus(status);
-  if (!s) return '서명/날인대기';
-  if (s === 'draft') return '초안';
-  if (s === 'review') return '검토';
-  if (s === 'active') return '서명/날인대기';
-  if (s === 'completed' || s === 'complete' || s === 'done') return '완료';
-  return status ?? '서명/날인대기';
-}
-
 interface Props {
-  // [변경] 거대한 객체 대신 ID만 받아서 스스로 데이터를 조회합니다.
+  data: StandardContractDto[];
   contractId: string;
 }
 
-export default function ContractDetailTop({ contractId }: Props) {
+export default function ContractDetailTop({ data, contractId }: Props) {
+  const contract = data?.find(c => String(c.id) === String(contractId));
   const navigate = useNavigate();
-  const { config, tenantId } = useAppConfig();
-  const queryClient = useQueryClient();
+  const { tenantId, config } = useAppConfig();
+  const { t } = useCoreTranslation('contract');
+  const [approveModalOpen, setApproveModalOpen] = useState(false);
 
-  // 1. 서비스 로드 (Suspense 적용 -> 무조건 존재함)
-  const service = useTenantService<IContractService>('ContractService');
+  const step = statusToStep(contract?.status ?? '');
 
-  // 2. 데이터 로드 (Suspense 적용 -> 데이터 무조건 존재함)
-  // 부모나 다른 형제 컴포넌트(Left/Right)에서 동일한 키로 호출해도 React Query가 요청을 하나로 합칩니다.
-  const { data: contract } = useSuspenseQuery({
-    queryKey: ['contract', tenantId, contractId],
-    queryFn: () => service.getContractsDetail(contractId),
-  });
-
-  // 3. 액션 로직 (Mutation)
-  const approveMutation = useMutation({
-    mutationFn: async () => {
-      // service가 확실히 존재하므로 바로 호출
-      return await service.approve(contractId);
-    },
-    onSuccess: (data: ApproveResultDto) => {
-      // 데이터 갱신
-      queryClient.invalidateQueries({ queryKey: ['contract', tenantId, contractId] });
-      alert(`${data.message || '승인되었습니다.'}`);
-    },
-    onError: (err) => {
-      alert(`오류 발생: ${(err as Error).message}`);
-    },
-  });
-
-  // ---------------------------------------------------------------------------
-  // View Logic
-  // ---------------------------------------------------------------------------
-  const step = statusToStep(contract.status);
-  const stepMap = { draft: 0, review: 1, active: 2, done: 3 };
+  const stepMap: Record<StepKey, number> = { draft: 0, review: 1, active: 2, done: 3 };
   const stepIndex = stepMap[step];
-  const title = contract.title ?? '계약 상세';
-  const statusLabel = getStatusLabel(contract.status);
 
-  const steps = [
-    { key: 'draft', label: '초안' },
-    { key: 'review', label: '검토' },
-    { key: 'active', label: '서명 및 회수' },
-    { key: 'done', label: '완료' },
+  const title = contract?.title ?? t('detailTop.titleFallback', { defaultValue: '계약 상세' });
+
+  const statusRaw = contract?.status ?? '';
+  const statusNormalized = normalizeStatus(statusRaw);
+
+  const statusLabel = (() => {
+    if (!statusNormalized) return t('contractStatus.signPending', { defaultValue: '서명/날인대기' });
+    if (statusNormalized === 'draft') return t('contractStatus.draft', { defaultValue: '초안' });
+    if (statusNormalized === 'review') return t('contractStatus.review', { defaultValue: '검토' });
+
+    if (statusNormalized === 'active' || statusNormalized.includes('sign')) return t('contractStatus.active', { defaultValue: '진행 중' });
+
+    if (statusNormalized === 'approved') return t('contractStatus.approved', { defaultValue: '승인됨' });
+
+    if (statusNormalized === 'completed' || statusNormalized === 'complete' || statusNormalized === 'done') {
+      return t('contractStatus.done', { defaultValue: '완료' });
+    }
+
+    return statusRaw || t('contractStatus.signPending', { defaultValue: '서명/날인대기' });
+  })();
+
+  const steps: Array<{ key: StepKey; label: string }> = [
+    { key: 'draft', label: t('detailTop.step.draft', { defaultValue: '초안' }) },
+    { key: 'review', label: t('detailTop.step.review', { defaultValue: '검토' }) },
+    { key: 'active', label: t('detailTop.step.active', { defaultValue: '진행 중' }) },
+    { key: 'done', label: t('detailTop.step.done', { defaultValue: '완료' }) },
   ];
+
+  const [state, submitApprove, isPending] = useActionState(
+    async (prevState: any) => {
+      try {
+        if (!contractId) throw new Error('Contract ID is missing');
+        await contractService.approve(tenantId, contractId);
+        return { success: true, ts: Date.now() };
+      } catch (error: any) {
+        return { error: error.message, ts: Date.now() };
+      }
+    },
+    null
+  );
+
+  useEffect(() => {
+    if (state?.success) {
+      alert(t('detailTop.approvedAlert', { defaultValue: '승인되었습니다.' }));
+      navigate('.', { replace: true });
+    } else if (state?.error) {
+      alert(t('detailTop.approveFailedAlert', { message: state.error, defaultValue: `승인 실패: ${state.error}` }));
+    }
+  }, [state, navigate, t]);
+
+  const onApproveClick = () => {
+    setApproveModalOpen(true);
+  };
 
   return (
     <section className="space-y-4">
+      <Modal
+        open={approveModalOpen}
+        title={t('detailTop.approve', { defaultValue: '승인' })}
+        message={t('detailTop.confirmApprove', { defaultValue: '정말 승인하시겠습니까?' })}
+        variant="double"
+        confirmText={t('detailTop.approve', { defaultValue: '승인' })}
+        cancelText="취소"
+        onConfirm={() => {
+          setApproveModalOpen(false);
+          submitApprove();
+        }}
+        onCancel={() => setApproveModalOpen(false)}
+        onClose={() => setApproveModalOpen(false)}
+        uniqueClassName="ui-standard-approve-modal"
+      />
+
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-2 min-w-0">
-          <button
-            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900"
-            onClick={() => navigate(-1)}
+          <Button
+            variant="ghost"
+            tone="slate"
+            size="sm"
+            align="start"
+            uniqueClassName="ui-standard-detail-top-back"
+            onPress={() => navigate('..')}
           >
             <span aria-hidden>←</span>
-            <span>목록으로</span>
-          </button>
+            <span>{t('detailTop.backToList', { defaultValue: '목록으로' })}</span>
+          </Button>
 
           <div className="flex items-center gap-3 min-w-0">
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight truncate">{title}</h1>
@@ -103,30 +130,34 @@ export default function ContractDetailTop({ contractId }: Props) {
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          {/* 승인 버튼: 직접 Mutation 호출 */}
-          {contract.status !== 'APPROVED' && (
-            <button
-              onClick={() => approveMutation.mutate()}
-              disabled={approveMutation.isPending}
-              className="px-3 py-2 rounded-lg border border-blue-200 bg-blue-600 font-bold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {approveMutation.isPending ? '처리중...' : '승인하기'}
-            </button>
+          {normalizeStatus(contract?.status ?? '') !== 'approved' && (
+            <form action={submitApprove} onSubmit={(e) => { e.preventDefault(); onApproveClick(); }}>
+              <Button
+                type="submit"
+                disabled={isPending || !contractId}
+                tone="blue"
+                uniqueClassName="ui-standard-detail-top-approve"
+              >
+                {isPending ? t('detailTop.processing', { defaultValue: '처리 중...' }) : t('detailTop.approve', { defaultValue: '승인' })}
+              </Button>
+            </form>
           )}
 
-          <button className="px-3 py-2 rounded-lg border border-slate-200 bg-amber-300 font-bold text-slate-900">
-            삭제하기
-          </button>
-          <button className="px-3 py-2 rounded-lg border border-rose-200 bg-rose-500 font-bold text-white">
-            계약 종료
-          </button>
+          <Button tone="amber" uniqueClassName="ui-standard-detail-top-delete">
+            {t('detailTop.delete', { defaultValue: '삭제' })}
+          </Button>
+          <Button tone="rose" uniqueClassName="ui-standard-detail-top-terminate">
+            {t('detailTop.terminate', { defaultValue: '종료' })}
+          </Button>
         </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100">
           <div className="text-center font-bold text-slate-900">
-            본 계약은 <span className="text-rose-500">{statusLabel}</span> 상태입니다.
+            {t('detailTop.contractIs', { defaultValue: '본 계약은 ' })}
+            <span className="text-rose-500">{statusLabel}</span>
+            {t('detailTop.statusSuffix', { defaultValue: ' 상태입니다.' })}
           </div>
         </div>
 

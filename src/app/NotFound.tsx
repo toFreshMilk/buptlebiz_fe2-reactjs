@@ -1,6 +1,6 @@
 ﻿// src/app/NotFound.tsx
 import { Link } from 'react-router-dom';
-import Button from '@/uikit/form/Button';
+import { Button } from '@/uikit/form/Button';
 
 const NotFound = () => {
   return (

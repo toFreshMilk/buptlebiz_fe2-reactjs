@@ -1,44 +1,66 @@
-﻿// src/uikit/form/Select.tsx
-import { SelectHTMLAttributes, forwardRef } from 'react';
+import { type ChangeEvent, type SelectHTMLAttributes } from 'react';
 
 interface Option {
-    label: string;
-    value: string | number;
+  label: string;
+  value: string | number;
+  disabled?: boolean;
 }
 
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-    label?: string;
-    options: Option[];
-    error?: string;
+type SelectTone = 'slate' | 'rose' | 'blue';
+type SelectSize = 'md' | 'lg';
+type SelectShape = 'md' | 'xl';
+
+interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className'> {
+  label?: string;
+  options: Option[];
+  tone?: SelectTone;
+  selectSize?: SelectSize;
+  shape?: SelectShape;
+  uniqueClassName?: string;
+  onValueChange?: (value: string, event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select = forwardRef<HTMLSelectElement, SelectProps>(
-    ({ label, options, error, className = '', ...props }, ref) => {
-        return (
-            <div className="w-full">
-                {label && (
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        {label}
-                    </label>
-                )}
-                <select
-                    ref={ref}
-                    className={`w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        error ? 'border-red-500' : ''
-                    } ${className}`}
-                    {...props}
-                >
-                    {options.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                        </option>
-                    ))}
-                </select>
-                {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
-            </div>
-        );
-    }
-);
+const SELECT_SIZE_CLASS: Record<SelectSize, string> = {
+  md: 'px-3 py-2 text-sm',
+  lg: 'px-4 py-3 text-base',
+};
 
-Select.displayName = 'Select';
-export default Select;
+const SELECT_TONE_CLASS: Record<SelectTone, string> = {
+  slate: 'border-slate-300 focus:ring-blue-500',
+  rose: 'border-rose-200 focus:ring-rose-200',
+  blue: 'border-blue-300 focus:ring-blue-400',
+};
+
+export function Select({
+  label,
+  options,
+  tone = 'slate',
+  selectSize = 'md',
+  shape = 'md',
+  uniqueClassName,
+  onChange,
+  onValueChange,
+  ...props
+}: Props) {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    onChange?.(event);
+    onValueChange?.(event.target.value, event);
+  };
+
+  return (
+    <div className={`flex flex-col gap-1 ${uniqueClassName ?? ''}`}>
+      {label && <label className="text-sm font-medium text-gray-700">{label}</label>}
+      <select
+        className={`${SELECT_SIZE_CLASS[selectSize]} border ${shape === 'xl' ? 'rounded-xl' : 'rounded-md'} focus:ring-2 outline-none bg-white ${SELECT_TONE_CLASS[tone]}`}
+        onChange={handleChange}
+        {...props}
+      >
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value} disabled={opt.disabled}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}

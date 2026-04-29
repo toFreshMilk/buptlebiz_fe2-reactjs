@@ -1,6 +1,9 @@
 {
-  "save": "save",
-  "cancel": "cancle",
-  "confirm": "approve",
-  "delete": "delete"
+  "app_name": "buptlebiz",
+  "cmmn_label_all": "All",
+  "cmmn_ok": "OK",
+  "cmmn_cancel": "Cancel",
+  "workspace_banner": {
+    "demo": "Demo mode. "
+  }
 }
