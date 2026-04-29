@@ -17,7 +17,7 @@ const InternalLayout = () => {
     <div className="flex flex-col min-h-screen">
       <TopNavbar />
       <WorkspaceBanner />
-      <main className="flex-1 bg-gray-50 p-6">
+      <main className="flex-1">
         <Outlet />
       </main>
     </div>

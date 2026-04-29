@@ -1,0 +1,58 @@
+{
+  "apr": {
+    "badge": "APR",
+    "desk": "Contract Desk",
+    "board_title": "Contract Workboard",
+    "board_desc": "Manage contract statuses on a board based on groupware integration.",
+    "actions": {
+      "sync": "Sync",
+      "approval": "Approval Settings"
+    },
+    "alerts": {
+      "sync_demo": "APR only: Groupware sync (demo)",
+      "approval_demo": "APR only: Approval line settings (demo)"
+    },
+    "stat": {
+      "total": "TOTAL",
+      "active": "ACTIVE",
+      "review": "REVIEW",
+      "draft": "DRAFT"
+    },
+    "columns": {
+      "empty": "No items to display.",
+      "review": {
+        "title": "Review",
+        "hint": "Legal review / change requests"
+      },
+      "active": {
+        "title": "In Progress",
+        "hint": "Signing / collection / execution"
+      },
+      "draft": {
+        "title": "Draft",
+        "hint": "Contracts being drafted"
+      }
+    },
+    "card": {
+      "status_label": "Status"
+    },
+    "chart_title": "APR Status Chart",
+    "table_title": "APR Table"
+  },
+  "sidebar": {
+    "createModal": {
+      "title": "Create APR Contract",
+      "message": "Start the APR exclusive contract creation flow."
+    },
+    "title": "APR Contracts",
+    "btnCreate": "Create APR Contract",
+    "searchPlaceholder": "Search APR contracts",
+    "category": "APR Exclusive Menu",
+    "categoryOptions": {
+      "overseas": "Overseas Corporation",
+      "supply": "Supply Contract",
+      "device": "Device",
+      "marketing": "Ad / Marketing"
+    }
+  }
+}

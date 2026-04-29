@@ -31,7 +31,7 @@ const ContractDetailPageContent = () => {
   const { Component: ContractDetailRight } = useTenantComponent('ContractDetailRight');
 
   return (
-    <div className="-m-10 p-10 bg-slate-50 min-h-[calc(100vh-64px)] space-y-6">
+    <div className="p-6 lg:p-10 space-y-6">
       <ContractDetailTop data={detailList} contractId={id} />
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 min-w-0">

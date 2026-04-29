@@ -19,7 +19,7 @@ const ContractPageContent = () => {
   const { Component: ContractList } = useTenantComponent('ContractList');
 
   return (
-    <div className="flex gap-6 -m-10 p-10 bg-slate-50 min-h-[calc(100vh-64px)]">
+    <div className="flex gap-6 p-6 lg:p-10">
       <ContractSidebar />
       <ContractMain contracts={contracts} ListComponent={ContractList} />
     </div>

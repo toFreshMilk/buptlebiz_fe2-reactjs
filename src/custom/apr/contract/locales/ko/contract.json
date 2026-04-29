@@ -1,0 +1,58 @@
+{
+  "apr": {
+    "badge": "APR",
+    "desk": "Contract Desk",
+    "board_title": "계약 워크보드",
+    "board_desc": "그룹웨어 연동 기반 계약 상태를 보드로 관리합니다.",
+    "actions": {
+      "sync": "동기화",
+      "approval": "결재 설정"
+    },
+    "alerts": {
+      "sync_demo": "APR 전용: 그룹웨어 동기화 (데모)",
+      "approval_demo": "APR 전용: 승인 라인 설정 (데모)"
+    },
+    "stat": {
+      "total": "전체",
+      "active": "활성",
+      "review": "리뷰",
+      "draft": "검토"
+    },
+    "columns": {
+      "empty": "표시할 항목이 없습니다.",
+      "review": {
+        "title": "검토",
+        "hint": "법무 검토/수정 요청"
+      },
+      "active": {
+        "title": "진행",
+        "hint": "서명/회수/체결 진행"
+      },
+      "draft": {
+        "title": "초안",
+        "hint": "작성 중인 계약"
+      }
+    },
+    "card": {
+      "status_label": "상태"
+    },
+    "chart_title": "APR 상태 차트 (Recharts 샘플)",
+    "table_title": "APR 테이블 (TanStack Table 샘플)"
+  },
+  "sidebar": {
+    "createModal": {
+      "title": "APR 계약 생성",
+      "message": "APR 전용 계약 생성 플로우를 시작합니다."
+    },
+    "title": "APR 계약",
+    "btnCreate": "APR 계약 생성",
+    "searchPlaceholder": "APR 계약 검색",
+    "category": "APR 전용 메뉴",
+    "categoryOptions": {
+      "overseas": "해외법인",
+      "supply": "공급계약",
+      "device": "디바이스",
+      "marketing": "광고/마케팅"
+    }
+  }
+}
