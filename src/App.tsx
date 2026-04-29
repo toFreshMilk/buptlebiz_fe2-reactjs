@@ -1,16 +1,21 @@
-﻿// src/App.tsx
+// src/App.tsx
+import { Suspense } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { routes } from './routes';
 import { queryClient } from '@/core/service/queryClient.ts';
+import { AppConfigProvider } from '@/core/contexts/AppConfigProvider';
 
-// 라우터 생성
 const router = createBrowserRouter(routes);
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-gray-500">Loading...</div>}>
+        <AppConfigProvider>
+          <RouterProvider router={router} />
+        </AppConfigProvider>
+      </Suspense>
     </QueryClientProvider>
   );
 }

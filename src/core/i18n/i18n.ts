@@ -3,6 +3,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import KoreanPostpositionProcessor from 'i18next-korean-postposition-processor';
 import resourcesToBackend from 'i18next-resources-to-backend';
+import { I18N_CONFIG } from '@/core/config/tenant.config';
 
 // [1] Glob 패턴: shared/locales 폴더 구조에 맞춤
 // 예: /src/standard/shared/locales/ko/contract.json
@@ -25,8 +26,8 @@ i18n
   )
   .init({
     // 기본 언어 설정
-    lng: 'ko',
-    fallbackLng: 'ko',
+    lng: I18N_CONFIG.defaultLang,
+    fallbackLng: I18N_CONFIG.defaultLang,
 
     // 네임스페이스 설정
     // common: 기본 공통어, contract: 계약 모듈 등등

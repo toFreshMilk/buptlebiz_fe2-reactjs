@@ -2,6 +2,13 @@
 import { ComponentType } from 'react';
 import type { TenantConfig, ComponentLoader, ServiceLoader, ModuleWithDefault } from '@/core/config/tenant.types';
 
+// === 0. i18n 부트스트랩 설정 ===
+// React 초기화 이전에 i18n이 필요로 하는 기본값 (실제 언어값은 각 테넌트 config의 features.i18n 배열에 정의)
+// 이거 고객사별 설정페이지에서 가져와야지 왜 이렇게 선언하냐
+export const I18N_CONFIG = {
+  defaultLang: 'ko',
+} as const;
+
 // === 1. Loaders ===
 // 테넌트별 설정 파일(*.config.ts)을 비동기로 로드합니다.
 const TenantLoaders: Record<string, () => Promise<ModuleWithDefault<TenantConfig>>> = {

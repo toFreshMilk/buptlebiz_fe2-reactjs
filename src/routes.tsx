@@ -1,5 +1,6 @@
-﻿// src/routes.tsx
+// src/routes.tsx
 import { RouteObject, Navigate } from 'react-router-dom';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
 
 // Layouts
 import RootLayout from '@/app/RootLayout';
@@ -13,8 +14,10 @@ import ContractPage from '@/app/(internal)/contract/ContractPage';
 import ContractDetailPage from '@/app/(internal)/contract/ContractDetailPage';
 import RootError from '@/app/RootError.tsx';
 
-// Pages - Public (예시)
-// import LoginPage from '@/app/(public)/login/LoginPage';
+const DefaultRedirect = () => {
+  const { config } = useAppConfig();
+  return <Navigate to={`/${config.features.i18n[0]}/contract`} replace />;
+};
 
 export const routes: RouteObject[] = [
   {
@@ -22,38 +25,45 @@ export const routes: RouteObject[] = [
     element: <RootLayout />,
     errorElement: <RootError />,
     children: [
-      // [Group 1] Public (로그인, 외부 페이지)
-      // URL: /login, /external/...
       {
-        element: <PublicLayout />,
-        children: [
-          // { path: 'login', element: <LoginPage /> },
-          // { path: 'external/*', element: <ExternalSignPage /> },
-        ],
+        index: true,
+        element: <DefaultRedirect />,
       },
 
-      // [Group 2] Internal (업무 공간)
-      // URL: /contract (앞에 tenantId 없음)
-      // Pathless Layout 사용: path 속성 없이 element만 지정하여 레이아웃만 적용
+      // [언어 prefix] /:lang (ko, en)
       {
-        element: <InternalLayout />,
-        errorElement: <InternalError />,
+        path: ':lang',
         children: [
-          // 루트('/') 접근 시 contract로 리다이렉트
+          // [Group 1] Public (로그인, 외부 페이지)
+          // URL: /ko/login, /en/external/...
           {
-            index: true,
-            element: <Navigate to="contract" replace />,
+            element: <PublicLayout />,
+            children: [
+              // { path: 'login', element: <LoginPage /> },
+              // { path: 'external/*', element: <ExternalSignPage /> },
+            ],
           },
+
+          // [Group 2] Internal (업무 공간)
+          // URL: /ko/contract, /en/contract/:id
           {
-            path: 'contract',
-            element: <ContractPage />,
+            element: <InternalLayout />,
+            errorElement: <InternalError />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="contract" replace />,
+              },
+              {
+                path: 'contract',
+                element: <ContractPage />,
+              },
+              {
+                path: 'contract/:id',
+                element: <ContractDetailPage />,
+              },
+            ],
           },
-          {
-            path: 'contract/:id',
-            element: <ContractDetailPage />,
-          },
-          // { path: 'advice', element: <AdvicePage /> },
-          // { path: 'admin', element: <AdminPage /> },
         ],
       },
     ],

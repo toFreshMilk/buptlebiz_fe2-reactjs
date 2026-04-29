@@ -10,10 +10,9 @@ export type ServiceLoader = () => Promise<ModuleWithDefault<any>>;
 export interface TenantConfig {
   id: string;
   name: string;
-  features: { i18n: boolean; ai: boolean; sso: boolean };
+  features: { i18n: string[]; ai: boolean; sso: boolean };
   theme: { primaryColor: string };
 
-  // [K in string] 인덱스 시그니처 사용
   components?: Record<string, ComponentLoader>;
   services?: Record<string, ServiceLoader>;
 }

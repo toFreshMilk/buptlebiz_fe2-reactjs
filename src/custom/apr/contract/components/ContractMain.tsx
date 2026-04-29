@@ -6,9 +6,16 @@ import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import type { IAprContractService } from '@/custom/apr/contract/services/contract.service';
 import type { StandardContractDto } from '@/standard/contract/services/contract.service';
+import i18nInstance from '@/core/i18n/i18n';
 
-// [1] 내(APR) 전용 데이터만 가져옴 (Standard는 Core가 알아서 로드함)
-import aprLocales from '@/custom/apr/shared/locales/ko/contract.json';
+// [1] 내(APR) 전용 데이터를 언어별로 가져옴
+import aprLocalesKo from '@/custom/apr/shared/locales/ko/contract.json';
+import aprLocalesEn from '@/custom/apr/shared/locales/en/contract.json';
+
+const aprLocales: Record<string, any> = {
+  ko: aprLocalesKo,
+  en: aprLocalesEn,
+};
 
 interface ContractMainProps {
   tenantId: string;
@@ -24,8 +31,11 @@ const AprContractMain = ({ tenantId, sidebar, listComponent: ListComponent }: Co
     queryFn: () => service.getAprContracts(),
   });
 
+  const lang = i18nInstance.resolvedLanguage || i18nInstance.language || 'ko';
+  const currentLocales = aprLocales[lang] || aprLocalesKo;
+
   // [2] 'contract' 네임스페이스 로드 + aprLocales 병합
-  const { t } = useCoreTranslation('contract', aprLocales);
+  const { t } = useCoreTranslation('contract', currentLocales);
 
   return (
     <div className="flex w-full bg-gray-100 min-h-screen">
