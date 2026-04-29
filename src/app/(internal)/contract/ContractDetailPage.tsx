@@ -4,6 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 import { Suspense } from 'react';
+import { LoadingBar } from '@/core/utils/LoadingBar';
 
 const ContractDetailPageContent = () => {
   const { id } = useParams<{ id: string }>();
@@ -45,7 +46,7 @@ const ContractDetailPageContent = () => {
 };
 
 const ContractDetailPage = () => (
-  <Suspense fallback={<div>Loading Detail Page...</div>}>
+  <Suspense fallback={<LoadingBar />}>
     <ContractDetailPageContent />
   </Suspense>
 );

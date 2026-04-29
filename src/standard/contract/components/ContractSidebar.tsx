@@ -23,27 +23,27 @@ export default function ContractSidebar() {
   const query = searchParams.get('q') ?? '';
   const tab = searchParams.get('tab') ?? 'all';
   const tabOptions = [
-    { label: t('sidebar.tab.all', { defaultValue: '전체' }), value: 'all' },
-    { label: t('sidebar.tab.draft', { defaultValue: '초안' }), value: 'draft' },
-    { label: t('sidebar.tab.review', { defaultValue: '검토' }), value: 'review' },
-    { label: t('sidebar.tab.active', { defaultValue: '진행' }), value: 'active' },
+    { label: t('sidebar.tab.all'), value: 'all' },
+    { label: t('sidebar.tab.draft'), value: 'draft' },
+    { label: t('sidebar.tab.review'), value: 'review' },
+    { label: t('sidebar.tab.active'), value: 'active' },
   ];
 
   return (
     <aside className="w-72 shrink-0 space-y-4">
       <Modal
         open={createModalOpen}
-        title={t('sidebar.createModal.title', { defaultValue: '계약 생성' })}
-        message={t('sidebar.createModal.message', { defaultValue: '새 계약 작성 플로우를 시작합니다. (데모)' })}
+        title={t('sidebar.createModal.title')}
+        message={t('sidebar.createModal.message')}
         variant="single"
-        confirmText={t('sidebar.createModal.confirm', { defaultValue: '확인' })}
+        confirmText={t('sidebar.createModal.confirm')}
         onConfirm={() => setCreateModalOpen(false)}
         onClose={() => setCreateModalOpen(false)}
         uniqueClassName="ui-standard-create-modal"
       />
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
-        <div className="text-lg font-black text-slate-900 mb-3">{t('sidebar.title', { defaultValue: '계약' })}</div>
+        <div className="text-lg font-black text-slate-900 mb-3">{t('sidebar.title')}</div>
         <Button
           fullWidth
           tone="slate"
@@ -51,12 +51,12 @@ export default function ContractSidebar() {
           style={{ backgroundColor: config.theme.primaryColor }}
           onPress={() => setCreateModalOpen(true)}
         >
-          {t('sidebar.btnCreate', { defaultValue: '계약 생성' })}
+          {t('sidebar.btnCreate')}
         </Button>
 
         <div className="mt-4">
           <Input
-            label={t('sidebar.searchLabel', { defaultValue: '계약명' })}
+            label={t('sidebar.searchLabel')}
             value={query}
             onValueChange={(v) => {
               const next = new URLSearchParams(searchParams.toString());
@@ -65,13 +65,13 @@ export default function ContractSidebar() {
               if (!next.get('tab')) next.set('tab', tab);
               navigate(buildUrl(location.pathname, next), { replace: true });
             }}
-            placeholder={t('sidebar.searchPlaceholder', { defaultValue: '검색어를 입력하세요' })}
+            placeholder={t('sidebar.searchPlaceholder')}
           />
         </div>
 
         <div className="mt-3">
           <Select
-            label={t('sidebar.statusLabel', { defaultValue: '상태' })}
+            label={t('sidebar.statusLabel')}
             value={tab}
             options={tabOptions}
             onValueChange={(value) => {
@@ -94,25 +94,25 @@ export default function ContractSidebar() {
               navigate(buildUrl(location.pathname, next), { replace: true });
             }}
           >
-            {t('sidebar.resetFilter', { defaultValue: '검색 초기화' })}
+            {t('sidebar.resetFilter')}
           </Button>
         </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
         <div className="flex items-center justify-between">
-          <div className="font-bold text-slate-900">{t('sidebar.category', { defaultValue: '카테고리' })}</div>
+          <div className="font-bold text-slate-900">{t('sidebar.category')}</div>
           <Button variant="ghost" size="icon" tone="slate" uniqueClassName="ui-standard-category-setting">
             ⚙
           </Button>
         </div>
         <div className="mt-3 space-y-2 text-sm">
           {[
-            t('sidebar.categoryOptions.all', { defaultValue: '전체' }),
-            t('sidebar.categoryOptions.company', { defaultValue: '회사 템플릿' }),
-            t('sidebar.categoryOptions.marketing', { defaultValue: '마케팅/홍보 계약' }),
-            t('sidebar.categoryOptions.test', { defaultValue: '테스트용도' }),
-            t('sidebar.categoryOptions.security', { defaultValue: '보안' })
+            t('sidebar.categoryOptions.all'),
+            t('sidebar.categoryOptions.company'),
+            t('sidebar.categoryOptions.marketing'),
+            t('sidebar.categoryOptions.test'),
+            t('sidebar.categoryOptions.security')
           ].map((label, index) => (
             <Button
               key={label}
@@ -121,7 +121,7 @@ export default function ContractSidebar() {
               tone="slate"
               align="start"
               uniqueClassName={`ui-standard-category-${index}`}
-              onPress={() => alert(`${t('sidebar.category', { defaultValue: '카테고리' })}: ${label}`)}
+              onPress={() => alert(`${t('sidebar.category')}: ${label}`)}
             >
               {label}
             </Button>

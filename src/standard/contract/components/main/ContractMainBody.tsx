@@ -20,7 +20,7 @@ export default function ContractMainBody({ filtered, ListComponent }: ContractMa
         <ListComponent contracts={filtered} />
       ) : (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-          <div className="text-sm text-slate-500">{t('main.list_component_load_failed', { defaultValue: '목록 컴포넌트 로딩 실패' })}</div>
+          <div className="text-sm text-slate-500">{t('main.list_component_load_failed')}</div>
         </div>
       )}
     </div>

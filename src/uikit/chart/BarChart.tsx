@@ -59,7 +59,7 @@ export function BarChart<T extends ChartRow>({
   onBarClick,
 }: Props<T>) {
   const { t } = useCoreTranslation('common');
-  const defaultEmptyFallback = <div className="text-sm text-slate-400">{t('uikit.chart.emptyText', { defaultValue: '표시할 데이터가 없습니다.' })}</div>;
+  const defaultEmptyFallback = <div className="text-sm text-slate-400">{t('uikit.chart.emptyText')}</div>;
 
   if (!data.length || !series.length) {
     return <div className={uniqueClassName}>{emptyFallback ?? defaultEmptyFallback}</div>;

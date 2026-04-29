@@ -39,32 +39,32 @@ export default function ContractDetailTop({ data, contractId }: Props) {
   const stepMap: Record<StepKey, number> = { draft: 0, review: 1, active: 2, done: 3 };
   const stepIndex = stepMap[step];
 
-  const title = contract?.title ?? t('detailTop.titleFallback', { defaultValue: '계약 상세' });
+  const title = contract?.title ?? t('detailTop.titleFallback');
 
   const statusRaw = contract?.status ?? '';
   const statusNormalized = normalizeStatus(statusRaw);
 
   const statusLabel = (() => {
-    if (!statusNormalized) return t('contractStatus.signPending', { defaultValue: '서명/날인대기' });
-    if (statusNormalized === 'draft') return t('contractStatus.draft', { defaultValue: '초안' });
-    if (statusNormalized === 'review') return t('contractStatus.review', { defaultValue: '검토' });
+    if (!statusNormalized) return t('contractStatus.signPending');
+    if (statusNormalized === 'draft') return t('contractStatus.draft');
+    if (statusNormalized === 'review') return t('contractStatus.review');
 
-    if (statusNormalized === 'active' || statusNormalized.includes('sign')) return t('contractStatus.active', { defaultValue: '진행 중' });
+    if (statusNormalized === 'active' || statusNormalized.includes('sign')) return t('contractStatus.active');
 
-    if (statusNormalized === 'approved') return t('contractStatus.approved', { defaultValue: '승인됨' });
+    if (statusNormalized === 'approved') return t('contractStatus.approved');
 
     if (statusNormalized === 'completed' || statusNormalized === 'complete' || statusNormalized === 'done') {
-      return t('contractStatus.done', { defaultValue: '완료' });
+      return t('contractStatus.done');
     }
 
-    return statusRaw || t('contractStatus.signPending', { defaultValue: '서명/날인대기' });
+    return statusRaw || t('contractStatus.signPending');
   })();
 
   const steps: Array<{ key: StepKey; label: string }> = [
-    { key: 'draft', label: t('detailTop.step.draft', { defaultValue: '초안' }) },
-    { key: 'review', label: t('detailTop.step.review', { defaultValue: '검토' }) },
-    { key: 'active', label: t('detailTop.step.active', { defaultValue: '진행 중' }) },
-    { key: 'done', label: t('detailTop.step.done', { defaultValue: '완료' }) },
+    { key: 'draft', label: t('detailTop.step.draft') },
+    { key: 'review', label: t('detailTop.step.review') },
+    { key: 'active', label: t('detailTop.step.active') },
+    { key: 'done', label: t('detailTop.step.done') },
   ];
 
   const [state, submitApprove, isPending] = useActionState(
@@ -82,10 +82,10 @@ export default function ContractDetailTop({ data, contractId }: Props) {
 
   useEffect(() => {
     if (state?.success) {
-      alert(t('detailTop.approvedAlert', { defaultValue: '승인되었습니다.' }));
+      alert(t('detailTop.approvedAlert'));
       navigate('.', { replace: true });
     } else if (state?.error) {
-      alert(t('detailTop.approveFailedAlert', { message: state.error, defaultValue: `승인 실패: ${state.error}` }));
+      alert(t('detailTop.approveFailedAlert', { message: state.error }));
     }
   }, [state, navigate, t]);
 
@@ -97,11 +97,11 @@ export default function ContractDetailTop({ data, contractId }: Props) {
     <section className="space-y-4">
       <Modal
         open={approveModalOpen}
-        title={t('detailTop.approve', { defaultValue: '승인' })}
-        message={t('detailTop.confirmApprove', { defaultValue: '정말 승인하시겠습니까?' })}
+        title={t('detailTop.approve')}
+        message={t('detailTop.confirmApprove')}
         variant="double"
-        confirmText={t('detailTop.approve', { defaultValue: '승인' })}
-        cancelText={t('cmmn_cancel', { defaultValue: '취소' })}
+        confirmText={t('detailTop.approve')}
+        cancelText={t('cmmn_cancel')}
         onConfirm={() => {
           setApproveModalOpen(false);
           submitApprove();
@@ -122,7 +122,7 @@ export default function ContractDetailTop({ data, contractId }: Props) {
             onPress={() => navigate('..')}
           >
             <span aria-hidden>←</span>
-            <span>{t('detailTop.backToList', { defaultValue: '목록으로' })}</span>
+            <span>{t('detailTop.backToList')}</span>
           </Button>
 
           <div className="flex items-center gap-3 min-w-0">
@@ -139,16 +139,16 @@ export default function ContractDetailTop({ data, contractId }: Props) {
                 tone="blue"
                 uniqueClassName="ui-apr-detail-top-approve"
               >
-                {isPending ? t('detailTop.processing', { defaultValue: '처리 중...' }) : t('detailTop.approve', { defaultValue: '승인' })}
+                {isPending ? t('detailTop.processing') : t('detailTop.approve')}
               </Button>
             </form>
           )}
 
           <Button tone="amber" uniqueClassName="ui-apr-detail-top-delete">
-            {t('detailTop.delete', { defaultValue: '삭제' })}
+            {t('detailTop.delete')}
           </Button>
           <Button tone="rose" uniqueClassName="ui-apr-detail-top-terminate">
-            {t('detailTop.terminate', { defaultValue: '종료' })}
+            {t('detailTop.terminate')}
           </Button>
         </div>
       </div>
@@ -156,9 +156,9 @@ export default function ContractDetailTop({ data, contractId }: Props) {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100">
           <div className="text-center font-bold text-slate-900">
-            {t('detailTop.contractIs', { defaultValue: '본 계약은 ' })}
+            {t('detailTop.contractIs')}
             <span className="text-rose-500">{statusLabel}</span>
-            {t('detailTop.statusSuffix', { defaultValue: ' 상태입니다.' })}
+            {t('detailTop.statusSuffix')}
           </div>
         </div>
 

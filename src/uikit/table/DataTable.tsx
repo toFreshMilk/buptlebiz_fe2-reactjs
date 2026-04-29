@@ -64,8 +64,8 @@ export function DataTable<T extends object>({
   toolbarRightSlot,
 }: Props<T>) {
   const { t } = useCoreTranslation('common');
-  const defaultEmptyText = t('uikit.table.emptyText', { defaultValue: '데이터가 없습니다.' });
-  const defaultGlobalFilterPlaceholder = t('uikit.table.searchPlaceholder', { defaultValue: '검색...' });
+  const defaultEmptyText = t('uikit.table.emptyText');
+  const defaultGlobalFilterPlaceholder = t('uikit.table.searchPlaceholder');
 
   const [internalSorting, setInternalSorting] = useState<SortingState>([]);
   const [internalPagination, setInternalPagination] = useState<PaginationState>({
@@ -130,7 +130,7 @@ export function DataTable<T extends object>({
             >
               {pageSizeOptions.map((n) => (
                 <option key={n} value={n}>
-                  {t('uikit.table.itemsPerPage', { count: n, defaultValue: `${n}개` })}
+                  {t('uikit.table.itemsPerPage', { count: n })}
                 </option>
               ))}
             </select>
@@ -195,16 +195,15 @@ export function DataTable<T extends object>({
             {t('uikit.table.paginationInfo', { 
                total: totalRows, 
                current: table.getState().pagination.pageIndex + 1,
-               pages: table.getPageCount(),
-               defaultValue: `총 ${totalRows}건 / 페이지 ${table.getState().pagination.pageIndex + 1} / ${table.getPageCount()}` 
+               pages: table.getPageCount() 
             })}
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" tone="slate" size="sm" disabled={!table.getCanPreviousPage()} onPress={() => table.previousPage()}>
-              {t('uikit.table.prev', { defaultValue: '이전' })}
+              {t('uikit.table.prev')}
             </Button>
             <Button variant="outline" tone="slate" size="sm" disabled={!table.getCanNextPage()} onPress={() => table.nextPage()}>
-              {t('uikit.table.next', { defaultValue: '다음' })}
+              {t('uikit.table.next')}
             </Button>
           </div>
         </div>

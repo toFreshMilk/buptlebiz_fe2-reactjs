@@ -23,20 +23,20 @@ export default function AprContractSidebar() {
   const query = searchParams.get('q') ?? '';
   const tab = searchParams.get('tab') ?? 'all';
   const tabOptions = [
-    { label: t('sidebar.tab.all', { defaultValue: '전체' }), value: 'all' },
-    { label: t('sidebar.tab.draft', { defaultValue: '초안' }), value: 'draft' },
-    { label: t('sidebar.tab.review', { defaultValue: '검토' }), value: 'review' },
-    { label: t('sidebar.tab.active', { defaultValue: '진행' }), value: 'active' },
+    { label: t('sidebar.tab.all'), value: 'all' },
+    { label: t('sidebar.tab.draft'), value: 'draft' },
+    { label: t('sidebar.tab.review'), value: 'review' },
+    { label: t('sidebar.tab.active'), value: 'active' },
   ];
 
   return (
     <aside className="w-72 shrink-0 space-y-4">
       <Modal
         open={createModalOpen}
-        title={t('sidebar.createModal.title', { defaultValue: 'APR 계약 생성' })}
-        message={t('sidebar.createModal.message', { defaultValue: 'APR 전용 계약 생성 플로우를 시작합니다.' })}
+        title={t('sidebar.createModal.title')}
+        message={t('sidebar.createModal.message')}
         variant="single"
-        confirmText={t('cmmn_ok', { defaultValue: '확인' })}
+        confirmText={t('cmmn_ok')}
         onConfirm={() => setCreateModalOpen(false)}
         onClose={() => setCreateModalOpen(false)}
         uniqueClassName="ui-apr-create-modal"
@@ -44,9 +44,9 @@ export default function AprContractSidebar() {
 
       <div className="bg-white rounded-2xl border border-rose-200 shadow-sm p-4">
         <div className="flex items-center justify-between mb-3">
-          <div className="text-lg font-black text-rose-700">{t('sidebar.title', { defaultValue: 'APR 계약' })}</div>
+          <div className="text-lg font-black text-rose-700">{t('sidebar.title')}</div>
           <span className="text-[10px] font-black px-2 py-1 rounded-full border border-rose-200 bg-rose-50 text-rose-700">
-            {t('apr.badge', { defaultValue: 'APR' })}
+            {t('apr.badge')}
           </span>
         </div>
 
@@ -58,12 +58,12 @@ export default function AprContractSidebar() {
           style={{ backgroundColor: config.theme.primaryColor }}
           onPress={() => setCreateModalOpen(true)}
         >
-          {t('sidebar.btnCreate', { defaultValue: 'APR 계약 생성' })}
+          {t('sidebar.btnCreate')}
         </Button>
 
         <div className="mt-4">
           <Input
-            label={t('sidebar.searchLabel', { defaultValue: '계약명' })}
+            label={t('sidebar.searchLabel')}
             value={query}
             tone="rose"
             shape="xl"
@@ -75,13 +75,13 @@ export default function AprContractSidebar() {
               if (!next.get('tab')) next.set('tab', tab);
               navigate(buildUrl(location.pathname, next), { replace: true });
             }}
-            placeholder={t('sidebar.searchPlaceholder', { defaultValue: 'APR 계약 검색' })}
+            placeholder={t('sidebar.searchPlaceholder')}
           />
         </div>
 
         <div className="mt-3">
           <Select
-            label={t('sidebar.statusLabel', { defaultValue: '상태' })}
+            label={t('sidebar.statusLabel')}
             value={tab}
             options={tabOptions}
             tone="rose"
@@ -108,19 +108,19 @@ export default function AprContractSidebar() {
               navigate(buildUrl(location.pathname, next), { replace: true });
             }}
           >
-            {t('sidebar.resetFilter', { defaultValue: '필터 초기화' })}
+            {t('sidebar.resetFilter')}
           </Button>
         </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-rose-200 shadow-sm p-4">
-        <div className="font-bold text-rose-800">{t('sidebar.category', { defaultValue: 'APR 전용 메뉴' })}</div>
+        <div className="font-bold text-rose-800">{t('sidebar.category')}</div>
         <div className="mt-3 space-y-2 text-sm">
           {[
-            t('sidebar.categoryOptions.overseas', { defaultValue: '해외법인' }),
-            t('sidebar.categoryOptions.supply', { defaultValue: '공급계약' }),
-            t('sidebar.categoryOptions.device', { defaultValue: '디바이스' }),
-            t('sidebar.categoryOptions.marketing', { defaultValue: '광고/마케팅' })
+            t('sidebar.categoryOptions.overseas'),
+            t('sidebar.categoryOptions.supply'),
+            t('sidebar.categoryOptions.device'),
+            t('sidebar.categoryOptions.marketing')
           ].map((label, index) => (
             <Button
               key={label}

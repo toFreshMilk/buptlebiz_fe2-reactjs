@@ -58,7 +58,7 @@ export default function Modal({
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white shadow-xl">
           <div className="px-5 py-4 border-b border-slate-100">
-            <div className="text-base font-black text-slate-900">{title ?? t('uikit.modal.defaultTitle', { defaultValue: '알림' })}</div>
+            <div className="text-base font-black text-slate-900">{title ?? t('uikit.modal.defaultTitle')}</div>
           </div>
 
           <div className="px-5 py-6">
@@ -68,7 +68,7 @@ export default function Modal({
           <div className="px-5 pb-5 flex items-center gap-2 justify-end">
             {variant === 'double' && (
               <Button variant="outline" tone="slate" uniqueClassName="ui-modal-cancel" onPress={onCancel ?? onClose}>
-                {cancelText ?? t('cmmn_cancel', { defaultValue: '취소' })}
+                {cancelText ?? t('cmmn_cancel')}
               </Button>
             )}
             <Button tone="blue" uniqueClassName="ui-modal-confirm" onPress={onConfirm}>

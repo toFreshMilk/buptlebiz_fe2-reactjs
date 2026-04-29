@@ -34,12 +34,12 @@ export default function ContractList({ contracts }: { contracts?: ContractRow[] 
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50/50">
-              <th className="px-6 py-4 font-semibold text-slate-500 w-20">{t('list.header.id', { defaultValue: 'ID' })}</th>
-              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.title', { defaultValue: '계약명' })}</th>
-              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.partner', { defaultValue: '거래처' })}</th>
-              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.status', { defaultValue: '상태' })}</th>
-              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.amount', { defaultValue: '계약금액' })}</th>
-              <th className="px-6 py-4 font-semibold text-slate-500 text-right">{t('list.header.date', { defaultValue: '등록일' })}</th>
+              <th className="px-6 py-4 font-semibold text-slate-500 w-20">{t('list.header.id')}</th>
+              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.title')}</th>
+              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.partner')}</th>
+              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.status')}</th>
+              <th className="px-6 py-4 font-semibold text-slate-500">{t('list.header.amount')}</th>
+              <th className="px-6 py-4 font-semibold text-slate-500 text-right">{t('list.header.date')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -69,7 +69,7 @@ export default function ContractList({ contracts }: { contracts?: ContractRow[] 
         </table>
       </div>
       <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center text-xs text-slate-500">
-        <span>{t('list.showingResults', { count: rows.length, defaultValue: `Showing ${rows.length} results` })}</span>
+        <span>{t('list.showingResults', { count: rows.length })}</span>
         <div className="flex gap-2">
           <Button variant="outline" tone="slate" size="sm" uniqueClassName="ui-standard-list-prev">
             Prev

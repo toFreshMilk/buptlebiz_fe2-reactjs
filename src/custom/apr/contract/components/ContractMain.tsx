@@ -112,8 +112,8 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
   const review = filtered.filter((c) => normalizeStatus(c.status) === 'review');
   const draft = filtered.filter((c) => normalizeStatus(c.status) === 'draft');
 
-  const emptyText = t('apr.columns.empty', { defaultValue: '표시할 항목이 없습니다.' });
-  const statusLabel = t('apr.card.status_label', { defaultValue: '상태' });
+  const emptyText = t('apr.columns.empty');
+  const statusLabel = t('apr.card.status_label');
 
   const statusChartData = [
     { status: 'Draft', count: draft.length },
@@ -124,15 +124,15 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
   const tableColumns: Array<ColumnDef<ContractItem, unknown>> = [
     {
       accessorKey: 'id',
-      header: t('list.header.id', { defaultValue: 'ID' }),
+      header: t('list.header.id'),
     },
     {
       accessorKey: 'title',
-      header: t('list.header.title', { defaultValue: '계약명' }),
+      header: t('list.header.title'),
     },
     {
       accessorKey: 'status',
-      header: t('list.header.status', { defaultValue: '상태' }),
+      header: t('list.header.status'),
     },
   ];
 
@@ -141,11 +141,11 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="inline-flex items-center gap-2 text-xs font-black text-rose-700">
-            <span className="px-2 py-1 rounded-full border border-rose-200 bg-rose-50">{t('apr.badge', { defaultValue: 'APR' })}</span>
-            <span className="text-slate-500">{t('apr.desk', { defaultValue: 'Contract Desk' })}</span>
+            <span className="px-2 py-1 rounded-full border border-rose-200 bg-rose-50">{t('apr.badge')}</span>
+            <span className="text-slate-500">{t('apr.desk')}</span>
           </div>
-          <h1 className="mt-2 text-3xl font-black text-slate-900 tracking-tight">{t('apr.board_title', { defaultValue: '계약 워크보드' })}</h1>
-          <div className="mt-1 text-sm text-slate-500">{t('apr.board_desc', { defaultValue: '그룹웨어 연동 보드' })}</div>
+          <h1 className="mt-2 text-3xl font-black text-slate-900 tracking-tight">{t('apr.board_title')}</h1>
+          <div className="mt-1 text-sm text-slate-500">{t('apr.board_desc')}</div>
         </div>
 
         <div className="flex items-center gap-2">
@@ -154,36 +154,36 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
             tone="rose"
             uniqueClassName="ui-apr-main-sync"
             style={{ backgroundColor: config.theme.primaryColor }}
-            onPress={() => alert(t('apr.alerts.sync_demo', { defaultValue: '그룹웨어 동기화 (데모)' }))}
+            onPress={() => alert(t('apr.alerts.sync_demo'))}
           >
-            {t('apr.actions.sync', { defaultValue: '동기화' })}
+            {t('apr.actions.sync')}
           </Button>
           <Button
             variant="outline"
             tone="rose"
             shape="xl"
             uniqueClassName="ui-apr-main-approval"
-            onPress={() => alert(t('apr.alerts.approval_demo', { defaultValue: '승인 라인 설정 (데모)' }))}
+            onPress={() => alert(t('apr.alerts.approval_demo'))}
           >
-            {t('apr.actions.approval', { defaultValue: '결재 설정' })}
+            {t('apr.actions.approval')}
           </Button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard label={t('apr.stat.total', { defaultValue: 'TOTAL' })} value={filtered.length} accent={config.theme.primaryColor} />
-        <StatCard label={t('apr.stat.active', { defaultValue: 'ACTIVE' })} value={active.length} accent="#16a34a" />
-        <StatCard label={t('apr.stat.review', { defaultValue: 'REVIEW' })} value={review.length} accent="#f59e0b" />
-        <StatCard label={t('apr.stat.draft', { defaultValue: 'DRAFT' })} value={draft.length} accent="#64748b" />
+        <StatCard label={t('apr.stat.total')} value={filtered.length} accent={config.theme.primaryColor} />
+        <StatCard label={t('apr.stat.active')} value={active.length} accent="#16a34a" />
+        <StatCard label={t('apr.stat.review')} value={review.length} accent="#f59e0b" />
+        <StatCard label={t('apr.stat.draft')} value={draft.length} accent="#64748b" />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm">
-          <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.chart_title', { defaultValue: 'APR 상태 차트 (Recharts 샘플)' })}</div>
+          <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.chart_title')}</div>
           <BarChart
             data={statusChartData}
             xKey="status"
-            series={[{ dataKey: 'count', name: t('main.chart_count', { defaultValue: '건수' }), color: config.theme.primaryColor }]}
+            series={[{ dataKey: 'count', name: t('main.chart_count'), color: config.theme.primaryColor }]}
             height={220}
             onBarClick={({ row }) => {
               const status = String(row.status ?? '').toLowerCase();
@@ -196,11 +196,11 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
         </div>
 
         <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm">
-          <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.table_title', { defaultValue: 'APR 테이블 (TanStack Table 샘플)' })}</div>
+          <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.table_title')}</div>
           <DataTable
             data={filtered}
             columns={tableColumns}
-            globalFilterPlaceholder={t('main.table_search_placeholder', { defaultValue: '계약명 검색' })}
+            globalFilterPlaceholder={t('main.table_search_placeholder')}
             onRowClick={(row) => navigate(`${location.pathname}/${row.id}`)}
             uniqueClassName="ui-apr-main-table"
             tableUniqueClassName="border-rose-200"
@@ -210,8 +210,8 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
 
       <div className="flex flex-col lg:flex-row gap-4">
         <Column
-          title={t('apr.columns.review.title', { defaultValue: 'Review' })}
-          hint={t('apr.columns.review.hint', { defaultValue: '검토' })}
+          title={t('apr.columns.review.title')}
+          hint={t('apr.columns.review.hint')}
           items={review}
           emptyText={emptyText}
           statusLabel={statusLabel}
@@ -223,8 +223,8 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
           }}
         />
         <Column
-          title={t('apr.columns.active.title', { defaultValue: 'Active' })}
-          hint={t('apr.columns.active.hint', { defaultValue: '진행 중' })}
+          title={t('apr.columns.active.title')}
+          hint={t('apr.columns.active.hint')}
           items={active}
           emptyText={emptyText}
           statusLabel={statusLabel}
@@ -236,8 +236,8 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
           }}
         />
         <Column
-          title={t('apr.columns.draft.title', { defaultValue: 'Draft' })}
-          hint={t('apr.columns.draft.hint', { defaultValue: '초안' })}
+          title={t('apr.columns.draft.title')}
+          hint={t('apr.columns.draft.hint')}
           items={draft}
           emptyText={emptyText}
           statusLabel={statusLabel}

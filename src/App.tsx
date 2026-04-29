@@ -5,13 +5,14 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { routes } from './routes';
 import { queryClient } from '@/core/service/queryClient.ts';
 import { AppConfigProvider } from '@/core/contexts/AppConfigProvider';
+import { LoadingBar } from '@/core/utils/LoadingBar';
 
 const router = createBrowserRouter(routes);
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-gray-500">Loading...</div>}>
+      <Suspense fallback={<LoadingBar />}>
         <AppConfigProvider>
           <RouterProvider router={router} />
         </AppConfigProvider>

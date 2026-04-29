@@ -48,10 +48,10 @@ export default function ContractMain({ contracts, ListComponent }: ContractMainP
   });
 
   const tabs: { k: TabKey; label: string }[] = [
-    { k: 'all', label: t('main.tabs.all', { defaultValue: '전체' }) },
-    { k: 'draft', label: t('main.tabs.draft', { defaultValue: '초안' }) },
-    { k: 'review', label: t('main.tabs.review', { defaultValue: '검토' }) },
-    { k: 'active', label: t('main.tabs.active', { defaultValue: '서명 및 회수' }) },
+    { k: 'all', label: t('main.tabs.all') },
+    { k: 'draft', label: t('main.tabs.draft') },
+    { k: 'review', label: t('main.tabs.review') },
+    { k: 'active', label: t('main.tabs.active') },
   ];
 
   return (

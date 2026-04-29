@@ -8,9 +8,9 @@ const NotFound = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-6xl font-bold text-gray-300 mb-4">404</h1>
-      <p className="text-xl text-gray-600 mb-8">{t('error.notFound', { defaultValue: 'Page not found' })}</p>
+      <p className="text-xl text-gray-600 mb-8">{t('error.notFound')}</p>
       <Link to="/">
-        <Button>{t('error.goHome', { defaultValue: 'Go Home' })}</Button>
+        <Button>{t('error.goHome')}</Button>
       </Link>
     </div>
   );

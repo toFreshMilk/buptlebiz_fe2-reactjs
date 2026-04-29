@@ -8,9 +8,9 @@ const RootError = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-6xl font-bold text-gray-300 mb-4">500</h1>
-      <p className="text-xl text-gray-600 mb-8">{t('error.root.message', { defaultValue: 'Root Error' })}</p>
+      <p className="text-xl text-gray-600 mb-8">{t('error.root.message')}</p>
       <Link to="/">
-        <Button>{t('error.goHome', { defaultValue: 'Go Home' })}</Button>
+        <Button>{t('error.goHome')}</Button>
       </Link>
     </div>
   );

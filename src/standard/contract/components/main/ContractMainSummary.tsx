@@ -43,19 +43,19 @@ export default function ContractMainSummary({
   const tableColumns: Array<ColumnDef<ContractItem, unknown>> = [
     {
       accessorKey: 'id',
-      header: t('list.header.id', { defaultValue: 'ID' }),
+      header: t('list.header.id'),
     },
     {
       accessorKey: 'title',
-      header: t('list.header.title', { defaultValue: '계약명' }),
+      header: t('list.header.title'),
     },
     {
       accessorKey: 'status',
-      header: t('list.header.status', { defaultValue: '상태' }),
+      header: t('list.header.status'),
     },
     {
       id: 'action',
-      header: t('main.summary_action', { defaultValue: '액션' }),
+      header: t('main.summary_action'),
       cell: ({ row }) => (
         <Button
           variant="outline"
@@ -66,7 +66,7 @@ export default function ContractMainSummary({
             onRowClick(row.original.id);
           }}
         >
-          {t('main.summary_detail', { defaultValue: '상세' })}
+          {t('main.summary_detail')}
         </Button>
       ),
     },
@@ -75,11 +75,11 @@ export default function ContractMainSummary({
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="mb-2 text-sm font-bold text-slate-800">{t('main.chart_title', { defaultValue: '상태 분포 차트 (Recharts 샘플)' })}</div>
+        <div className="mb-2 text-sm font-bold text-slate-800">{t('main.chart_title')}</div>
         <BarChart
           data={chartData}
           xKey="status"
-          series={[{ dataKey: 'count', name: t('main.chart_count', { defaultValue: '건수' }), color: chartColor }]}
+          series={[{ dataKey: 'count', name: t('main.chart_count'), color: chartColor }]}
           height={240}
           onBarClick={({ row }) => {
             const value = String(row.status ?? '').toLowerCase();
@@ -89,11 +89,11 @@ export default function ContractMainSummary({
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="mb-2 text-sm font-bold text-slate-800">{t('main.table_title', { defaultValue: '계약 테이블 (TanStack Table 샘플)' })}</div>
+        <div className="mb-2 text-sm font-bold text-slate-800">{t('main.table_title')}</div>
         <DataTable
           data={filtered}
           columns={tableColumns}
-          globalFilterPlaceholder={t('main.table_search_placeholder', { defaultValue: '계약명 검색' })}
+          globalFilterPlaceholder={t('main.table_search_placeholder')}
           onRowClick={(row) => onRowClick(row.id)}
           uniqueClassName="ui-standard-main-table"
         />

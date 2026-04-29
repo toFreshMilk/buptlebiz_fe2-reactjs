@@ -3,6 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 import { Suspense } from 'react';
+import { LoadingBar } from '@/core/utils/LoadingBar';
 
 const ContractPageContent = () => {
   const { tenantId } = useAppConfig();
@@ -26,7 +27,7 @@ const ContractPageContent = () => {
 };
 
 const ContractPage = () => (
-  <Suspense fallback={<div>Loading Contract Page...</div>}>
+  <Suspense fallback={<LoadingBar />}>
     <ContractPageContent />
   </Suspense>
 );
