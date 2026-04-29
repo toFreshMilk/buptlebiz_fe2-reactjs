@@ -1,0 +1,45 @@
+{
+  "title": "계약",
+  "main": {
+    "summary_total_label": "전체",
+    "summary_count_unit": "건",
+    "actions": {
+      "show_fields": "필드 표시",
+      "per_page_10": "10개씩 보기"
+    },
+    "tabs": {
+      "all": "전체",
+      "draft": "초안",
+      "review": "검토",
+      "active": "서명 및 회수"
+    },
+    "list_component_load_failed": "목록 컴포넌트 로딩 실패"
+  },
+  "detailTop": {
+    "backToList": "목록으로",
+    "titleFallback": "계약 상세",
+    "approve": "승인하기",
+    "processing": "처리중...",
+    "delete": "삭제하기",
+    "terminate": "계약 종료",
+    "confirmApprove": "정말 승인하시겠습니까?",
+    "approvedAlert": "승인되었습니다.",
+    "approveFailedAlert": "승인 실패: {{message}}",
+    "contractIs": "본 계약은 ",
+    "statusSuffix": " 상태입니다.",
+    "step": {
+      "draft": "초안",
+      "review": "검토",
+      "active": "서명 및 회수",
+      "done": "완료"
+    }
+  },
+  "contractStatus": {
+    "signPending": "서명/날인대기",
+    "draft": "초안",
+    "review": "검토",
+    "active": "서명/날인대기",
+    "approved": "승인",
+    "done": "완료"
+  }
+}
