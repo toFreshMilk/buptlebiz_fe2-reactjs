@@ -15,12 +15,7 @@ body {
 /* 3. 컴포넌트 오버라이드 (순수 CSS 사용) */
 /* Tailwind @apply 없이 직접 스타일 지정 */
 aside {
-    background-color: #0f172a !important; /* bg-slate-900 */
-    border-right-color: #1e293b !important; /* border-r-slate-800 */
-    color: #e2e8f0 !important; /* text-slate-200 */
 }
 
 aside a:hover {
-    background-color: #1e293b !important; /* bg-slate-800 */
-    color: #ffffff !important; /* text-white */
 }

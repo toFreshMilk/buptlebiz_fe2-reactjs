@@ -3,11 +3,6 @@ import { ComponentType } from 'react';
 import type { TenantConfig, ComponentLoader, ServiceLoader, ModuleWithDefault } from '@/core/config/tenant.types';
 import type { StandardComponentKey, StandardServiceKey } from '@/standard/registry';
 
-// === 0. i18n 부트스트랩 설정 ===
-export const I18N_CONFIG = {
-  defaultLang: 'ko',
-} as const;
-
 // === 1. Loaders ===
 // 테넌트별 설정 파일(*.config.ts)을 비동기로 로드합니다.
 const TenantLoaders: Record<string, () => Promise<ModuleWithDefault<TenantConfig>>> = {

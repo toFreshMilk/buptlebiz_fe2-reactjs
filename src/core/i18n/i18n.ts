@@ -2,7 +2,6 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import KoreanPostpositionProcessor from 'i18next-korean-postposition-processor';
 import resourcesToBackend from 'i18next-resources-to-backend';
-import { I18N_CONFIG } from '@/core/config/tenant.config';
 import { STANDARD_I18N_OWNER_BY_NAMESPACE } from '@/standard/registry';
 import { deepMerge } from '@/core/utils/object.util';
 
@@ -37,8 +36,6 @@ i18n
     }),
   )
   .init({
-    lng: I18N_CONFIG.defaultLang,
-    fallbackLng: I18N_CONFIG.defaultLang,
     ns: ['common', 'contract'],
     defaultNS: 'common',
     partialBundledLanguages: true,
