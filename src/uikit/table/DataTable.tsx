@@ -12,6 +12,7 @@ import {
 } from '@tanstack/react-table';
 import { Input } from '@/uikit/form/Input';
 import { Button } from '@/uikit/form/Button';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 
 interface Props<T extends object> {
   data: T[];
@@ -45,10 +46,10 @@ export function DataTable<T extends object>({
   tableUniqueClassName,
   headerRowUniqueClassName,
   bodyRowUniqueClassName,
-  emptyText = '데이터가 없습니다.',
+  emptyText,
   showToolbar = true,
   showGlobalFilter = true,
-  globalFilterPlaceholder = '검색...',
+  globalFilterPlaceholder,
   showPagination = true,
   pageSizeOptions = [10, 20, 50],
   defaultPageSize = 10,
@@ -62,6 +63,10 @@ export function DataTable<T extends object>({
   onRowDoubleClick,
   toolbarRightSlot,
 }: Props<T>) {
+  const { t } = useCoreTranslation('common');
+  const defaultEmptyText = t('uikit.table.emptyText', { defaultValue: '데이터가 없습니다.' });
+  const defaultGlobalFilterPlaceholder = t('uikit.table.searchPlaceholder', { defaultValue: '검색...' });
+
   const [internalSorting, setInternalSorting] = useState<SortingState>([]);
   const [internalPagination, setInternalPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -110,7 +115,7 @@ export function DataTable<T extends object>({
               uniqueClassName="w-64"
               value={globalFilter}
               onValueChange={(value) => table.setGlobalFilter(value)}
-              placeholder={globalFilterPlaceholder}
+              placeholder={globalFilterPlaceholder ?? defaultGlobalFilterPlaceholder}
               tone="slate"
               shape="xl"
             />
@@ -125,7 +130,7 @@ export function DataTable<T extends object>({
             >
               {pageSizeOptions.map((n) => (
                 <option key={n} value={n}>
-                  {n}개
+                  {t('uikit.table.itemsPerPage', { count: n, defaultValue: `${n}개` })}
                 </option>
               ))}
             </select>
@@ -161,7 +166,7 @@ export function DataTable<T extends object>({
             {currentRows.length === 0 ? (
               <tr>
                 <td className="px-4 py-10 text-center text-slate-400" colSpan={columns.length}>
-                  {emptyText}
+                  {emptyText ?? defaultEmptyText}
                 </td>
               </tr>
             ) : (
@@ -187,14 +192,19 @@ export function DataTable<T extends object>({
       {showPagination && (
         <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
           <div>
-            총 {totalRows}건 / 페이지 {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
+            {t('uikit.table.paginationInfo', { 
+               total: totalRows, 
+               current: table.getState().pagination.pageIndex + 1,
+               pages: table.getPageCount(),
+               defaultValue: `총 ${totalRows}건 / 페이지 ${table.getState().pagination.pageIndex + 1} / ${table.getPageCount()}` 
+            })}
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" tone="slate" size="sm" disabled={!table.getCanPreviousPage()} onPress={() => table.previousPage()}>
-              이전
+              {t('uikit.table.prev', { defaultValue: '이전' })}
             </Button>
             <Button variant="outline" tone="slate" size="sm" disabled={!table.getCanNextPage()} onPress={() => table.nextPage()}>
-              다음
+              {t('uikit.table.next', { defaultValue: '다음' })}
             </Button>
           </div>
         </div>

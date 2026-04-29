@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import type { StandardContractDto } from '@/standard/contract/services/contract.service';
 import { Button } from '@/uikit/form/Button';
 import { Input } from '@/uikit/form/Input';
@@ -41,22 +42,34 @@ type WeeklyActivity = {
 
 export default function ContractDetailRight({ data }: Props) {
   const { config } = useAppConfig();
+  const { t } = useCoreTranslation('contract');
 
   const contract = data?.[0] || null;
 
-  const base = contract ?? { id: '-', title: '계약 상세', status: 'Active' };
+  const base = contract ?? {
+    id: '-',
+    title: t('detailLeft.titleFallback', { defaultValue: '계약 상세' }),
+    status: 'Active',
+  };
 
   const defaultSignDate =
-    typeof base.signDate === 'string' && !Number.isNaN(new Date(base.signDate).getTime()) ? new Date(base.signDate) : undefined;
+    typeof base.signDate === 'string' && !Number.isNaN(new Date(base.signDate).getTime())
+      ? new Date(base.signDate)
+      : undefined;
   const defaultReviewFrom =
-    typeof base.reviewFrom === 'string' && !Number.isNaN(new Date(base.reviewFrom).getTime()) ? new Date(base.reviewFrom) : undefined;
+    typeof base.reviewFrom === 'string' && !Number.isNaN(new Date(base.reviewFrom).getTime())
+      ? new Date(base.reviewFrom)
+      : undefined;
   const defaultReviewTo =
-    typeof base.reviewTo === 'string' && !Number.isNaN(new Date(base.reviewTo).getTime()) ? new Date(base.reviewTo) : undefined;
+    typeof base.reviewTo === 'string' && !Number.isNaN(new Date(base.reviewTo).getTime())
+      ? new Date(base.reviewTo)
+      : undefined;
 
-  const weeklyActivityData: WeeklyActivity[] = Array.isArray(base.weeklyActivity) && base.weeklyActivity.length > 0 ? base.weeklyActivity : [];
+  const weeklyActivityData: WeeklyActivity[] =
+    Array.isArray(base.weeklyActivity) && base.weeklyActivity.length > 0 ? base.weeklyActivity : [];
   const timeline = Array.isArray(base.timeline) ? base.timeline : [];
 
-  const [comment, setComment] = useState('승인합니다.');
+  const [comment, setComment] = useState(t('detailRight.defaultComment', { defaultValue: '승인합니다.' }));
   const [signDate, setSignDate] = useState<Date | undefined>(defaultSignDate);
   const [reviewRange, setReviewRange] = useState<DateRange | undefined>(
     defaultReviewFrom
@@ -72,30 +85,41 @@ export default function ContractDetailRight({ data }: Props) {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
         <div className="flex gap-2">
           <Button fullWidth variant="outline" tone="slate" uniqueClassName="ui-standard-right-download">
-            날인용 다운로드
+            {t('detailRight.downloadStamp', { defaultValue: '날인용 다운로드' })}
           </Button>
-          <Button fullWidth tone="slate" uniqueClassName="ui-standard-right-stamp-check" style={{ backgroundColor: config.theme.primaryColor }}>
-            날인 확인
+          <Button
+            fullWidth
+            tone="slate"
+            uniqueClassName="ui-standard-right-stamp-check"
+            style={{ backgroundColor: config.theme.primaryColor }}
+          >
+            {t('detailRight.confirmStamp', { defaultValue: '날인 확인' })}
           </Button>
         </div>
       </div>
 
       <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" open>
         <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
-          <div className="font-black text-slate-900">법무팀 공유</div>
+          <div className="font-black text-slate-900">
+            {t('detailRight.shareLegal', { defaultValue: '법무팀 공유' })}
+          </div>
           <div className="text-slate-400">⌄</div>
         </summary>
         <div className="px-5 pb-5">
-          <div className="text-sm text-slate-500">공유 대상/권한 설정 영역입니다.</div>
+          <div className="text-sm text-slate-500">
+            {t('detailRight.shareLegalDesc', { defaultValue: '공유 대상/권한 설정 영역입니다.' })}
+          </div>
         </div>
       </details>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
-        <div className="text-sm font-black text-slate-900">서명/검토 일정 (DatePicker 샘플)</div>
+        <div className="text-sm font-black text-slate-900">
+          {t('detailRight.schedule', { defaultValue: '서명/검토 일정 (DatePicker 샘플)' })}
+        </div>
         <DatePicker
           mode="single"
-          label="서명 예정일"
-          description="단일 날짜 선택"
+          label={t('detailRight.signDate', { defaultValue: '서명 예정일' })}
+          description={t('detailRight.signDateDesc', { defaultValue: '단일 날짜 선택' })}
           value={signDate}
           onValueChange={setSignDate}
           onDayClick={(day) => {
@@ -104,8 +128,8 @@ export default function ContractDetailRight({ data }: Props) {
         />
         <DatePicker
           mode="range"
-          label="검토 기간"
-          description="기간 선택"
+          label={t('detailRight.reviewRange', { defaultValue: '검토 기간' })}
+          description={t('detailRight.reviewRangeDesc', { defaultValue: '기간 선택' })}
           value={reviewRange}
           onValueChange={setReviewRange}
           numberOfMonths={1}
@@ -113,13 +137,19 @@ export default function ContractDetailRight({ data }: Props) {
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
-        <div className="text-sm font-black text-slate-900 mb-2">주간 활동량 (Recharts 샘플)</div>
+        <div className="text-sm font-black text-slate-900 mb-2">
+          {t('detailRight.weeklyActivity', { defaultValue: '주간 활동량 (Recharts 샘플)' })}
+        </div>
         <BarChart
           data={weeklyActivityData}
           xKey="week"
           series={[
-            { dataKey: 'comments', name: '코멘트', color: config.theme.primaryColor },
-            { dataKey: 'files', name: '첨부파일', color: '#f59e0b' },
+            {
+              dataKey: 'comments',
+              name: t('detailRight.comments', { defaultValue: '코멘트' }),
+              color: config.theme.primaryColor,
+            },
+            { dataKey: 'files', name: t('detailRight.files', { defaultValue: '첨부파일' }), color: '#f59e0b' },
           ]}
           height={220}
           onBarClick={({ seriesKey, row }) => {
@@ -131,7 +161,7 @@ export default function ContractDetailRight({ data }: Props) {
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <div className="font-black text-slate-900">진행상황</div>
+          <div className="font-black text-slate-900">{t('detailRight.progress', { defaultValue: '진행상황' })}</div>
           <Button variant="ghost" tone="slate" size="icon" uniqueClassName="ui-standard-right-collapse">
             ^
           </Button>
@@ -139,10 +169,12 @@ export default function ContractDetailRight({ data }: Props) {
 
         <div className="p-5 space-y-4">
           <div className="flex items-center gap-2">
-            <div className="text-sm font-bold text-slate-700">스마트 이메일</div>
+            <div className="text-sm font-bold text-slate-700">
+              {t('detailRight.smartEmail', { defaultValue: '스마트 이메일' })}
+            </div>
             <div className="ml-auto flex items-center gap-2">
               <div className="px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-xs font-mono text-slate-700">
-                    {safeText(base.smartEmail)}
+                {safeText(base.smartEmail)}
               </div>
               <Button
                 variant="outline"
@@ -159,25 +191,31 @@ export default function ContractDetailRight({ data }: Props) {
               >
                 copy
               </Button>
-              <Button variant="ghost" tone="blue" size="sm" align="start" uniqueClassName="ui-standard-right-smart-mail">
-                스마트 이메일 보기
+              <Button
+                variant="ghost"
+                tone="blue"
+                size="sm"
+                align="start"
+                uniqueClassName="ui-standard-right-smart-mail"
+              >
+                {t('detailRight.viewSmartEmail', { defaultValue: '스마트 이메일 보기' })}
               </Button>
             </div>
           </div>
 
           <div className="flex items-center justify-between">
             <Button variant="outline" tone="slate" uniqueClassName="ui-standard-right-workflow">
-              워크플로우 설정
+              {t('detailRight.workflowConfig', { defaultValue: '워크플로우 설정' })}
             </Button>
             <Button tone="blue" uniqueClassName="ui-standard-right-compare">
-              계약서 비교보기
+              {t('detailRight.compareContract', { defaultValue: '계약서 비교보기' })}
             </Button>
           </div>
 
           <div className="flex items-center gap-4 text-sm text-slate-600">
-            <Checkbox label="계약 수정 내역" />
-            <Checkbox label="첨부파일" />
-            <Checkbox label="코멘트" />
+            <Checkbox label={t('detailRight.history', { defaultValue: '계약 수정 내역' })} />
+            <Checkbox label={t('detailRight.files', { defaultValue: '첨부파일' })} />
+            <Checkbox label={t('detailRight.comments', { defaultValue: '코멘트' })} />
           </div>
 
           <div className="pt-2">
@@ -191,7 +229,9 @@ export default function ContractDetailRight({ data }: Props) {
                 </div>
               </div>
               <div className="pt-1 w-full">
-                <div className="text-sm font-bold text-slate-900">법률_최종승인자: 최종승인</div>
+                <div className="text-sm font-bold text-slate-900">
+                  {t('detailRight.finalApprovalRole', { defaultValue: '법률_최종승인자: 최종승인' })}
+                </div>
                 <div className="text-xs text-slate-400 mt-1">26/01/12 10:26</div>
                 <div className="mt-3">
                   <Input

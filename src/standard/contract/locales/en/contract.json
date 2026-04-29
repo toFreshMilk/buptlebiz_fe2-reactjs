@@ -3,6 +3,12 @@
   "main": {
     "summary_total_label": "Total",
     "summary_count_unit": "items",
+    "summary_action": "Action",
+    "summary_detail": "Detail",
+    "chart_title": "Status Distribution (Recharts)",
+    "chart_count": "Count",
+    "table_title": "Contract Table (TanStack Table)",
+    "table_search_placeholder": "Search contracts...",
     "actions": {
       "show_fields": "Show fields",
       "per_page_10": "10 per page"
@@ -41,5 +47,84 @@
     "active": "Pending signature/seal",
     "approved": "Approved",
     "done": "Completed"
+  },
+  "detailLeft": {
+    "titleFallback": "Contract details",
+    "basicInfo": "Basic Info",
+    "requester": "Requester",
+    "partner": "Partner",
+    "category": "Category",
+    "templateName": "Template",
+    "reviewer": "Reviewer",
+    "amount": "Amount",
+    "documentCode": "Doc Code",
+    "documentStatus": "Doc Status",
+    "userInfo": "User Info",
+    "userInfoDesc": "(Demo) User info section. Actual fields will be populated upon service integration.",
+    "miscInfo": "Misc Info",
+    "miscInfoDesc": "(Demo) Miscellaneous info section.",
+    "contractDoc": "Contract Document",
+    "contractDocDesc": "(Demo) Contract body and attachments section."
+  },
+  "detailRight": {
+    "downloadStamp": "Download for stamp",
+    "confirmStamp": "Confirm stamp",
+    "shareLegal": "Share with Legal",
+    "shareLegalDesc": "Sharing targets and permissions configuration area.",
+    "schedule": "Signing / Review Schedule",
+    "signDate": "Expected Sign Date",
+    "signDateDesc": "Single date selection",
+    "reviewRange": "Review Period",
+    "reviewRangeDesc": "Date range selection",
+    "weeklyActivity": "Weekly Activity (Recharts)",
+    "comments": "Comments",
+    "files": "Files",
+    "emptyActivity": "No activity data.",
+    "progress": "Progress",
+    "smartEmail": "Smart Email",
+    "viewSmartEmail": "View Smart Email",
+    "workflowConfig": "Workflow Config",
+    "compareContract": "Compare Contract",
+    "history": "Revision History",
+    "finalApprovalRole": "Legal Approver: Final Approval",
+    "defaultComment": "Approved."
+  },
+  "list": {
+    "header": {
+      "id": "ID",
+      "title": "Title",
+      "partner": "Partner",
+      "status": "Status",
+      "amount": "Amount",
+      "date": "Date"
+    },
+    "showingResults": "Showing {{count}} results"
+  },
+  "sidebar": {
+    "tab": {
+      "all": "All",
+      "draft": "Draft",
+      "review": "Review",
+      "active": "Active"
+    },
+    "createModal": {
+      "title": "Create Contract",
+      "message": "Starts the flow to create a new contract. (Demo)",
+      "confirm": "OK"
+    },
+    "title": "Contracts",
+    "btnCreate": "Create Contract",
+    "searchLabel": "Title",
+    "searchPlaceholder": "Enter search terms",
+    "statusLabel": "Status",
+    "resetFilter": "Reset Filter",
+    "category": "Category",
+    "categoryOptions": {
+      "all": "All",
+      "company": "Company Template",
+      "marketing": "Marketing/PR",
+      "test": "Test Purpose",
+      "security": "Security"
+    }
   }
 }

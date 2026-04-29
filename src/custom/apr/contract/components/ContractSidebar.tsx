@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Button } from '@/uikit/form/Button';
 import { Input } from '@/uikit/form/Input';
 import { Select } from '@/uikit/form/Select';
@@ -13,6 +14,7 @@ function buildUrl(pathname: string, params: URLSearchParams) {
 
 export default function AprContractSidebar() {
   const { config } = useAppConfig();
+  const { t } = useCoreTranslation('contract');
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -21,20 +23,20 @@ export default function AprContractSidebar() {
   const query = searchParams.get('q') ?? '';
   const tab = searchParams.get('tab') ?? 'all';
   const tabOptions = [
-    { label: '전체', value: 'all' },
-    { label: '초안', value: 'draft' },
-    { label: '검토', value: 'review' },
-    { label: '진행', value: 'active' },
+    { label: t('sidebar.tab.all', { defaultValue: '전체' }), value: 'all' },
+    { label: t('sidebar.tab.draft', { defaultValue: '초안' }), value: 'draft' },
+    { label: t('sidebar.tab.review', { defaultValue: '검토' }), value: 'review' },
+    { label: t('sidebar.tab.active', { defaultValue: '진행' }), value: 'active' },
   ];
 
   return (
     <aside className="w-72 shrink-0 space-y-4">
       <Modal
         open={createModalOpen}
-        title="APR 계약 생성"
-        message="APR 전용 계약 생성 플로우를 시작합니다."
+        title={t('sidebar.createModal.title', { defaultValue: 'APR 계약 생성' })}
+        message={t('sidebar.createModal.message', { defaultValue: 'APR 전용 계약 생성 플로우를 시작합니다.' })}
         variant="single"
-        confirmText="확인"
+        confirmText={t('cmmn_ok', { defaultValue: '확인' })}
         onConfirm={() => setCreateModalOpen(false)}
         onClose={() => setCreateModalOpen(false)}
         uniqueClassName="ui-apr-create-modal"
@@ -42,9 +44,9 @@ export default function AprContractSidebar() {
 
       <div className="bg-white rounded-2xl border border-rose-200 shadow-sm p-4">
         <div className="flex items-center justify-between mb-3">
-          <div className="text-lg font-black text-rose-700">APR 계약</div>
+          <div className="text-lg font-black text-rose-700">{t('sidebar.title', { defaultValue: 'APR 계약' })}</div>
           <span className="text-[10px] font-black px-2 py-1 rounded-full border border-rose-200 bg-rose-50 text-rose-700">
-            APR
+            {t('apr.badge', { defaultValue: 'APR' })}
           </span>
         </div>
 
@@ -56,12 +58,12 @@ export default function AprContractSidebar() {
           style={{ backgroundColor: config.theme.primaryColor }}
           onPress={() => setCreateModalOpen(true)}
         >
-          APR 계약 생성
+          {t('sidebar.btnCreate', { defaultValue: 'APR 계약 생성' })}
         </Button>
 
         <div className="mt-4">
           <Input
-            label="계약명"
+            label={t('sidebar.searchLabel', { defaultValue: '계약명' })}
             value={query}
             tone="rose"
             shape="xl"
@@ -73,13 +75,13 @@ export default function AprContractSidebar() {
               if (!next.get('tab')) next.set('tab', tab);
               navigate(buildUrl(location.pathname, next), { replace: true });
             }}
-            placeholder="APR 계약 검색"
+            placeholder={t('sidebar.searchPlaceholder', { defaultValue: 'APR 계약 검색' })}
           />
         </div>
 
         <div className="mt-3">
           <Select
-            label="상태"
+            label={t('sidebar.statusLabel', { defaultValue: '상태' })}
             value={tab}
             options={tabOptions}
             tone="rose"
@@ -106,15 +108,20 @@ export default function AprContractSidebar() {
               navigate(buildUrl(location.pathname, next), { replace: true });
             }}
           >
-            필터 초기화
+            {t('sidebar.resetFilter', { defaultValue: '필터 초기화' })}
           </Button>
         </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-rose-200 shadow-sm p-4">
-        <div className="font-bold text-rose-800">APR 전용 메뉴</div>
+        <div className="font-bold text-rose-800">{t('sidebar.category', { defaultValue: 'APR 전용 메뉴' })}</div>
         <div className="mt-3 space-y-2 text-sm">
-          {['해외법인', '공급계약', '디바이스', '광고/마케팅'].map((label, index) => (
+          {[
+            t('sidebar.categoryOptions.overseas', { defaultValue: '해외법인' }),
+            t('sidebar.categoryOptions.supply', { defaultValue: '공급계약' }),
+            t('sidebar.categoryOptions.device', { defaultValue: '디바이스' }),
+            t('sidebar.categoryOptions.marketing', { defaultValue: '광고/마케팅' })
+          ].map((label, index) => (
             <Button
               key={label}
               fullWidth

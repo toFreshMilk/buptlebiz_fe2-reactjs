@@ -4,6 +4,34 @@
   "cmmn_ok": "확인",
   "cmmn_cancel": "취소",
   "workspace_banner": {
-    "demo": "데모 모드입니다."
+    "demo": "데모 모드입니다.",
+    "apr": "APR 전용 환경입니다."
+  },
+  "uikit": {
+    "table": {
+      "emptyText": "데이터가 없습니다.",
+      "searchPlaceholder": "검색...",
+      "itemsPerPage": "{{count}}개씩",
+      "paginationInfo": "총 {{total}}건 / 페이지 {{current}} / {{pages}}",
+      "prev": "이전",
+      "next": "다음"
+    },
+    "chart": {
+      "emptyText": "표시할 데이터가 없습니다."
+    },
+    "modal": {
+      "defaultTitle": "알림"
+    }
+  },
+  "error": {
+    "internal": {
+      "title": "오류가 발생했습니다!"
+    },
+    "root": {
+      "message": "루트 오류"
+    },
+    "notFound": "페이지를 찾을 수 없습니다",
+    "refresh": "페이지 새로고침",
+    "goHome": "홈으로 이동"
   }
 }

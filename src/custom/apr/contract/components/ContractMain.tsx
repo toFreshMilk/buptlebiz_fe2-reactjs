@@ -124,15 +124,15 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
   const tableColumns: Array<ColumnDef<ContractItem, unknown>> = [
     {
       accessorKey: 'id',
-      header: 'ID',
+      header: t('list.header.id', { defaultValue: 'ID' }),
     },
     {
       accessorKey: 'title',
-      header: '계약명',
+      header: t('list.header.title', { defaultValue: '계약명' }),
     },
     {
       accessorKey: 'status',
-      header: '상태',
+      header: t('list.header.status', { defaultValue: '상태' }),
     },
   ];
 
@@ -179,11 +179,11 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm">
-          <div className="mb-2 text-sm font-bold text-slate-800">APR 상태 차트 (Recharts 샘플)</div>
+          <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.chart_title', { defaultValue: 'APR 상태 차트 (Recharts 샘플)' })}</div>
           <BarChart
             data={statusChartData}
             xKey="status"
-            series={[{ dataKey: 'count', name: '건수', color: config.theme.primaryColor }]}
+            series={[{ dataKey: 'count', name: t('main.chart_count', { defaultValue: '건수' }), color: config.theme.primaryColor }]}
             height={220}
             onBarClick={({ row }) => {
               const status = String(row.status ?? '').toLowerCase();
@@ -196,11 +196,11 @@ export default function AprContractMain({ contracts }: AprContractMainProps) {
         </div>
 
         <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm">
-          <div className="mb-2 text-sm font-bold text-slate-800">APR 테이블 (TanStack Table 샘플)</div>
+          <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.table_title', { defaultValue: 'APR 테이블 (TanStack Table 샘플)' })}</div>
           <DataTable
             data={filtered}
             columns={tableColumns}
-            globalFilterPlaceholder="계약명 검색"
+            globalFilterPlaceholder={t('main.table_search_placeholder', { defaultValue: '계약명 검색' })}
             onRowClick={(row) => navigate(`${location.pathname}/${row.id}`)}
             uniqueClassName="ui-apr-main-table"
             tableUniqueClassName="border-rose-200"

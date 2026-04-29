@@ -9,7 +9,8 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import type { DataKey } from 'recharts/types/util/types';
+import type { DataKey } from 'recharts';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 
 export type ChartRow = Record<string, string | number | null | undefined>;
 
@@ -52,13 +53,16 @@ export function BarChart<T extends ChartRow>({
   showXAxis = true,
   showYAxis = true,
   uniqueClassName,
-  emptyFallback = <div className="text-sm text-slate-400">표시할 데이터가 없습니다.</div>,
+  emptyFallback,
   tooltipLabelFormatter,
   tooltipValueFormatter,
   onBarClick,
 }: Props<T>) {
+  const { t } = useCoreTranslation('common');
+  const defaultEmptyFallback = <div className="text-sm text-slate-400">{t('uikit.chart.emptyText', { defaultValue: '표시할 데이터가 없습니다.' })}</div>;
+
   if (!data.length || !series.length) {
-    return <div className={uniqueClassName}>{emptyFallback}</div>;
+    return <div className={uniqueClassName}>{emptyFallback ?? defaultEmptyFallback}</div>;
   }
 
   return (

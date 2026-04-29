@@ -100,7 +100,7 @@ export default function ContractDetailTop({ data, contractId }: Props) {
         message={t('detailTop.confirmApprove', { defaultValue: '정말 승인하시겠습니까?' })}
         variant="double"
         confirmText={t('detailTop.approve', { defaultValue: '승인' })}
-        cancelText="취소"
+        cancelText={t('cmmn_cancel', { defaultValue: '취소' })}
         onConfirm={() => {
           setApproveModalOpen(false);
           submitApprove();

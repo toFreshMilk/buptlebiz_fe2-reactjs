@@ -4,25 +4,36 @@ import KoreanPostpositionProcessor from 'i18next-korean-postposition-processor';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { I18N_CONFIG } from '@/core/config/tenant.config';
 import { STANDARD_I18N_OWNER_BY_NAMESPACE } from '@/standard/registry';
+import { deepMerge } from '@/core/utils/object.util';
 
-// [1] Glob 패턴: 각 도메인별 폴더에서 locales를 가져옵니다.
-// 예: /src/standard/contract/locales/ko/contract.json
 const standardLocales = import.meta.glob('/src/standard/**/locales/*/*.json');
+const customLocales = import.meta.glob('/src/custom/**/locales/*/*.json');
 
 i18n
   .use(initReactI18next)
   .use(KoreanPostpositionProcessor as any)
   .use(
-    resourcesToBackend((language: string, namespace: string) => {
-      // Registry에서 해당 네임스페이스의 오너(디렉토리명)를 찾습니다.
+    resourcesToBackend(async (language: string, namespace: string) => {
       const owner = (STANDARD_I18N_OWNER_BY_NAMESPACE as Record<string, string>)[namespace] || 'shared';
-      const targetKey = `/src/standard/${owner}/locales/${language}/${namespace}.json`;
+      
+      const hostname = window.location.hostname;
+      const tenantId = hostname.split('.')[0] || 'demo';
 
-      if (standardLocales[targetKey]) {
-        return standardLocales[targetKey]().then((mod: any) => mod.default);
+      const standardKey = `/src/standard/${owner}/locales/${language}/${namespace}.json`;
+      const customKey = `/src/custom/${tenantId}/${owner}/locales/${language}/${namespace}.json`;
+
+      let base = {};
+      let override = {};
+
+      if (standardLocales[standardKey]) {
+        base = await standardLocales[standardKey]().then((mod: any) => mod.default);
       }
 
-      return Promise.resolve({});
+      if (customLocales[customKey]) {
+        override = await customLocales[customKey]().then((mod: any) => mod.default);
+      }
+
+      return deepMerge(base, override);
     }),
   )
   .init({

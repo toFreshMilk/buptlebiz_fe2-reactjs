@@ -4,6 +4,34 @@
   "cmmn_ok": "OK",
   "cmmn_cancel": "Cancel",
   "workspace_banner": {
-    "demo": "Demo mode. "
+    "demo": "Demo mode.",
+    "apr": "APR environment only."
+  },
+  "uikit": {
+    "table": {
+      "emptyText": "No data available.",
+      "searchPlaceholder": "Search...",
+      "itemsPerPage": "{{count}} per page",
+      "paginationInfo": "Total {{total}} / Page {{current}} of {{pages}}",
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "chart": {
+      "emptyText": "No data to display."
+    },
+    "modal": {
+      "defaultTitle": "Notice"
+    }
+  },
+  "error": {
+    "internal": {
+      "title": "Something went wrong!"
+    },
+    "root": {
+      "message": "Root Error"
+    },
+    "notFound": "Page not found",
+    "refresh": "Refresh Page",
+    "goHome": "Go Home"
   }
 }

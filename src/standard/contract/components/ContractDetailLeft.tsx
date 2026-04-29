@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import type { StandardContractDto } from '@/standard/contract/services/contract.service';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 
 function formatAmount(v?: string) {
   if (!v) return '-';
@@ -35,6 +36,7 @@ interface Props {
 }
 
 export default function ContractDetailLeft({ data }: Props) {
+  const { t } = useCoreTranslation('contract');
   const params = useParams<{ lang: string; id: string }>();
   const contractId = params?.id;
 
@@ -42,17 +44,17 @@ export default function ContractDetailLeft({ data }: Props) {
 
   const base = contract ?? {
     id: contractId ?? '-',
-    title: '계약 상세',
+    title: t('detailLeft.titleFallback', { defaultValue: '계약 상세' }),
     status: 'Active',
   };
 
   const derived = {
     ...base,
     partner: base.partner ?? 'Apple',
-    category: base.category ?? '테스트',
-    templateName: base.templateName ?? '법률QA체결계약서',
-    requester: base.requester ?? '법률_생성자',
-    reviewer: base.reviewer ?? '법률_검토자',
+    category: base.category ?? t('detailLeft.fallback.category', { defaultValue: '테스트' }),
+    templateName: base.templateName ?? t('detailLeft.fallback.template', { defaultValue: '법률QA체결계약서' }),
+    requester: base.requester ?? t('detailLeft.fallback.requester', { defaultValue: '법률_생성자' }),
+    reviewer: base.reviewer ?? t('detailLeft.fallback.reviewer', { defaultValue: '법률_검토자' }),
     documentCode: base.documentCode ?? '-',
     date: base.date ?? '26/01/12',
     amount: base.amount ?? '231,213',
@@ -60,55 +62,55 @@ export default function ContractDetailLeft({ data }: Props) {
 
   return (
     <section className="space-y-4">
-      <Card title="기본정보">
+      <Card title={t('detailLeft.basicInfo', { defaultValue: '기본정보' })}>
         <div>
-          <InfoRow label="기안자" value={safeText(derived.requester)} />
-          <InfoRow label="계약 상대방" value={safeText(derived.partner)} />
-          <InfoRow label="카테고리" value={safeText(derived.category)} />
-          <InfoRow label="템플릿명" value={safeText(derived.templateName)} />
-          <InfoRow label="검토자" value={safeText(derived.reviewer)} />
+          <InfoRow label={t('detailLeft.requester', { defaultValue: '기안자' })} value={safeText(derived.requester)} />
+          <InfoRow label={t('detailLeft.partner', { defaultValue: '계약 상대방' })} value={safeText(derived.partner)} />
+          <InfoRow label={t('detailLeft.category', { defaultValue: '카테고리' })} value={safeText(derived.category)} />
+          <InfoRow label={t('detailLeft.templateName', { defaultValue: '템플릿명' })} value={safeText(derived.templateName)} />
+          <InfoRow label={t('detailLeft.reviewer', { defaultValue: '검토자' })} value={safeText(derived.reviewer)} />
           <InfoRow
-            label="계약금액"
+            label={t('detailLeft.amount', { defaultValue: '계약금액' })}
             value={
               <span className="font-bold">
                 {formatAmount(derived.amount)} <span className="text-slate-400 text-xs">KRW</span>
               </span>
             }
           />
-          <InfoRow label="전자결재 문서코드" value={safeText(derived.documentCode)} />
-          <InfoRow label="전자결재 진행상태" value="-" />
+          <InfoRow label={t('detailLeft.documentCode', { defaultValue: '전자결재 문서코드' })} value={safeText(derived.documentCode)} />
+          <InfoRow label={t('detailLeft.documentStatus', { defaultValue: '전자결재 진행상태' })} value="-" />
         </div>
       </Card>
 
       <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" open>
         <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
-          <div className="font-black text-slate-900">유저정보</div>
+          <div className="font-black text-slate-900">{t('detailLeft.userInfo', { defaultValue: '유저정보' })}</div>
           <div className="text-slate-400">⌄</div>
         </summary>
         <div className="px-5 pb-5">
           <div className="text-sm text-slate-500">
-            (데모) 유저정보 영역입니다. 실제 필드는 서비스 연동 시 채워집니다.
+            {t('detailLeft.userInfoDesc', { defaultValue: '(데모) 유저정보 영역입니다. 실제 필드는 서비스 연동 시 채워집니다.' })}
           </div>
         </div>
       </details>
 
       <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
-          <div className="font-black text-slate-900">기타 정보</div>
+          <div className="font-black text-slate-900">{t('detailLeft.miscInfo', { defaultValue: '기타 정보' })}</div>
           <div className="text-slate-400">⌄</div>
         </summary>
         <div className="px-5 pb-5">
-          <div className="text-sm text-slate-500">(데모) 기타 정보 영역입니다.</div>
+          <div className="text-sm text-slate-500">{t('detailLeft.miscInfoDesc', { defaultValue: '(데모) 기타 정보 영역입니다.' })}</div>
         </div>
       </details>
 
       <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" open>
         <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
-          <div className="font-black text-slate-900">계약서</div>
+          <div className="font-black text-slate-900">{t('detailLeft.contractDoc', { defaultValue: '계약서' })}</div>
           <div className="text-slate-400">⌄</div>
         </summary>
         <div className="px-5 pb-5">
-          <div className="text-sm text-slate-500">(데모) 계약서 본문/첨부 영역입니다.</div>
+          <div className="text-sm text-slate-500">{t('detailLeft.contractDocDesc', { defaultValue: '(데모) 계약서 본문/첨부 영역입니다.' })}</div>
         </div>
       </details>
     </section>

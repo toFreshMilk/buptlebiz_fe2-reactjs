@@ -2,6 +2,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/uikit/form/Button';
 import { BarChart } from '@/uikit/chart/BarChart';
 import { DataTable } from '@/uikit/table/DataTable';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 
 type ContractItem = {
   id: number | string;
@@ -22,6 +23,8 @@ export default function ContractMainSummary({
   onBarClick,
   onRowClick,
 }: ContractMainSummaryProps) {
+  const { t } = useCoreTranslation('contract');
+
   const chartData = [
     {
       status: 'Draft',
@@ -40,19 +43,19 @@ export default function ContractMainSummary({
   const tableColumns: Array<ColumnDef<ContractItem, unknown>> = [
     {
       accessorKey: 'id',
-      header: 'ID',
+      header: t('list.header.id', { defaultValue: 'ID' }),
     },
     {
       accessorKey: 'title',
-      header: '계약명',
+      header: t('list.header.title', { defaultValue: '계약명' }),
     },
     {
       accessorKey: 'status',
-      header: '상태',
+      header: t('list.header.status', { defaultValue: '상태' }),
     },
     {
       id: 'action',
-      header: '액션',
+      header: t('main.summary_action', { defaultValue: '액션' }),
       cell: ({ row }) => (
         <Button
           variant="outline"
@@ -63,7 +66,7 @@ export default function ContractMainSummary({
             onRowClick(row.original.id);
           }}
         >
-          상세
+          {t('main.summary_detail', { defaultValue: '상세' })}
         </Button>
       ),
     },
@@ -72,11 +75,11 @@ export default function ContractMainSummary({
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="mb-2 text-sm font-bold text-slate-800">상태 분포 차트 (Recharts 샘플)</div>
+        <div className="mb-2 text-sm font-bold text-slate-800">{t('main.chart_title', { defaultValue: '상태 분포 차트 (Recharts 샘플)' })}</div>
         <BarChart
           data={chartData}
           xKey="status"
-          series={[{ dataKey: 'count', name: '건수', color: chartColor }]}
+          series={[{ dataKey: 'count', name: t('main.chart_count', { defaultValue: '건수' }), color: chartColor }]}
           height={240}
           onBarClick={({ row }) => {
             const value = String(row.status ?? '').toLowerCase();
@@ -86,11 +89,11 @@ export default function ContractMainSummary({
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="mb-2 text-sm font-bold text-slate-800">계약 테이블 (TanStack Table 샘플)</div>
+        <div className="mb-2 text-sm font-bold text-slate-800">{t('main.table_title', { defaultValue: '계약 테이블 (TanStack Table 샘플)' })}</div>
         <DataTable
           data={filtered}
           columns={tableColumns}
-          globalFilterPlaceholder="계약명 검색"
+          globalFilterPlaceholder={t('main.table_search_placeholder', { defaultValue: '계약명 검색' })}
           onRowClick={(row) => onRowClick(row.id)}
           uniqueClassName="ui-standard-main-table"
         />

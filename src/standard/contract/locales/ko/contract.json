@@ -3,6 +3,12 @@
   "main": {
     "summary_total_label": "전체",
     "summary_count_unit": "건",
+    "summary_action": "액션",
+    "summary_detail": "상세",
+    "chart_title": "상태 분포 차트 (Recharts 샘플)",
+    "chart_count": "건수",
+    "table_title": "계약 테이블 (TanStack Table 샘플)",
+    "table_search_placeholder": "계약명 검색",
     "actions": {
       "show_fields": "필드 표시",
       "per_page_10": "10개씩 보기"
@@ -41,5 +47,84 @@
     "active": "서명/날인대기",
     "approved": "승인",
     "done": "완료"
+  },
+  "detailLeft": {
+    "titleFallback": "계약 상세",
+    "basicInfo": "기본정보",
+    "requester": "기안자",
+    "partner": "계약 상대방",
+    "category": "카테고리",
+    "templateName": "템플릿명",
+    "reviewer": "검토자",
+    "amount": "계약금액",
+    "documentCode": "전자결재 문서코드",
+    "documentStatus": "전자결재 진행상태",
+    "userInfo": "유저정보",
+    "userInfoDesc": "(데모) 유저정보 영역입니다. 실제 필드는 서비스 연동 시 채워집니다.",
+    "miscInfo": "기타 정보",
+    "miscInfoDesc": "(데모) 기타 정보 영역입니다.",
+    "contractDoc": "계약서",
+    "contractDocDesc": "(데모) 계약서 본문/첨부 영역입니다."
+  },
+  "detailRight": {
+    "downloadStamp": "날인용 다운로드",
+    "confirmStamp": "날인 확인",
+    "shareLegal": "법무팀 공유",
+    "shareLegalDesc": "공유 대상/권한 설정 영역입니다.",
+    "schedule": "서명/검토 일정 (DatePicker 샘플)",
+    "signDate": "서명 예정일",
+    "signDateDesc": "단일 날짜 선택",
+    "reviewRange": "검토 기간",
+    "reviewRangeDesc": "기간 선택",
+    "weeklyActivity": "주간 활동량 (Recharts 샘플)",
+    "comments": "코멘트",
+    "files": "첨부파일",
+    "emptyActivity": "활동 데이터가 없습니다.",
+    "progress": "진행상황",
+    "smartEmail": "스마트 이메일",
+    "viewSmartEmail": "스마트 이메일 보기",
+    "workflowConfig": "워크플로우 설정",
+    "compareContract": "계약서 비교보기",
+    "history": "계약 수정 내역",
+    "finalApprovalRole": "법률_최종승인자: 최종승인",
+    "defaultComment": "승인합니다."
+  },
+  "list": {
+    "header": {
+      "id": "ID",
+      "title": "계약명",
+      "partner": "거래처",
+      "status": "상태",
+      "amount": "계약금액",
+      "date": "등록일"
+    },
+    "showingResults": "총 {{count}}건의 검색 결과"
+  },
+  "sidebar": {
+    "tab": {
+      "all": "전체",
+      "draft": "초안",
+      "review": "검토",
+      "active": "진행"
+    },
+    "createModal": {
+      "title": "계약 생성",
+      "message": "새 계약 작성 플로우를 시작합니다. (데모)",
+      "confirm": "확인"
+    },
+    "title": "계약",
+    "btnCreate": "계약 생성",
+    "searchLabel": "계약명",
+    "searchPlaceholder": "검색어를 입력하세요",
+    "statusLabel": "상태",
+    "resetFilter": "검색 초기화",
+    "category": "카테고리",
+    "categoryOptions": {
+      "all": "전체",
+      "company": "회사 템플릿",
+      "marketing": "마케팅/홍보 계약",
+      "test": "테스트용도",
+      "security": "보안"
+    }
   }
 }
