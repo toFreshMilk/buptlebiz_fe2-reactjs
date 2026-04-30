@@ -18,10 +18,6 @@ export function deepMerge(base: Dict, override: Dict): Dict {
   return out;
 }
 
-export function asStringKeyedRecord<T>(obj: unknown): Record<string, T> {
-  return obj as Record<string, T>;
-}
-
 export const isEmpty = (obj: unknown): boolean => {
   if (obj === null || obj === undefined) return true;
   if (typeof obj !== 'object') return true;

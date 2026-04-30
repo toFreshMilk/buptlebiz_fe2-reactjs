@@ -34,7 +34,8 @@ export async function getTenantComponent<T = ComponentType<any>>(tenantId: strin
   const config = await loadTenantConfig(tenantId);
   const { STANDARD_COMPONENT_LOADERS } = await import('@/standard/registry');
 
-  const standardLoader = (STANDARD_COMPONENT_LOADERS as Record<string, ComponentLoader>)[key];
+  const standardLoaders: Record<string, ComponentLoader> = STANDARD_COMPONENT_LOADERS;
+  const standardLoader = standardLoaders[key];
   const loader = config.components?.[key] || standardLoader;
 
   if (!loader) {
@@ -60,7 +61,8 @@ export async function getTenantService<T = any>(tenantId: string, key: string): 
   }
 
   const { STANDARD_SERVICE_LOADERS } = await import('@/standard/registry');
-  const standardLoader = (STANDARD_SERVICE_LOADERS as Record<string, ServiceLoader>)[key];
+  const standardLoaders: Record<string, ServiceLoader> = STANDARD_SERVICE_LOADERS;
+  const standardLoader = standardLoaders[key];
 
   if (!standardLoader) {
     throw new Error(`Service '${key}' not found`);

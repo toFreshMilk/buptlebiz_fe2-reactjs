@@ -13,7 +13,8 @@ i18n
   .use(KoreanPostpositionProcessor as any)
   .use(
     resourcesToBackend(async (language: string, namespace: string) => {
-      const owner = (STANDARD_I18N_OWNER_BY_NAMESPACE as Record<string, string>)[namespace] || 'shared';
+      const ownerMap: Record<string, string> = STANDARD_I18N_OWNER_BY_NAMESPACE;
+      const owner = ownerMap[namespace] || 'shared';
       
       const hostname = window.location.hostname;
       const tenantId = hostname.split('.')[0] || 'demo';

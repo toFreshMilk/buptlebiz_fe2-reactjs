@@ -100,22 +100,16 @@ export default function ContractDetailRight({ data }: Props) {
 
       <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" open>
         <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
-          <div className="font-black text-slate-900">
-            {t('detailRight.shareLegal')}
-          </div>
+          <div className="font-black text-slate-900">{t('detailRight.shareLegal')}</div>
           <div className="text-slate-400">⌄</div>
         </summary>
         <div className="px-5 pb-5">
-          <div className="text-sm text-slate-500">
-            {t('detailRight.shareLegalDesc')}
-          </div>
+          <div className="text-sm text-slate-500">{t('detailRight.shareLegalDesc')}</div>
         </div>
       </details>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
-        <div className="text-sm font-black text-slate-900">
-          {t('detailRight.schedule')}
-        </div>
+        <div className="text-sm font-black text-slate-900">{t('detailRight.schedule')}</div>
         <DatePicker
           mode="single"
           label={t('detailRight.signDate')}
@@ -137,9 +131,7 @@ export default function ContractDetailRight({ data }: Props) {
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
-        <div className="text-sm font-black text-slate-900 mb-2">
-          {t('detailRight.weeklyActivity')}
-        </div>
+        <div className="text-sm font-black text-slate-900 mb-2">{t('detailRight.weeklyActivity')}</div>
         <BarChart
           data={weeklyActivityData}
           xKey="week"
@@ -155,7 +147,7 @@ export default function ContractDetailRight({ data }: Props) {
           onBarClick={({ seriesKey, row }) => {
             console.log('[BarChart] click', seriesKey, row.week);
           }}
-          emptyFallback={<div className="text-sm text-slate-400">활동 데이터가 없습니다.</div>}
+          emptyFallback={<div className="text-sm text-slate-400">{t('detailRight.emptyActivity')}</div>}
         />
       </div>
 
@@ -169,9 +161,7 @@ export default function ContractDetailRight({ data }: Props) {
 
         <div className="p-5 space-y-4">
           <div className="flex items-center gap-2">
-            <div className="text-sm font-bold text-slate-700">
-              {t('detailRight.smartEmail')}
-            </div>
+            <div className="text-sm font-bold text-slate-700">{t('detailRight.smartEmail')}</div>
             <div className="ml-auto flex items-center gap-2">
               <div className="px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-xs font-mono text-slate-700">
                 {safeText(base.smartEmail)}
@@ -229,9 +219,7 @@ export default function ContractDetailRight({ data }: Props) {
                 </div>
               </div>
               <div className="pt-1 w-full">
-                <div className="text-sm font-bold text-slate-900">
-                  {t('detailRight.finalApprovalRole')}
-                </div>
+                <div className="text-sm font-bold text-slate-900">{t('detailRight.finalApprovalRole')}</div>
                 <div className="text-xs text-slate-400 mt-1">26/01/12 10:26</div>
                 <div className="mt-3">
                   <Input

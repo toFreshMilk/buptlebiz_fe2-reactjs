@@ -1,16 +1,12 @@
 import { type ComponentType } from 'react';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
+import { useQueryState, parseAsString, parseAsStringEnum } from 'nuqs';
 import ContractMainHeader from './main/ContractMainHeader';
 import ContractMainTabs from './main/ContractMainTabs';
 import ContractMainSummary from './main/ContractMainSummary';
 import ContractMainBody from './main/ContractMainBody';
-
-function buildUrl(pathname: string, params: URLSearchParams) {
-  const qs = params.toString();
-  return qs ? `${pathname}?${qs}` : pathname;
-}
 
 type TabKey = 'all' | 'draft' | 'review' | 'active';
 type ContractItem = {
@@ -30,10 +26,12 @@ export default function ContractMain({ contracts, ListComponent }: ContractMainP
   const { config } = useAppConfig();
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams] = useSearchParams();
 
-  const query = searchParams.get('q') ?? '';
-  const tab = (searchParams.get('tab') ?? 'all') as TabKey;
+  const [query] = useQueryState('q', parseAsString.withDefault(''));
+  const [tab, setTab] = useQueryState(
+    'tab',
+    parseAsStringEnum<TabKey>(['all', 'draft', 'review', 'active']).withDefault('all')
+  );
 
   const q = query.trim().toLowerCase();
 
@@ -62,20 +60,18 @@ export default function ContractMain({ contracts, ListComponent }: ContractMainP
         tabs={tabs}
         activeTab={tab}
         primaryColor={config.theme.primaryColor}
-        onSelect={(k) => {
-          const next = new URLSearchParams(searchParams.toString());
-          next.set('tab', k);
-          navigate(buildUrl(location.pathname, next), { replace: true });
-        }}
+        onSelect={(k) => setTab(k)}
       />
 
       <ContractMainSummary
         filtered={filtered}
         chartColor={config.theme.primaryColor}
         onBarClick={(status) => {
-          const next = new URLSearchParams(searchParams.toString());
-          if (status && status !== 'all') next.set('tab', status);
-          navigate(buildUrl(location.pathname, next), { replace: true });
+          if (status && status !== 'all') {
+            setTab(status as TabKey);
+          } else {
+            setTab('all');
+          }
         }}
         onRowClick={(id) => navigate(`${location.pathname}/${id}`)}
       />

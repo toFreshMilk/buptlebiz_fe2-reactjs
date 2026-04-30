@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Button } from '@/uikit/form/Button';
@@ -17,6 +18,8 @@ export default function ContractList({ contracts }: { contracts?: ContractRow[] 
   const location = useLocation();
 
   const rows: ContractRow[] = contracts ?? [];
+
+  const [, setPage] = useState(1);
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
@@ -71,10 +74,22 @@ export default function ContractList({ contracts }: { contracts?: ContractRow[] 
       <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center text-xs text-slate-500">
         <span>{t('list.showingResults', { count: rows.length })}</span>
         <div className="flex gap-2">
-          <Button variant="outline" tone="slate" size="sm" uniqueClassName="ui-standard-list-prev">
+          <Button
+            variant="outline"
+            tone="slate"
+            size="sm"
+            uniqueClassName="ui-standard-list-prev"
+            onPress={() => setPage((p) => Math.max(1, p - 1))}
+          >
             Prev
           </Button>
-          <Button variant="outline" tone="slate" size="sm" uniqueClassName="ui-standard-list-next">
+          <Button
+            variant="outline"
+            tone="slate"
+            size="sm"
+            uniqueClassName="ui-standard-list-next"
+            onPress={() => setPage((p) => p + 1)}
+          >
             Next
           </Button>
         </div>

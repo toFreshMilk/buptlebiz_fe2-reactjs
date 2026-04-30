@@ -47,8 +47,10 @@ export type StandardI18nNamespace = keyof typeof STANDARD_I18N_OWNER_BY_NAMESPAC
  */
 export function pickI18nOwnerMap(namespaces: readonly string[]) {
   const out: Record<string, string> = {};
+  const ownerMap: Record<string, string> = STANDARD_I18N_OWNER_BY_NAMESPACE;
+
   for (const ns of namespaces) {
-    const owner = (STANDARD_I18N_OWNER_BY_NAMESPACE as Record<string, string>)[ns];
+    const owner = ownerMap[ns];
     if (!owner) {
       throw new Error(`[i18n registry] unknown namespace: ${ns}`);
     }
