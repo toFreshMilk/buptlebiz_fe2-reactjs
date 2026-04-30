@@ -1,7 +1,7 @@
 // src/app/RootLayout.tsx
 import { useParams, Outlet, Navigate } from 'react-router-dom';
 import { useI18nSync } from '@/core/hooks/useI18nSync';
-import { NuqsAdapter } from 'nuqs/adapters/react-router';
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v7';
 
 const RootLayout = () => {
   const { lang } = useParams<{ lang: string }>();
