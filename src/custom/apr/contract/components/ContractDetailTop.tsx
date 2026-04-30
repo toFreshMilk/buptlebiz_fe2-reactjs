@@ -28,7 +28,7 @@ interface Props {
 }
 
 export default function ContractDetailTop({ data, contractId }: Props) {
-  const contract = data?.find(c => String(c.id) === String(contractId));
+  const contract = data?.find((c) => String(c.id) === String(contractId));
   const navigate = useNavigate();
   const { tenantId, config } = useAppConfig();
   const { t } = useCoreTranslation('contract');
@@ -67,18 +67,15 @@ export default function ContractDetailTop({ data, contractId }: Props) {
     { key: 'done', label: t('detailTop.step.done') },
   ];
 
-  const [state, submitApprove, isPending] = useActionState(
-    async (_prevState: any) => {
-      try {
-        if (!contractId) throw new Error('Contract ID is missing');
-        await contractService.approve(tenantId, contractId);
-        return { success: true, ts: Date.now() };
-      } catch (error: any) {
-        return { error: error.message, ts: Date.now() };
-      }
-    },
-    null
-  );
+  const [state, submitApprove, isPending] = useActionState(async (_prevState: any) => {
+    try {
+      if (!contractId) throw new Error('Contract ID is missing');
+      await contractService.approve(tenantId, contractId);
+      return { success: true, ts: Date.now() };
+    } catch (error: any) {
+      return { error: error.message, ts: Date.now() };
+    }
+  }, null);
 
   useEffect(() => {
     if (state?.success) {
@@ -98,10 +95,9 @@ export default function ContractDetailTop({ data, contractId }: Props) {
       <Modal
         open={approveModalOpen}
         title={t('detailTop.approve')}
-        message={t('detailTop.confirmApprove')}
+        message={t('detailTop.confirmApprove', { title })}
         variant="double"
         confirmText={t('detailTop.approve')}
-        cancelText={t('cmmn_cancel')}
         onConfirm={() => {
           setApproveModalOpen(false);
           submitApprove();
@@ -132,7 +128,13 @@ export default function ContractDetailTop({ data, contractId }: Props) {
 
         <div className="flex items-center gap-2 shrink-0">
           {normalizeStatus(contract?.status ?? '') !== 'approved' && (
-            <form action={submitApprove} onSubmit={(e) => { e.preventDefault(); onApproveClick(); }}>
+            <form
+              action={submitApprove}
+              onSubmit={(e) => {
+                e.preventDefault();
+                onApproveClick();
+              }}
+            >
               <Button
                 type="submit"
                 disabled={isPending || !contractId}

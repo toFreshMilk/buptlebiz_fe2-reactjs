@@ -36,7 +36,6 @@ export default function ContractSidebar() {
         title={t('sidebar.createModal.title')}
         message={t('sidebar.createModal.message')}
         variant="single"
-        confirmText={t('sidebar.createModal.confirm')}
         onConfirm={() => setCreateModalOpen(false)}
         onClose={() => setCreateModalOpen(false)}
         uniqueClassName="ui-standard-create-modal"

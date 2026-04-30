@@ -9,7 +9,7 @@ const InternalError = () => {
   return (
     <div className="p-10 text-center">
       <h2 className="text-2xl font-bold text-red-600 mb-2">{t('error.internal.title')}</h2>
-      <p className="text-gray-600 mb-6">{error.statusText || error.message}</p>
+      <p className="text-slate-600 mb-6">{error.message || 'Unknown Error'}</p>
       <Button onClick={() => window.location.reload()}>{t('error.refresh')}</Button>
     </div>
   );

@@ -9,7 +9,7 @@ interface ModalProps {
   title?: string;
   message: ReactNode;
   variant?: ModalVariant;
-  confirmText: string;
+  confirmText?: string;
   cancelText?: string;
   onConfirm: () => void;
   onCancel?: () => void;
@@ -72,7 +72,7 @@ export default function Modal({
               </Button>
             )}
             <Button tone="blue" uniqueClassName="ui-modal-confirm" onPress={onConfirm}>
-              {confirmText}
+              {confirmText ?? t('cmmn_ok')}
             </Button>
           </div>
         </div>

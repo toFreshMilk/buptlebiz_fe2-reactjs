@@ -97,10 +97,9 @@ export default function ContractDetailTop({ data, contractId }: Props) {
       <Modal
         open={approveModalOpen}
         title={t('detailTop.approve')}
-        message={t('detailTop.confirmApprove')}
+        message={t('detailTop.confirmApprove', { title })}
         variant="double"
         confirmText={t('detailTop.approve')}
-        cancelText={t('cmmn_cancel')}
         onConfirm={() => {
           setApproveModalOpen(false);
           submitApprove();

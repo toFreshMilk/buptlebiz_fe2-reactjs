@@ -36,7 +36,6 @@ export default function AprContractSidebar() {
         title={t('sidebar.createModal.title')}
         message={t('sidebar.createModal.message')}
         variant="single"
-        confirmText={t('cmmn_ok')}
         onConfirm={() => setCreateModalOpen(false)}
         onClose={() => setCreateModalOpen(false)}
         uniqueClassName="ui-apr-create-modal"

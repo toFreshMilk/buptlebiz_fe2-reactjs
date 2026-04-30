@@ -43,5 +43,17 @@
 - **Prop Naming:** HTML 기본 속성과의 충돌 방지를 위해 `inputSize`, `selectSize`와 같이 명명하십시오.
 
 ## 6. 다국어 지원 (i18n)
-- 모든 텍스트는 `locales/*.json`에 정의하고 `useCoreTranslation` 훅을 통해 호출하십시오.
-- 라우팅은 `/:lang/...` (예: `/ko/contract`) 구조를 따릅니다.
+
+### 6.1 전략 및 저장 구조
+- **모듈별 관리**: 다국어 키는 `src/standard/[module]/locales/` 또는 `src/custom/[tenant]/[module]/locales/`에 JSON 형태로 저장합니다.
+- **계층 구조**: JSON 내부는 도메인/컴포넌트 단위의 계층 구조를 가집니다 (예: `main.tabs.all`).
+- **Fallback 로직**: `useCoreTranslation`은 호출 시 지정된 네임스페이스 뒤에 자동으로 `common`을 추가하여, 특정 키가 없을 경우 공통 문구에서 찾아 출력합니다.
+
+### 6.2 호출 가이드 및 문법
+- **기본 호출**: `const { t } = useCoreTranslation(['contract', 'common'])`
+- **동적 데이터 처리**: JSON에 `{{value}}`를 정의하고 `t('key', { value: 'data' })`로 전달합니다.
+- **한국어 조사 처리**: 자동 조사 대응이 필요한 경우 문구 뒤에 `[[가]]`, `[[를]]` 등을 붙여 정의합니다 (예: `{{title}}[[를]] 승인하시겠습니까?`).
+- **테넌트 오버라이드**: 특정 고객사에서만 문구를 바꿔야 할 경우, `tenant.config.ts`의 `i18n` 설정을 통해 `overrides` 객체를 `useCoreTranslation`의 두 번째 인자로 주입합니다.
+
+### 6.3 라우팅 규칙
+- URL은 `/:lang/...` (예: `/ko/contract`) 구조를 따르며, `useI18nSync` 훅을 통해 URL 상태와 i18next 상태를 동기화합니다.

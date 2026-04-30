@@ -47,11 +47,22 @@ function getOverridesSignature(overrides: Overrides) {
   return sig;
 }
 
-export function useCoreTranslation(ns: string, overrides?: Overrides, options?: UseTranslationOptions<any>) {
-  const { t, i18n, ready } = useTranslation(ns, { ...options, useSuspense: false });
+export function useCoreTranslation(namespaces: string | string[], overrides?: Overrides, options?: UseTranslationOptions<any>) {
+  // Array of namespaces support
+  const nsArray = Array.isArray(namespaces) ? namespaces : [namespaces];
+  
+  // Automatically append 'common' namespace at the end if not present, so we can fallback to it
+  if (!nsArray.includes('common')) {
+    nsArray.push('common');
+  }
+
+  const { t, i18n, ready } = useTranslation(nsArray, { ...options, useSuspense: false });
+
+  // For overrides, we apply it to the first namespace (primary)
+  const primaryNs = nsArray[0];
 
   useEffect(() => {
-    if (!overrides) return;
+    if (!overrides || !primaryNs) return;
 
     let cancelled = false;
 
@@ -59,23 +70,25 @@ export function useCoreTranslation(ns: string, overrides?: Overrides, options?: 
       const lang = getActiveLang(i18n);
       const cache = getOverrideCache(i18n);
       const signature = getOverridesSignature(overrides);
-      const cacheKey = `${lang}__${ns}__${signature}`;
+      const cacheKey = `${lang}__${primaryNs}__${signature}`;
 
       if (cache.has(cacheKey)) return;
 
       try {
         if (typeof i18n.hasResourceBundle === 'function') {
-          if (!i18n.hasResourceBundle(lang, ns)) {
-            await i18n.loadNamespaces(ns);
+          if (!i18n.hasResourceBundle(lang, primaryNs)) {
+            await i18n.loadNamespaces(primaryNs);
           }
         } else {
-          await i18n.loadNamespaces(ns);
+          await i18n.loadNamespaces(primaryNs);
         }
-      } finally {
-        if (cancelled) return;
-        i18n.addResourceBundle(lang, ns, overrides, true, true);
-        cache.add(cacheKey);
+      } catch (e) {
+        console.error('[i18n] loadNamespaces failed:', e);
       }
+
+      if (cancelled) return;
+      i18n.addResourceBundle(lang, primaryNs, overrides, true, true);
+      cache.add(cacheKey);
     };
 
     void run();
@@ -90,7 +103,7 @@ export function useCoreTranslation(ns: string, overrides?: Overrides, options?: 
       cancelled = true;
       i18n.off('languageChanged', onLanguageChanged);
     };
-  }, [i18n, ns, overrides]);
+  }, [i18n, primaryNs, overrides]);
 
   return { t, ready, i18n };
 }
