@@ -1,7 +1,7 @@
 // src/core/hooks/useI18nSync.ts
 import { useEffect } from 'react';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
-import i18n from '@/core/i18n/i18n';
+import i18n from '@/core/service/i18n';
 
 export const useI18nSync = (lang?: string) => {
   const { config } = useAppConfig();
