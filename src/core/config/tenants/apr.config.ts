@@ -5,7 +5,7 @@ import '@/custom/apr/apr.css'; // [추가] 이 설정파일이 로드될 때 CSS
 const config: TenantConfig = {
   id: 'apr',
   name: 'APR Corp',
-  features: { i18n: ['ko', 'en'], defaultLang: 'ko', ai: false, sso: false },
+  features: { i18n: ['ko'], defaultLang: 'ko', ai: false, sso: false },
   theme: { primaryColor: '#e11d48' },
 
   // APR은 Standard 페이지를 유지하고, 리포트/배너 같은 일부만 교체
