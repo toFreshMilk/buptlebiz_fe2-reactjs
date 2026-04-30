@@ -1,58 +1,68 @@
 {
   "apr": {
     "badge": "APR",
-    "desk": "Contract Desk",
-    "board_title": "Contract Workboard",
-    "board_desc": "Manage contract statuses on a board based on groupware integration.",
+    "desk": "[APR] Contract Desk",
+    "board_title": "🚀 [APR] Contract Workboard",
+    "board_desc": "[APR Only] Manage contracts with GW integration",
     "actions": {
-      "sync": "Sync",
-      "approval": "Approval Settings"
+      "sync": "🔄 [APR] Sync",
+      "approval": "✍️ [APR] Approval Config"
     },
     "alerts": {
-      "sync_demo": "APR only: Groupware sync (demo)",
-      "approval_demo": "APR only: Approval line settings (demo)"
+      "sync_demo": "[APR] Real-time GW Sync Demo",
+      "approval_demo": "[APR] Custom Approval Line Demo"
     },
     "stat": {
-      "total": "TOTAL",
-      "active": "ACTIVE",
-      "review": "REVIEW",
-      "draft": "DRAFT"
+      "total": "[APR] TOTAL",
+      "active": "[APR] ACTIVE",
+      "review": "[APR] REVIEW",
+      "draft": "[APR] DRAFT"
     },
     "columns": {
-      "empty": "No items to display.",
+      "empty": "[APR] No items found",
       "review": {
-        "title": "Review",
-        "hint": "Legal review / change requests"
+        "title": "[APR] Legal Review",
+        "hint": "Pending legal review"
       },
       "active": {
-        "title": "In Progress",
-        "hint": "Signing / collection / execution"
+        "title": "[APR] In Progress",
+        "hint": "Signing / collection"
       },
       "draft": {
-        "title": "Draft",
-        "hint": "Contracts being drafted"
+        "title": "[APR] Drafting",
+        "hint": "Draft contracts"
       }
     },
-    "card": {
-      "status_label": "Status"
-    },
-    "chart_title": "APR Status Chart",
-    "table_title": "APR Table"
+    "chart_title": "📊 [APR] Status Distribution",
+    "table_title": "📋 [APR] Master Table"
   },
   "sidebar": {
     "createModal": {
-      "title": "Create APR Contract",
-      "message": "Start the APR exclusive contract creation flow."
+      "title": "🆕 [APR] Create New Contract",
+      "message": "[APR Only] Starting the contract creation flow."
     },
-    "title": "APR Contracts",
-    "btnCreate": "Create APR Contract",
-    "searchPlaceholder": "Search APR contracts",
-    "category": "APR Exclusive Menu",
+    "title": "[APR] Contract Center",
+    "btnCreate": "➕ [APR] Create",
+    "searchPlaceholder": "🔍 [APR] Search...",
+    "category": "📂 [APR] Categories",
     "categoryOptions": {
-      "overseas": "Overseas Corporation",
-      "supply": "Supply Contract",
-      "device": "Device",
-      "marketing": "Ad / Marketing"
+      "overseas": "[APR] Overseas Corp",
+      "supply": "[APR] Supply",
+      "device": "[APR] Device",
+      "marketing": "[APR] Marketing"
     }
+  },
+  "main": {
+    "tabs": {
+      "active": "⚡ [APR] Sign & Collect"
+    },
+    "table_search_placeholder": "🔍 [APR] Unified Search"
+  },
+  "detailTop": {
+    "approve": "✅ [APR] Approve",
+    "delete": "🗑️ [APR] Delete"
+  },
+  "detailRight": {
+    "shareLegal": "⚖️ [APR] Express Share with Legal"
   }
 }

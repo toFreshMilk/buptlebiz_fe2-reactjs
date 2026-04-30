@@ -1,58 +1,68 @@
 {
   "apr": {
     "badge": "APR",
-    "desk": "Contract Desk",
-    "board_title": "계약 워크보드",
-    "board_desc": "그룹웨어 연동 기반 계약 상태를 보드로 관리합니다.",
+    "desk": "[APR] Contract Desk",
+    "board_title": "🚀 [APR] 계약 워크보드",
+    "board_desc": "[APR 전용] 그룹웨어 연동 기반 계약 상태 관리",
     "actions": {
-      "sync": "동기화",
-      "approval": "결재 설정"
+      "sync": "🔄 [APR] 동기화",
+      "approval": "✍️ [APR] 결재 설정"
     },
     "alerts": {
-      "sync_demo": "APR 전용: 그룹웨어 동기화 (데모)",
-      "approval_demo": "APR 전용: 승인 라인 설정 (데모)"
+      "sync_demo": "[APR] 그룹웨어 실시간 동기화 데모",
+      "approval_demo": "[APR] 승인 라인 커스텀 설정 데모"
     },
     "stat": {
-      "total": "전체",
-      "active": "활성",
-      "review": "리뷰",
-      "draft": "검토"
+      "total": "[APR] 전체",
+      "active": "[APR] 활성",
+      "review": "[APR] 리뷰",
+      "draft": "[APR] 검토"
     },
     "columns": {
-      "empty": "표시할 항목이 없습니다.",
+      "empty": "[APR] 데이터 없음",
       "review": {
-        "title": "검토",
-        "hint": "법무 검토/수정 요청"
+        "title": "[APR] 법무 검토",
+        "hint": "법무팀 검토 대기 항목"
       },
       "active": {
-        "title": "진행",
-        "hint": "서명/회수/체결 진행"
+        "title": "[APR] 체결 진행",
+        "hint": "서명/회수 진행 항목"
       },
       "draft": {
-        "title": "초안",
-        "hint": "작성 중인 계약"
+        "title": "[APR] 작성 중",
+        "hint": "임시 저장된 계약"
       }
     },
-    "card": {
-      "status_label": "상태"
-    },
-    "chart_title": "APR 상태 차트 (Recharts 샘플)",
-    "table_title": "APR 테이블 (TanStack Table 샘플)"
+    "chart_title": "📊 [APR] 상태 분포 현황",
+    "table_title": "📋 [APR] 계약 마스터 테이블"
   },
   "sidebar": {
     "createModal": {
-      "title": "APR 계약 생성",
-      "message": "APR 전용 계약 생성 플로우를 시작합니다."
+      "title": "🆕 [APR] 신규 계약 생성",
+      "message": "[APR 전용] 계약 생성 프로세스를 시작합니다."
     },
-    "title": "APR 계약",
-    "btnCreate": "APR 계약 생성",
-    "searchPlaceholder": "APR 계약 검색",
-    "category": "APR 전용 메뉴",
+    "title": "[APR] 계약 센터",
+    "btnCreate": "➕ [APR] 계약 생성",
+    "searchPlaceholder": "🔍 [APR] 계약 검색...",
+    "category": "📂 [APR] 전용 분류",
     "categoryOptions": {
-      "overseas": "해외법인",
-      "supply": "공급계약",
-      "device": "디바이스",
-      "marketing": "광고/마케팅"
+      "overseas": "[APR] 해외법인",
+      "supply": "[APR] 공급계약",
+      "device": "[APR] 디바이스",
+      "marketing": "[APR] 마케팅"
     }
+  },
+  "main": {
+    "tabs": {
+      "active": "⚡ [APR] 서명 및 회수"
+    },
+    "table_search_placeholder": "🔍 [APR] 통합 검색 (상세)"
+  },
+  "detailTop": {
+    "approve": "✅ [APR] 승인하기",
+    "delete": "🗑️ [APR] 삭제"
+  },
+  "detailRight": {
+    "shareLegal": "⚖️ [APR] 법무팀 특급 공유"
   }
 }
