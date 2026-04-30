@@ -4,8 +4,7 @@
   "cmmn_ok": "확인",
   "cmmn_cancel": "취소",
   "workspace_banner": {
-    "demo": "데모 모드입니다.",
-    "apr": "APR 전용 환경입니다."
+    "demo": "데모 모드입니다."
   },
   "uikit": {
     "table": {

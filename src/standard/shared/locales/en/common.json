@@ -4,8 +4,7 @@
   "cmmn_ok": "OK",
   "cmmn_cancel": "Cancel",
   "workspace_banner": {
-    "demo": "Demo mode.",
-    "apr": "APR environment only."
+    "demo": "Demo mode."
   },
   "uikit": {
     "table": {
