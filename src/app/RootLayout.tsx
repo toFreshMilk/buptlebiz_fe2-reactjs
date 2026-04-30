@@ -1,22 +1,12 @@
 // src/app/RootLayout.tsx
-import { useEffect } from 'react';
 import { useParams, Outlet, Navigate } from 'react-router-dom';
-import i18n from '@/core/i18n/i18n';
-import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useI18nSync } from '@/core/hooks/useI18nSync';
 
 const RootLayout = () => {
   const { lang } = useParams<{ lang: string }>();
-  const { config } = useAppConfig();
-  const supportedLangs = config.features.i18n;
-  const defaultLang = supportedLangs[0];
+  const { isInvalidLang, defaultLang } = useI18nSync(lang);
 
-  useEffect(() => {
-    if (lang && i18n.language !== lang) {
-      i18n.changeLanguage(lang);
-    }
-  }, [lang]);
-
-  if (lang && !supportedLangs.includes(lang)) {
+  if (isInvalidLang) {
     return <Navigate to={`/${defaultLang}`} replace />;
   }
 

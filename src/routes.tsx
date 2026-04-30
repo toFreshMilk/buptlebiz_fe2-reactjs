@@ -16,7 +16,7 @@ import RootError from '@/app/RootError.tsx';
 
 const DefaultRedirect = () => {
   const { config } = useAppConfig();
-  return <Navigate to={`/${config.features.i18n[0]}/contract`} replace />;
+  return <Navigate to={`/${config.features.defaultLang}/contract`} replace />;
 };
 
 export const routes: RouteObject[] = [
