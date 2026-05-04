@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "output=$(npx tsc --noEmit 2>&1); code=$?; [ $code -ne 0 ] && echo \"$output\" && exit 2; exit 0",
+            "shell": "bash",
+            "asyncRewake": true,
+            "statusMessage": "tsc 검사 중...",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
