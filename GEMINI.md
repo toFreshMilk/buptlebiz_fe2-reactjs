@@ -1,6 +1,7 @@
 # 프로젝트 컨벤션 가이드 (buptlebiz_fe2)
 
 ## 1. 기술 스택 및 환경 (Tech Stack)
+- **Package Manager:** `pnpm` (필수). 모든 패키지 설치(`pnpm install`), 스크립트 실행(`pnpm run`), 일회성 패키지 실행(`pnpm dlx`)에는 반드시 `pnpm`을 사용하십시오. `npm` 및 `yarn` 사용은 엄격히 금지됩니다.
 - **Core:** Vite + React 19 + React Router v7 (`react-router-dom`)
 - **State:** TanStack Query v5 (Server State), `nuqs` (URL Query State)
 - **Styling:** Tailwind CSS v4, Vanilla CSS
