@@ -1,4 +1,3 @@
-// src/App.tsx
 import { Suspense } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';

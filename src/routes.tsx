@@ -1,4 +1,3 @@
-// src/routes.tsx
 /* eslint-disable react-refresh/only-export-components */
 import { RouteObject, Navigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';

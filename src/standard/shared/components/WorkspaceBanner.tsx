@@ -1,4 +1,3 @@
-﻿// src/standard/shared/components/WorkspaceBanner.tsx
 const WorkspaceBanner = () => {
     return (
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-indigo-100 p-4">

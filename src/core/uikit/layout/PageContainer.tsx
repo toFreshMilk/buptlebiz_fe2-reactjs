@@ -1,4 +1,3 @@
-﻿// src/core/uikit/layout/PageContainer.tsx
 import React from 'react';
 
 interface PageContainerProps {

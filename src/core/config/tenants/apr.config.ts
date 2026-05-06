@@ -1,4 +1,3 @@
-﻿// src/core/config/tenants/apr.config.ts
 import { TenantConfig } from '../tenant.types';
 import '@/custom/apr/apr.css'; // [추가] 이 설정파일이 로드될 때 CSS도 함께 적용됨
 

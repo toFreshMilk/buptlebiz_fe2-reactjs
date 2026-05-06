@@ -1,4 +1,3 @@
-// src/standard/shared/components/TopNavbar.tsx
 import { Link } from 'react-router-dom';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';

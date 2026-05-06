@@ -1,4 +1,3 @@
-﻿// src/standard/modules/contract/components/ContractDetailPage/index.tsx
 import { useParams } from 'react-router-dom';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';

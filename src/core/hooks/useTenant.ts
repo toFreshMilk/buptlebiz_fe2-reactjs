@@ -1,4 +1,3 @@
-﻿// src/core/hooks/useTenant.ts
 
 /**
  * 호스트네임의 첫 번째 파트(서브도메인)를 무조건 Tenant ID로 추출합니다.

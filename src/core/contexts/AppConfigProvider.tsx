@@ -1,4 +1,3 @@
-﻿// src/core/contexts/AppConfigProvider.tsx
 import React from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { AppConfigContext } from './AppConfigContext';

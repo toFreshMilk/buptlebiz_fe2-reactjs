@@ -1,4 +1,3 @@
-﻿// src/core/contexts/AppConfigContext.ts
 import { createContext, useContext } from 'react';
 import type { TenantConfig } from '@/core/config/tenant.types';
 

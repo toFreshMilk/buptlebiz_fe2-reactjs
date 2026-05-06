@@ -1,4 +1,3 @@
-// src/app/(internal)/InternalLayout.tsx
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';

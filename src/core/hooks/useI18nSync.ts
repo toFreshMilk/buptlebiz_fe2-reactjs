@@ -1,4 +1,3 @@
-// src/core/hooks/useI18nSync.ts
 import { useEffect } from 'react';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import i18n from '@/core/service/i18n';

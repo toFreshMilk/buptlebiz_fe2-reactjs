@@ -1,4 +1,3 @@
-﻿// src/core/hooks/useTenantModule.ts
 import { ComponentType } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getTenantComponent, getTenantService } from '@/core/config/tenant.config';

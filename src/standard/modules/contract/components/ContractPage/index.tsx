@@ -1,4 +1,3 @@
-// src/standard/modules/contract/components/ContractPage/index.tsx
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';

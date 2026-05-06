@@ -1,4 +1,3 @@
-﻿// src/core/uikit/layout/Section.tsx
 import React from 'react';
 
 interface SectionProps {
