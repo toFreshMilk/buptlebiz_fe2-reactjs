@@ -1,0 +1,241 @@
+import { useState } from 'react';
+import type { DateRange } from 'react-day-picker';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
+import type { StandardContractDto } from '@/standard/modules/contract/services/contract.service';
+import { Button } from '@/core/uikit/form/Button';
+import { Input } from '@/core/uikit/form/Input';
+import { Checkbox } from '@/core/uikit/form/Checkbox';
+import { DatePicker } from '@/core/uikit/calendar/DatePicker';
+import { BarChart } from '@/core/uikit/chart/BarChart';
+
+function safeText(v?: string) {
+  return v && String(v).trim() ? v : '-';
+}
+
+function TimelineItem({ title, time }: { title: string; time: string }) {
+  return (
+    <div className="flex gap-3">
+      <div className="flex flex-col items-center">
+        <div className="h-8 w-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500">
+          ▦
+        </div>
+        <div className="flex-1 w-px bg-slate-200 mt-1" />
+      </div>
+      <div className="pt-1 pb-6">
+        <div className="text-sm font-bold text-slate-900">{title}</div>
+        <div className="text-xs text-slate-400 mt-1">{time}</div>
+      </div>
+    </div>
+  );
+}
+
+interface Props {
+  data: StandardContractDto[];
+}
+
+type WeeklyActivity = {
+  week: string;
+  comments: number;
+  files: number;
+};
+
+export default function Right({ data }: Props) {
+  const { config } = useAppConfig();
+  const { t } = useCoreTranslation('contract');
+
+  const contract = data?.[0] || null;
+
+  const base = contract ?? {
+    id: '-',
+    title: t('detailLeft.titleFallback'),
+    status: 'Active',
+  };
+
+  const defaultSignDate =
+    typeof base.signDate === 'string' && !Number.isNaN(new Date(base.signDate).getTime())
+      ? new Date(base.signDate)
+      : undefined;
+  const defaultReviewFrom =
+    typeof base.reviewFrom === 'string' && !Number.isNaN(new Date(base.reviewFrom).getTime())
+      ? new Date(base.reviewFrom)
+      : undefined;
+  const defaultReviewTo =
+    typeof base.reviewTo === 'string' && !Number.isNaN(new Date(base.reviewTo).getTime())
+      ? new Date(base.reviewTo)
+      : undefined;
+
+  const weeklyActivityData: WeeklyActivity[] =
+    Array.isArray(base.weeklyActivity) && base.weeklyActivity.length > 0 ? base.weeklyActivity : [];
+  const timeline = Array.isArray(base.timeline) ? base.timeline : [];
+
+  const [comment, setComment] = useState(t('detailRight.defaultComment'));
+  const [signDate, setSignDate] = useState<Date | undefined>(defaultSignDate);
+  const [reviewRange, setReviewRange] = useState<DateRange | undefined>(
+    defaultReviewFrom
+      ? {
+          from: defaultReviewFrom,
+          to: defaultReviewTo,
+        }
+      : undefined,
+  );
+
+  return (
+    <section className="space-y-4">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+        <div className="flex gap-2">
+          <Button fullWidth variant="outline" tone="slate" uniqueClassName="ui-standard-right-download">
+            {t('detailRight.downloadStamp')}
+          </Button>
+          <Button
+            fullWidth
+            tone="slate"
+            uniqueClassName="ui-standard-right-stamp-check"
+            style={{ backgroundColor: config.theme.primaryColor }}
+          >
+            {t('detailRight.confirmStamp')}
+          </Button>
+        </div>
+      </div>
+
+      <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" open>
+        <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
+          <div className="font-black text-slate-900">{t('detailRight.shareLegal')}</div>
+          <div className="text-slate-400">⌄</div>
+        </summary>
+        <div className="px-5 pb-5">
+          <div className="text-sm text-slate-500">{t('detailRight.shareLegalDesc')}</div>
+        </div>
+      </details>
+
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
+        <div className="text-sm font-black text-slate-900">{t('detailRight.schedule')}</div>
+        <DatePicker
+          mode="single"
+          label={t('detailRight.signDate')}
+          description={t('detailRight.signDateDesc')}
+          value={signDate}
+          onValueChange={setSignDate}
+          onDayClick={(day) => {
+            console.log('[DatePicker] sign date selected:', day);
+          }}
+        />
+        <DatePicker
+          mode="range"
+          label={t('detailRight.reviewRange')}
+          description={t('detailRight.reviewRangeDesc')}
+          value={reviewRange}
+          onValueChange={setReviewRange}
+          numberOfMonths={1}
+        />
+      </div>
+
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+        <div className="text-sm font-black text-slate-900 mb-2">{t('detailRight.weeklyActivity')}</div>
+        <BarChart
+          data={weeklyActivityData}
+          xKey="week"
+          series={[
+            {
+              dataKey: 'comments',
+              name: t('detailRight.comments'),
+              color: config.theme.primaryColor,
+            },
+            { dataKey: 'files', name: t('detailRight.files'), color: '#f59e0b' },
+          ]}
+          height={220}
+          onBarClick={({ seriesKey, row }) => {
+            console.log('[BarChart] click', seriesKey, row.week);
+          }}
+          emptyFallback={<div className="text-sm text-slate-400">{t('detailRight.emptyActivity')}</div>}
+        />
+      </div>
+
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+          <div className="font-black text-slate-900">{t('detailRight.progress')}</div>
+          <Button variant="ghost" tone="slate" size="icon" uniqueClassName="ui-standard-right-collapse">
+            ^
+          </Button>
+        </div>
+
+        <div className="p-5 space-y-4">
+          <div className="flex items-center gap-2">
+            <div className="text-sm font-bold text-slate-700">{t('detailRight.smartEmail')}</div>
+            <div className="ml-auto flex items-center gap-2">
+              <div className="px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-xs font-mono text-slate-700">
+                {safeText(base.smartEmail)}
+              </div>
+              <Button
+                variant="outline"
+                tone="slate"
+                size="sm"
+                uniqueClassName="ui-standard-right-copy"
+                onPress={async () => {
+                  try {
+                    await navigator.clipboard.writeText(String(base.smartEmail ?? ''));
+                  } catch {
+                    // ignore
+                  }
+                }}
+              >
+                copy
+              </Button>
+              <Button
+                variant="ghost"
+                tone="blue"
+                size="sm"
+                align="start"
+                uniqueClassName="ui-standard-right-smart-mail"
+              >
+                {t('detailRight.viewSmartEmail')}
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Button variant="outline" tone="slate" uniqueClassName="ui-standard-right-workflow">
+              {t('detailRight.workflowConfig')}
+            </Button>
+            <Button tone="blue" uniqueClassName="ui-standard-right-compare">
+              {t('detailRight.compareContract')}
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-4 text-sm text-slate-600">
+            <Checkbox label={t('detailRight.history')} />
+            <Checkbox label={t('detailRight.files')} />
+            <Checkbox label={t('detailRight.comments')} />
+          </div>
+
+          <div className="pt-2">
+            {timeline.map((item, index) => (
+              <TimelineItem key={`${item.title}-${item.time}-${index}`} title={item.title} time={item.time} />
+            ))}
+            <div className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <div className="h-8 w-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500">
+                  ▦
+                </div>
+              </div>
+              <div className="pt-1 w-full">
+                <div className="text-sm font-bold text-slate-900">{t('detailRight.finalApprovalRole')}</div>
+                <div className="text-xs text-slate-400 mt-1">26/01/12 10:26</div>
+                <div className="mt-3">
+                  <Input
+                    tone="blue"
+                    inputSize="lg"
+                    shape="xl"
+                    uniqueClassName="ui-standard-right-comment"
+                    value={comment}
+                    onValueChange={setComment}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

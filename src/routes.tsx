@@ -1,18 +1,14 @@
 // src/routes.tsx
+/* eslint-disable react-refresh/only-export-components */
 import { RouteObject, Navigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useTenantComponent } from '@/core/hooks/useTenantModule';
+import { StandardComponentKey } from '@/standard/registry';
 
-// Layouts
-import RootLayout from '@/app/RootLayout';
-import NotFound from '@/app/NotFound';
-import PublicLayout from '@/app/(public)/PublicLayout';
-import InternalLayout from '@/app/(internal)/InternalLayout';
-import InternalError from '@/app/(internal)/InternalError';
-
-// Pages - Internal
-import ContractPage from '@/app/(internal)/contract/ContractPage';
-import ContractDetailPage from '@/app/(internal)/contract/ContractDetailPage';
-import RootError from '@/app/RootError.tsx';
+const TenantRoute = ({ name }: { name: StandardComponentKey }) => {
+  const { Component } = useTenantComponent(name);
+  return <Component />;
+};
 
 const DefaultRedirect = () => {
   const { config } = useAppConfig();
@@ -22,8 +18,8 @@ const DefaultRedirect = () => {
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <RootLayout />,
-    errorElement: <RootError />,
+    element: <TenantRoute name="RootLayout" />,
+    errorElement: <TenantRoute name="RootError" />,
     children: [
       {
         index: true,
@@ -37,7 +33,7 @@ export const routes: RouteObject[] = [
           // [Group 1] Public (로그인, 외부 페이지)
           // URL: /ko/login, /en/external/...
           {
-            element: <PublicLayout />,
+            element: <TenantRoute name="PublicLayout" />,
             children: [
               // { path: 'login', element: <LoginPage /> },
               // { path: 'external/*', element: <ExternalSignPage /> },
@@ -47,8 +43,8 @@ export const routes: RouteObject[] = [
           // [Group 2] Internal (업무 공간)
           // URL: /ko/contract, /en/contract/:id
           {
-            element: <InternalLayout />,
-            errorElement: <InternalError />,
+            element: <TenantRoute name="InternalLayout" />,
+            errorElement: <TenantRoute name="InternalError" />,
             children: [
               {
                 index: true,
@@ -56,11 +52,11 @@ export const routes: RouteObject[] = [
               },
               {
                 path: 'contract',
-                element: <ContractPage />,
+                element: <TenantRoute name="ContractPage" />,
               },
               {
                 path: 'contract/:id',
-                element: <ContractDetailPage />,
+                element: <TenantRoute name="ContractDetailPage" />,
               },
             ],
           },
@@ -70,6 +66,6 @@ export const routes: RouteObject[] = [
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: <TenantRoute name="NotFound" />,
   },
 ];

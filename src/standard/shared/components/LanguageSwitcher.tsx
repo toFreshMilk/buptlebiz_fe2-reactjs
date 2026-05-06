@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Select } from '@/uikit/form/Select';
+import { Select } from '@/core/uikit/form/Select';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 

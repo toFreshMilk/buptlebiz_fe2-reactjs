@@ -18,14 +18,13 @@
 ## 3. 멀티테넌트 및 조립 아키텍처 (Architecture)
 
 ### 3.1 레이어별 책임
-- **`src/app/` (Composition):** 페이지의 뼈대를 조립하는 레이어입니다. 직접적인 비즈니스 로직이나 복잡한 스타일링을 피하고, 슬롯(Slot) 컴포넌트를 배치하는 역할만 수행합니다.
-- **`src/standard/` (Base):** 모든 테넌트가 공유하는 기본 구현체입니다.
+- **`src/standard/` (Base & Composition):** 모든 테넌트가 공유하는 기본 구현체이자, 페이지의 뼈대를 조립(Composition)하는 레이어입니다. 특정 테넌트가 페이지 전체의 레이아웃(조립 방식)을 오버라이드할 수 있도록 모든 진입점(페이지, 레이아웃)은 `registry.ts`에 등록되어야 합니다.
 - **`src/custom/` (Override):** 특정 테넌트(예: `apr`, `demo`)를 위한 오버라이드 코드입니다.
-- **`src/core/config/` (SSOT):** 어떤 컴포넌트/서비스를 사용할지 결정하는 단일 진실 공급원입니다.
+- **`src/core/config/` (SSOT):** 어떤 컴포넌트/서비스를 사용할지 결정하는 단일 진실 공급원입니다. (참고: 라우팅을 담당하는 `src/routes.tsx`는 순수 인프라로서 기능하며, 직접적인 UI 조립 없이 테넌트 슬롯 컴포넌트만 연결합니다.)
 
 ### 3.2 오버라이드 원칙
 - **Standard 코드 오염 금지:** `standard/` 파일 내부에 `if (tenant === 'apr')`와 같은 분기 처리를 절대 하지 마십시오.
-- **파일 단위 오버라이드:** 차별화가 필요하면 `src/custom/[tenant_id]/`에 파일을 만들고 `src/core/config/tenants/`에서 매핑을 업데이트하십시오.
+- **파일 단위 오버라이드 (Sparse Override):** 차별화가 필요하면 `src/custom/[tenant_id]/`에 파일을 만들고 `src/core/config/tenants/`에서 매핑을 업데이트하십시오. 당장 오버라이드하지 않는 도메인(예: `layouts`, `contract`)이나 빈 폴더를 무의미하게 미리 생성해두지 않고, 필요해진 순간에만 생성하여 저장소를 깔끔하게 유지합니다.
 
 ## 4. 데이터 페칭 및 상태 관리
 
@@ -38,7 +37,7 @@
 - **Single Source of Truth**: 컴포넌트 간의 상태 동기화는 Props Drilling이나 전역 상태 라이브러리 대신 URL을 매개로 수행합니다.
 - 단, 단순 입력 폼이나 상세 페이지의 편집 상태 등 모든 UI 상태를 URL에 담는 것은 지양합니다.
 
-## 5. UI 킷 스타일링 규칙 (`src/uikit/`)
+## 5. UI 킷 스타일링 규칙 (`src/core/uikit/`)
 - **Internal Style:** 컴포넌트 내부에 `variant`, `tone`, `size` 등을 정의합니다.
 - **External Injection:** 외부에서 스타일 주입 시 `uniqueClassName` prop을 사용하십시오 (`className` 사용 금지).
 - **Prop Naming:** HTML 기본 속성과의 충돌 방지를 위해 `inputSize`, `selectSize`와 같이 명명하십시오.
@@ -58,3 +57,8 @@
 
 ### 6.3 라우팅 규칙
 - URL은 `/:lang/...` (예: `/ko/contract`) 구조를 따르며, `useI18nSync` 훅을 통해 URL 상태와 i18next 상태를 동기화합니다.
+
+## 7. 협업 및 변경 프로세스
+1. **의사결정 투명성 (Pros & Cons)**: 아키텍처 변경, 대규모 리팩토링, 혹은 여러 기술적 대안 중 하나를 선택할 때는 반드시 각 방안의 **장점(Pros)과 단점(Cons)**을 명확히 제시하여 사용자가 판단할 수 있게 합니다.
+2. **플랜 준수 (Plan Adherence)**: 전략(Strategy/Plan) 단계에서 합의된 명칭, 폴더 구조, 로직은 실행 단계에서 임의로 변경하지 않고 철저히 준수합니다. 변경이 필요한 경우 반드시 다시 플랜 모드를 거쳐 합의합니다.
+3. **자기 검증 필수 (Self-Validation)**: 모든 코드 수정 또는 구조 변경 작업의 마지막 단계에서 반드시 **`pnpm tsc --noEmit`** 또는 **`pnpm build`**를 실행하여 타입 에러와 빌드 에러가 없음을 직접 확인해야 합니다. 사용자에게 결과를 보고하기 전 에러를 스스로 찾아 해결하는 것을 원칙으로 합니다.

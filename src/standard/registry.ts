@@ -11,18 +11,28 @@ export const STANDARD_COMPONENT_LOADERS = {
   TopNavbar: () => import('@/standard/shared/components/TopNavbar'),
   WorkspaceBanner: () => import('@/standard/shared/components/WorkspaceBanner'),
 
+  // ===== Layouts =====
+  RootLayout: () => import('@/standard/layouts/RootLayout/index'),
+  RootError: () => import('@/standard/layouts/RootError'),
+  NotFound: () => import('@/standard/layouts/NotFound'),
+  PublicLayout: () => import('@/standard/layouts/PublicLayout/index'),
+  InternalLayout: () => import('@/standard/layouts/InternalLayout/index'),
+  InternalError: () => import('@/standard/layouts/InternalError'),
+
   // ===== Contract =====
-  ContractSidebar: () => import('@/standard/contract/components/ContractSidebar'),
-  ContractMain: () => import('@/standard/contract/components/ContractMain'),
-  ContractList: () => import('@/standard/contract/components/ContractList'),
-  ContractDetailTop: () => import('@/standard/contract/components/ContractDetailTop'),
-  ContractDetailLeft: () => import('@/standard/contract/components/ContractDetailLeft'),
-  ContractDetailRight: () => import('@/standard/contract/components/ContractDetailRight'),
+  ContractPage: () => import('@/standard/modules/contract/components/ContractPage/index'),
+  ContractDetailPage: () => import('@/standard/modules/contract/components/ContractDetailPage/index'),
+  ContractSidebar: () => import('@/standard/modules/contract/components/ContractPage/Sidebar'),
+  ContractBoard: () => import('@/standard/modules/contract/components/ContractPage/Board'),
+  ContractList: () => import('@/standard/modules/contract/components/ContractPage/List'),
+  ContractDetailTop: () => import('@/standard/modules/contract/components/ContractDetailPage/Top'),
+  ContractDetailLeft: () => import('@/standard/modules/contract/components/ContractDetailPage/Left'),
+  ContractDetailRight: () => import('@/standard/modules/contract/components/ContractDetailPage/Right'),
 } satisfies Record<string, ComponentLoader>;
 
 export const STANDARD_SERVICE_LOADERS = {
   // ===== Contract =====
-  ContractService: () => import('@/standard/contract/services/contract.service'),
+  ContractService: () => import('@/standard/modules/contract/services/contract.service'),
 } satisfies Record<string, ServiceLoader>;
 
 // Standard 키 타입 (오타 방지/자동완성)
@@ -37,7 +47,7 @@ export type StandardServiceKey = keyof typeof STANDARD_SERVICE_LOADERS;
  */
 export const STANDARD_I18N_OWNER_BY_NAMESPACE = {
   common: 'shared',
-  contract: 'contract',
+  contract: 'modules/contract',
 } as const satisfies Record<string, string>;
 
 export type StandardI18nNamespace = keyof typeof STANDARD_I18N_OWNER_BY_NAMESPACE;
