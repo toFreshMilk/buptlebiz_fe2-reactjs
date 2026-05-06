@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { routes } from './routes';
 import { queryClient } from '@/core/service/queryClient.ts';
 import { AppConfigProvider } from '@/core/contexts/AppConfigProvider';
-import { LoadingBar } from '@/core/utils/LoadingBar';
+import { LoadingBar } from '@/uikit/feedback/LoadingBar';
 
 const router = createBrowserRouter(routes);
 

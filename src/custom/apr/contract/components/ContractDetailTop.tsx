@@ -5,7 +5,7 @@ import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import contractService from '@/custom/apr/contract/services/contract.service';
 import { type StandardContractDto } from '@/standard/contract/services/contract.service';
 import { Button } from '@/uikit/form/Button';
-import Modal from '@/uikit/layout/Modal';
+import Modal from '@/uikit/feedback/Modal';
 
 type StepKey = 'draft' | 'review' | 'active' | 'done';
 

@@ -5,7 +5,7 @@ import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Button } from '@/uikit/form/Button';
 import { Input } from '@/uikit/form/Input';
 import { Select } from '@/uikit/form/Select';
-import Modal from '@/uikit/layout/Modal';
+import Modal from '@/uikit/feedback/Modal';
 
 function buildUrl(pathname: string, params: URLSearchParams) {
   const qs = params.toString();

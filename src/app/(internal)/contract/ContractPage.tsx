@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTenantComponent, useTenantService } from '@/core/hooks/useTenantModule';
 import { useAppConfig } from '@/core/contexts/AppConfigContext.ts';
 import { Suspense } from 'react';
-import { LoadingBar } from '@/core/utils/LoadingBar';
+import { LoadingBar } from '@/uikit/feedback/LoadingBar';
 
 const ContractPageContent = () => {
   const { tenantId } = useAppConfig();

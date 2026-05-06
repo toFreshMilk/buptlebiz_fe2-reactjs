@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/uikit/form/Button';
 import { Input } from '@/uikit/form/Input';
 import { Select } from '@/uikit/form/Select';
-import Modal from '@/uikit/layout/Modal';
+import Modal from '@/uikit/feedback/Modal';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
