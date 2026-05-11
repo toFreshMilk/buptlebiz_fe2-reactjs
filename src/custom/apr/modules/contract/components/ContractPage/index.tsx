@@ -104,7 +104,7 @@ const ContractPageContent = () => {
   const tab = (searchParams.get('tab') ?? 'all').toLowerCase();
   const list = contracts || [];
 
-  const filtered = list.filter((c: any) => {
+  const filtered = list.filter((c: ContractItem) => {
     const s = normalizeStatus(c.status);
     const matchQ =
       !query ||
@@ -115,9 +115,9 @@ const ContractPageContent = () => {
     return matchQ && matchTab;
   });
 
-  const active = filtered.filter((c: any) => normalizeStatus(c.status) === 'active');
-  const review = filtered.filter((c: any) => normalizeStatus(c.status) === 'review');
-  const draft = filtered.filter((c: any) => normalizeStatus(c.status) === 'draft');
+  const active = filtered.filter((c: ContractItem) => normalizeStatus(c.status) === 'active');
+  const review = filtered.filter((c: ContractItem) => normalizeStatus(c.status) === 'review');
+  const draft = filtered.filter((c: ContractItem) => normalizeStatus(c.status) === 'draft');
 
   const emptyText = t('apr.columns.empty');
   const statusLabel = t('apr.card.status_label');

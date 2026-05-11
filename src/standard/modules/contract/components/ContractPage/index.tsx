@@ -13,6 +13,12 @@ import Summary from './Summary';
 
 type TabKey = 'all' | 'draft' | 'review' | 'active';
 
+type ContractItem = {
+  id: number | string;
+  title: string;
+  status: string;
+};
+
 const ContractPageContent = () => {
   const { tenantId, config } = useAppConfig();
   const service = useTenantService('ContractService');
@@ -37,7 +43,7 @@ const ContractPageContent = () => {
 
   const q = query.trim().toLowerCase();
 
-  const filtered = (contracts ?? []).filter((c: any) => {
+  const filtered = (contracts ?? []).filter((c: ContractItem) => {
     const matchQ = !q || c.title.toLowerCase().includes(q);
     const matchTab =
       tab === 'all' ||
