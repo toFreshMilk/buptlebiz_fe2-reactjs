@@ -20,7 +20,7 @@ export function LanguageSwitcher({ uniqueClassName }: LanguageSwitcherProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const supportedLangs = config.features?.i18n;
+  const supportedLangs = config.features.i18n;
 
   const languageOptions = supportedLangs.map((lang) => ({
     label: LANG_LABELS[lang] || lang.toUpperCase(),
@@ -33,7 +33,7 @@ export function LanguageSwitcher({ uniqueClassName }: LanguageSwitcherProps) {
     navigate(newPath + location.search);
   };
 
-  const currentLang = i18n.language || config.features.defaultLang;
+  const currentLang = i18n.language || config.features.i18n[0];
 
   return (
     <Select

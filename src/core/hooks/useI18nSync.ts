@@ -5,7 +5,7 @@ import i18n from '@/core/service/i18n';
 export const useI18nSync = (lang?: string) => {
   const { config } = useAppConfig();
   const supportedLangs = config.features.i18n;
-  const defaultLang = config.features.defaultLang || supportedLangs[0];
+  const defaultLang = supportedLangs[0];
 
   const isInvalidLang = !!lang && !supportedLangs.includes(lang);
 

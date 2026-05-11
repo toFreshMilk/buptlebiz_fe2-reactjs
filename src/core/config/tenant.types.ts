@@ -9,7 +9,7 @@ export type ServiceLoader = () => Promise<ModuleWithDefault<any>>;
 export interface TenantConfig {
   id: string;
   name: string;
-  features: { i18n: string[]; defaultLang: string; ai: boolean; sso: boolean };
+  features: { i18n: string[]; ai: boolean; sso: boolean };
   theme: { primaryColor: string };
 
   components?: Record<string, ComponentLoader>;

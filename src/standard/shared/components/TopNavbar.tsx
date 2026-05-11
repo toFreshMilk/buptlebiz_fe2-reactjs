@@ -7,7 +7,7 @@ const TopNavbar = () => {
   const { t, i18n } = useCoreTranslation('common');
   const { config } = useAppConfig();
 
-  const currentLang = i18n.language || config.features.defaultLang;
+  const currentLang = i18n.language || config.features.i18n[0];
 
   return (
     <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-50 flex items-center justify-between px-6">
