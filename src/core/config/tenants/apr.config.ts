@@ -12,7 +12,7 @@ const config: TenantConfig = {
     WorkspaceBanner: () => import('@/custom/apr/shared/components/WorkspaceBanner'),
     ContractSidebar: () => import('@/custom/apr/modules/contract/components/ContractPage/Sidebar'),
     // APR은 계약 메인 UI를 크게 다르게 가져감
-    ContractBoard: () => import('@/custom/apr/modules/contract/components/ContractPage/Board'),
+    ContractPage: () => import('@/custom/apr/modules/contract/components/ContractPage/index'),
     ContractDetailTop: () => import('@/custom/apr/modules/contract/components/ContractDetailPage/Top'),
   },
 

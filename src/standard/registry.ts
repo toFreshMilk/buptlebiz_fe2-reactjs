@@ -23,7 +23,6 @@ export const STANDARD_COMPONENT_LOADERS = {
   ContractPage: () => import('@/standard/modules/contract/components/ContractPage/index'),
   ContractDetailPage: () => import('@/standard/modules/contract/components/ContractDetailPage/index'),
   ContractSidebar: () => import('@/standard/modules/contract/components/ContractPage/Sidebar'),
-  ContractBoard: () => import('@/standard/modules/contract/components/ContractPage/Board'),
   ContractList: () => import('@/standard/modules/contract/components/ContractPage/List'),
   ContractDetailTop: () => import('@/standard/modules/contract/components/ContractDetailPage/Top'),
   ContractDetailLeft: () => import('@/standard/modules/contract/components/ContractDetailPage/Left'),
