@@ -1,3 +1,7 @@
+https://apr.buptlebiz-fe2.pages.dev/ko/contract
+https://demo.buptlebiz-fe2.pages.dev/ko/contract
+
+
 # 📝 BuptleBiz FE 2.0 (법틀비즈 프론트엔드 v2)
 
 BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는 B2B SaaS 프론트엔드 애플리케이션입니다.

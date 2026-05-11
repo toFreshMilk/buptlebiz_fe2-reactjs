@@ -13,11 +13,11 @@ export const STANDARD_COMPONENT_LOADERS = {
 
   // ===== Layouts =====
   RootLayout: () => import('@/standard/layouts/RootLayout/index'),
-  RootError: () => import('@/standard/layouts/RootError'),
+  RootError: () => import('@/standard/layouts/RootLayout/RootError'),
   NotFound: () => import('@/standard/layouts/NotFound'),
-  PublicLayout: () => import('@/standard/layouts/PublicLayout/index'),
-  InternalLayout: () => import('@/standard/layouts/InternalLayout/index'),
-  InternalError: () => import('@/standard/layouts/InternalError'),
+  PublicLayout: () => import('@/standard/layouts/RootLayout/PublicLayout/index'),
+  InternalLayout: () => import('@/standard/layouts/RootLayout/InternalLayout/index'),
+  InternalError: () => import('@/standard/layouts/RootLayout/InternalLayout/InternalError'),
 
   // ===== Contract =====
   ContractPage: () => import('@/standard/modules/contract/components/ContractPage/index'),
