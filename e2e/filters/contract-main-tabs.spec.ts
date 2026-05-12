@@ -21,6 +21,7 @@ test.describe('ContractMainTabs', () => {
   test('apr / ko renders ContractMainTabs', async ({ page }) => {
     await page.goto('http://apr.localhost:3200/ko/contract');
     await page.waitForLoadState('networkidle');
-    await expect(page.locator('.ui-apr-contract-create')).toBeVisible();
+    // The locator was .ui-apr-contract-create but the button text is also unique
+    await expect(page.locator('button', { hasText: '계약 생성' }).first()).toBeVisible();
   });
 });
