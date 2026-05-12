@@ -10,11 +10,16 @@ export const useI18nSync = (lang?: string) => {
   const defaultLang = supportedLangs[0];
 
   const isInvalidLang = !!lang && !supportedLangs.includes(lang);
+  
+  if (isInvalidLang) {
+    throw new Response('Not Found', { status: 404 });
+  }
+
   const targetLang = lang || defaultLang;
 
   // React Suspense 통합: 언어 변경이 필요하면 Promise를 던져(throw) 렌더링을 중단시킴.
   // 상위의 <Suspense fallback={<LoadingBar />}>가 이를 캐치하여 로딩바를 보여줍니다.
-  if (!isInvalidLang && targetLang && i18n.language !== targetLang) {
+  if (targetLang && i18n.language !== targetLang) {
     let promise = promiseCache.get(targetLang);
     if (!promise) {
       promise = i18n.changeLanguage(targetLang).then(() => {
@@ -25,5 +30,5 @@ export const useI18nSync = (lang?: string) => {
     throw promise;
   }
 
-  return { isInvalidLang, defaultLang };
+  return { defaultLang };
 };

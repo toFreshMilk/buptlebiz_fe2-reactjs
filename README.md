@@ -1,6 +1,8 @@
 https://apr.buptlebiz-fe2.pages.dev/ko/contract
 https://demo.buptlebiz-fe2.pages.dev/ko/contract
 
+1. 에러로그 및 에러 페이지 시스템 점검할것(로그인 붙인 후)
+
 
 # 📝 BuptleBiz FE 2.0 (법틀비즈 프론트엔드 v2)
 

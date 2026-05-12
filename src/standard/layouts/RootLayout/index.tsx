@@ -1,14 +1,10 @@
-import { useParams, Outlet, Navigate } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router-dom';
 import { useI18nSync } from '@/core/hooks/useI18nSync';
 import { NuqsAdapter } from 'nuqs/adapters/react-router/v7';
 
 const RootLayout = () => {
   const { lang } = useParams<{ lang: string }>();
-  const { isInvalidLang, defaultLang } = useI18nSync(lang);
-
-  if (isInvalidLang) {
-    return <Navigate to={`/${defaultLang}`} replace />;
-  }
+  useI18nSync(lang);
 
   return (
     <NuqsAdapter>
