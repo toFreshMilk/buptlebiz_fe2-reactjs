@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e1": "playwright test e2e/e1.spec.ts"
   },
   "dependencies": {
     "@onlyoffice/document-editor-react": "^2.1.1",
