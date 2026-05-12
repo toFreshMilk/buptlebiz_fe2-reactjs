@@ -14,7 +14,6 @@ export const STANDARD_COMPONENT_LOADERS = {
   // ===== Layouts =====
   RootLayout: () => import('@/standard/layouts/RootLayout/index'),
   RootError: () => import('@/standard/layouts/RootLayout/RootError'),
-  NotFound: () => import('@/standard/layouts/NotFound'),
   PublicLayout: () => import('@/standard/layouts/RootLayout/PublicLayout/index'),
   InternalLayout: () => import('@/standard/layouts/RootLayout/InternalLayout/index'),
   InternalError: () => import('@/standard/layouts/RootLayout/InternalLayout/InternalError'),
