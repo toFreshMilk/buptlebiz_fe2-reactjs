@@ -57,14 +57,22 @@ export const routes: RouteObject[] = [
                 path: 'contract/:id',
                 element: <TenantRoute name="ContractDetailPage" />,
               },
+              {
+                path: '*',
+                loader: () => {
+                  throw new Response('Not Found', { status: 404 });
+                },
+              },
             ],
           },
         ],
       },
+      {
+        path: '*',
+        loader: () => {
+          throw new Response('Not Found', { status: 404 });
+        },
+      },
     ],
-  },
-  {
-    path: '*',
-    element: <TenantRoute name="NotFound" />,
   },
 ];
