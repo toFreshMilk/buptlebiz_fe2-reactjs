@@ -8,7 +8,7 @@ https://demo.buptlebiz-fe2.pages.dev/ko/contract
 
 BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는 B2B SaaS 프론트엔드 애플리케이션입니다.
 다양한 고객사(Tenant)의 요구사항을 단일 코드베이스에서 수용할 수 있는 **Multi-tenant 아키텍처**와, URL 기반의 완벽한 **다국어(i18n) 시스템**을 특징으로 합니다.
-
+github_pat_
 ## 🚀 Tech Stack
 
 - **Framework**: React 19 (React Compiler 적용)
@@ -22,7 +22,7 @@ BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는
 - **i18n**: `i18next`, `react-i18next`, `i18next-korean-postposition-processor` (조사 자동 처리)
 - **UI Components**: `@tanstack/react-table`, `recharts`, `lucide-react`
 - **Testing**: Playwright (E2E)
-
+11AIVVX4A0nznSbxztMNN4_
 ---
 
 ## 🏗️ Architecture Highlights
@@ -33,7 +33,7 @@ BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는
 - **`src/standard/`**: 모든 고객사가 공통으로 사용하는 표준 비즈니스 로직과 UI 컴포넌트 (`Base`)
 - **`src/custom/{tenantId}/`**: 특정 고객사(예: `apr`, `demo`)만을 위한 커스텀 로직과 UI 오버라이드
 - **Tenant Config (`src/core/config/`)**: 고객사별 활성화 기능(Feature Flag), 다국어 지원 범위, 커스텀 컴포넌트 맵핑 관리
-
+s83w4ryXNFvq7cYosj4dg0Lb4UbKe0sauXXb9ojjYpoKTWPONA5lYRZM7qK
 ### 2. URL-driven i18n (라우팅 기반 다국어)
 상태 유실 방지와 SEO 최적화를 위해 **"URL이 진실의 원천(SSOT)"**이 되는 다국어 시스템을 채택했습니다.
 - 예: `/{lang}/contract` (`/ko/contract`, `/en/contract`)
