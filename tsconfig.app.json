@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     /* [최적화 1] 타겟 버전 & 라이브러리 (Browser) */
     "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],

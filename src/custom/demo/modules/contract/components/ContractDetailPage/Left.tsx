@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { StandardContractDto } from '@/standard/modules/contract/services/contract.service';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
@@ -61,11 +62,13 @@ export default function Left({ data }: Props) {
     amount: base.amount ?? '231,213',
   };
 
+  const [sessionKey] = useState(() => Date.now());
+
   // 임시 스태틱 데이터 (실제로는 백엔드에서 받아와야 함)
   const docConfig = {
     document: {
       fileType: 'docx',
-      key: `demo-contract-${contractId}-${Date.now()}`,
+      key: `demo-contract-${contractId}-${sessionKey}`,
       title: `${derived.title}.docx`,
       url: 'https://static.onlyoffice.com/assets/docs/samples/demo.docx', // 공식 제공 테스트 샘플 문서 URL
     },

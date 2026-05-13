@@ -11,7 +11,7 @@ BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는
 ## 🚀 Tech Stack
 
 - **Framework**: React 19 (React Compiler 적용)
-- **Build Tool**: Vite 5
+- **Build Tool**: Vite 8
 - **Language**: TypeScript 5.4
 - **Routing**: React Router v7
 - **Styling**: Tailwind CSS v4

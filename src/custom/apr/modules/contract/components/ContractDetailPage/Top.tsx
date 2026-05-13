@@ -67,7 +67,7 @@ export default function Top({ data, contractId }: Props) {
     { key: 'done', label: t('detailTop.step.done') },
   ];
 
-  const [state, submitApprove, isPending] = useActionState(async (_prevState: any) => {
+  const [state, submitApprove, isPending] = useActionState(async () => {
     try {
       if (!contractId) throw new Error('Contract ID is missing');
       await contractService.approve(tenantId, contractId);

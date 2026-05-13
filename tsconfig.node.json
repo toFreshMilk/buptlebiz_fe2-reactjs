@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     /* [Node.js 환경 타겟] */
     "target": "ES2022",
     "lib": ["ESNext"],

@@ -77,18 +77,17 @@ export function DatePicker(props: Props) {
           month={month}
           numberOfMonths={numberOfMonths}
           disabled={disabled}
-          fromDate={fromDate}
-          toDate={toDate}
+          startMonth={fromDate}
+          endMonth={toDate}
           required={required}
           showOutsideDays={showOutsideDays}
           fixedWeeks={fixedWeeks}
           showWeekNumber={showWeekNumber}
           onMonthChange={onMonthChange}
           onDayClick={(day) => onDayClick?.(day)}
-          classNames={{
+            classNames={{
             months: 'flex gap-4',
             month: 'space-y-2',
-            caption: 'flex items-center justify-between px-1',
             caption_label: 'text-sm font-semibold text-slate-700',
             nav: 'flex items-center gap-1',
             button_previous: 'h-8 w-8 rounded-lg border border-slate-200 hover:bg-slate-50',
