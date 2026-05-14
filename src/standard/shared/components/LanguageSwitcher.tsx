@@ -22,7 +22,7 @@ export function LanguageSwitcher({ uniqueClassName }: LanguageSwitcherProps) {
 
   const supportedLangs = config.features.i18n;
 
-  const languageOptions = supportedLangs.map((lang) => ({
+  const languageOptions = supportedLangs.map((lang: string) => ({
     label: LANG_LABELS[lang] || lang.toUpperCase(),
     value: lang,
   }));

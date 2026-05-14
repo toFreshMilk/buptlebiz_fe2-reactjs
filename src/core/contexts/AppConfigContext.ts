@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 import type { TenantConfig } from '@/core/config/tenant.types';
 
 // -----------------------------------------------------------------------------
@@ -19,7 +19,7 @@ export const AppConfigContext = createContext<AppConfigContextValue | null>(null
 // 3. Custom Hook (Consumer)
 // -----------------------------------------------------------------------------
 export function useAppConfig() {
-  const context = useContext(AppConfigContext);
+  const context = use(AppConfigContext);
 
   if (!context) {
     throw new Error('useAppConfig must be used within <AppConfigProvider />');
