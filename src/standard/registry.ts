@@ -18,6 +18,9 @@ export const STANDARD_COMPONENT_LOADERS = {
   InternalLayout: () => import('@/standard/layouts/RootLayout/InternalLayout/index'),
   InternalError: () => import('@/standard/layouts/RootLayout/InternalLayout/InternalError'),
 
+  // ===== Auth =====
+  LoginPage: () => import('@/standard/modules/auth/components/LoginPage/index'),
+
   // ===== Contract =====
   ContractPage: () => import('@/standard/modules/contract/components/ContractPage/index'),
   ContractDetailPage: () => import('@/standard/modules/contract/components/ContractDetailPage/index'),
@@ -29,6 +32,9 @@ export const STANDARD_COMPONENT_LOADERS = {
 } satisfies Record<string, ComponentLoader>;
 
 export const STANDARD_SERVICE_LOADERS = {
+  // ===== Auth =====
+  AuthService: () => import('@/standard/modules/auth/services/auth.service'),
+
   // ===== Contract =====
   ContractService: () => import('@/standard/modules/contract/services/contract.service'),
 } satisfies Record<string, ServiceLoader>;
@@ -45,6 +51,7 @@ export type StandardServiceKey = keyof typeof STANDARD_SERVICE_LOADERS;
  */
 export const STANDARD_I18N_OWNER_BY_NAMESPACE = {
   common: 'shared',
+  auth: 'modules/auth',
   contract: 'modules/contract',
 } as const satisfies Record<string, string>;
 

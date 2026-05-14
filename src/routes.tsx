@@ -3,6 +3,8 @@ import { RouteObject, Navigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useTenantComponent } from '@/core/hooks/useTenantModule';
 import { StandardComponentKey } from '@/standard/registry';
+import { AuthGuard } from '@/core/components/AuthGuard';
+import { AuthProvider } from '@/core/contexts/AuthProvider';
 
 const TenantRoute = ({ name }: { name: StandardComponentKey }) => {
   const { Component } = useTenantComponent(name);
@@ -34,7 +36,7 @@ export const routes: RouteObject[] = [
           {
             element: <TenantRoute name="PublicLayout" />,
             children: [
-              // { path: 'login', element: <LoginPage /> },
+              { path: 'login', element: <TenantRoute name="LoginPage" /> },
               // { path: 'external/*', element: <ExternalSignPage /> },
             ],
           },
@@ -42,7 +44,13 @@ export const routes: RouteObject[] = [
           // [Group 2] Internal (업무 공간)
           // URL: /ko/contract, /en/contract/:id
           {
-            element: <TenantRoute name="InternalLayout" />,
+            element: (
+              <AuthProvider>
+                <AuthGuard>
+                  <TenantRoute name="InternalLayout" />
+                </AuthGuard>
+              </AuthProvider>
+            ),
             errorElement: <TenantRoute name="InternalError" />,
             children: [
               {

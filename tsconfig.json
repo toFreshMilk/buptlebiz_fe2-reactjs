@@ -7,6 +7,7 @@
   // 공통 기본 설정 (선택 사항, 하위에서 상속받음)
   "compilerOptions": {
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["src/*"]
     }
