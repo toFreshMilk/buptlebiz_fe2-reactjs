@@ -66,7 +66,7 @@ export function pickI18nOwnerMap(namespaces: readonly string[]) {
   for (const ns of namespaces) {
     const owner = ownerMap[ns];
     if (!owner) {
-      throw new Error(`[i18n registry] unknown namespace: ${ns}`);
+      throw new Error(`[i18n 레지스트리] 알 수 없는 네임스페이스입니다: ${ns}`);
     }
     out[ns] = owner;
   }

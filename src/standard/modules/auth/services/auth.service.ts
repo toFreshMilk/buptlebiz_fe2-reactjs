@@ -1,4 +1,4 @@
-import { apiGet } from '@/core/service/apiClient';
+import { apiPost } from '@/core/service/apiClient';
 
 export interface LoginResponse {
   success: boolean;
@@ -12,7 +12,7 @@ export interface LoginResponse {
 export class AuthService {
   static async login(tenantId: string, email: string, password: string): Promise<LoginResponse> {
     console.log(`[AuthService] 로그인 시도 - 이메일: ${email}`);
-    const res = await apiGet<LoginResponse>('/auth/login', tenantId);
+    const res = await apiPost<LoginResponse>('/auth/login', tenantId, { email, password });
     
     // 비즈니스 로직(서비스)에서 데이터 저장 책임을 가집니다.
     if (res.success && res.token) {
@@ -25,7 +25,7 @@ export class AuthService {
 
   static async logout(tenantId: string): Promise<{ success: boolean }> {
     console.log(`[AuthService] 로그아웃 시도`);
-    const res = await apiGet<{ success: boolean }>('/auth/logout', tenantId);
+    const res = await apiPost<{ success: boolean }>('/auth/logout', tenantId, {});
     
     if (res.success) {
       localStorage.removeItem('auth_token');

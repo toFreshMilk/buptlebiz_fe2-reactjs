@@ -17,7 +17,7 @@ export const useTenant = (): { tenantId: string } => {
 
   // [핵심] Config에 정의된 키인지 확인
   if (!isValidTenantId(tenantId)) {
-    throw new Error(`Unknown Tenant: "${tenantId}". Check tenant.config.ts`);
+    throw new Error(`알 수 없는 테넌트입니다: "${tenantId}". tenant.config.ts를 확인하세요.`);
   }
 
   return { tenantId };

@@ -69,7 +69,7 @@ export default function Top({ data, contractId }: Props) {
   const [state, submitApprove, isPending] = useActionState(
     async () => {
       try {
-        if (!contractId) throw new Error('Contract ID is missing');
+        if (!contractId) throw new Error('계약 ID가 누락되었습니다.');
         await contractService.approve(tenantId, contractId);
         return { success: true, ts: Date.now() };
       } catch (error: any) {

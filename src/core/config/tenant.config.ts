@@ -18,7 +18,7 @@ export async function loadTenantConfig(tenantId: string): Promise<TenantConfig> 
 
   if (!loader) {
     const available = Object.keys(TenantLoaders).join(', ');
-    throw new Error(`[Config Error] Invalid TenantID: "${tenantId}". Available: [${available}]`);
+    throw new Error(`[설정 오류] 유효하지 않은 테넌트 ID: "${tenantId}". 사용 가능: [${available}]`);
   }
 
   const moduleData = await loader();
@@ -38,8 +38,8 @@ export async function getTenantComponent<T = ComponentType<any>>(tenantId: strin
   const loader = config.components?.[key] || standardLoader;
 
   if (!loader) {
-    console.error(`[Component Error] Component '${key}' not found for tenant '${tenantId}'`);
-    throw new Error(`Component '${key}' not found`);
+    console.error(`[컴포넌트 오류] 테넌트 '${tenantId}'에 대한 컴포넌트 '${key}'를 찾을 수 없습니다.`);
+    throw new Error(`컴포넌트 '${key}'를 찾을 수 없습니다.`);
   }
 
   const moduleData = await loader();
@@ -54,7 +54,7 @@ export async function getTenantService<T = any>(tenantId: string, key: string): 
   const tenantLoader = config.services?.[key];
 
   if (tenantLoader) {
-    console.log(`[Service] Custom Loaded: ${tenantId}:${key}`);
+    console.log(`[서비스] 커스텀 로드됨: ${tenantId}:${key}`);
     const moduleData = await tenantLoader();
     return moduleData.default as T;
   }
@@ -64,10 +64,9 @@ export async function getTenantService<T = any>(tenantId: string, key: string): 
   const standardLoader = standardLoaders[key];
 
   if (!standardLoader) {
-    throw new Error(`Service '${key}' not found`);
+    throw new Error(`서비스 '${key}'를 찾을 수 없습니다.`);
   }
 
   const moduleData = await standardLoader();
   return moduleData.default as T;
 }
-

@@ -14,7 +14,7 @@ export function useTenantComponent<T = any>(componentKey: string) {
   const { data: Component } = useSuspenseQuery({
     queryKey: ['tenant-component', tenantId, componentKey],
     queryFn: async () => {
-      if (!tenantId) throw new Error('TenantID is required');
+      if (!tenantId) throw new Error('TenantID가 필요합니다.');
       return await getTenantComponent<ComponentType<T>>(tenantId, componentKey);
     },
     staleTime: Infinity, // 컴포넌트 코드는 런타임 중에 변하지 않음
@@ -35,7 +35,7 @@ export function useTenantService<T = any>(serviceKey: string): T {
   const { data: service } = useSuspenseQuery({
     queryKey: ['tenant-service', tenantId, serviceKey],
     queryFn: async () => {
-      if (!tenantId) throw new Error('TenantID is required');
+      if (!tenantId) throw new Error('TenantID가 필요합니다.');
 
       const serviceObj = await getTenantService<any>(tenantId, serviceKey);
       return serviceObj;

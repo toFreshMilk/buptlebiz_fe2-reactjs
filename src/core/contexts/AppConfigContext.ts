@@ -22,7 +22,7 @@ export function useAppConfig() {
   const context = use(AppConfigContext);
 
   if (!context) {
-    throw new Error('useAppConfig must be used within <AppConfigProvider />');
+    throw new Error('useAppConfig는 <AppConfigProvider /> 내부에서 사용되어야 합니다.');
   }
 
   // Provider 바깥이면 위에서 에러가 나므로, 여기서는 무조건 값이 있음을 보장

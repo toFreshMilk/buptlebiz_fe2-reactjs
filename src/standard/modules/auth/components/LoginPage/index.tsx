@@ -14,7 +14,7 @@ export default function LoginPage() {
   const { lang } = useParams<{ lang: string }>();
   const { t } = useCoreTranslation(['common']);
   const AuthServiceClass = useTenantService<typeof AuthService>('AuthService');
-
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);

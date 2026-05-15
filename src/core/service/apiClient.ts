@@ -1,19 +1,27 @@
 export async function apiGet<T>(path: string, tenantId: string): Promise<T> {
-  // http://apr.localhost:3000/mock-data/... 로 요청하게 됨 -> Same Origin -> 성공
-  const res = await fetch(`/mock-data/${path.replace(/^\/+/, '')}/${tenantId}.json`);
+  const url = `/mock-data/${path.replace(/^\/+/, '')}/${tenantId}.json`;
+  const res = await fetch(url);
+  
+  if (!res.ok) {
+    throw new Error(`[API 오류] GET ${url} 요청이 상태 코드 ${res.status}로 실패했습니다.`);
+  }
+  
   return res.json();
 }
 
-// [NEW] POST 요청 처리 (Mock 환경 시뮬레이션)
-export async function apiPost<T>(path: string, tenantId: string, body: any): Promise<T> {
-  console.log(`[API MOCK POST] Path: ${path}, Tenant: ${tenantId}`, body);
+// POST 요청 처리 (Mock 환경 시뮬레이션)
+export async function apiPost<T>(path: string, tenantId: string, body?: any): Promise<T> {
+  console.log(`[API MOCK POST] 경로: ${path}, 테넌트: ${tenantId}`, body);
 
-  // 실제 백엔드가 없으므로, 마치 서버가 처리 후 성공 응답을 준 것처럼 0.5초 대기
+  // 실제 백엔드가 없으므로, 마치 서버가 처리 후 응답을 준 것처럼 0.5초 대기
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  // 성공 응답 리턴 (제네릭 T가 있다고 가정, 기본값으로 성공 메시지 리턴)
-  return {
-    success: true,
-    message: 'Processed successfully (Mock)',
-  } as unknown as T;
+  const url = `/mock-data/${path.replace(/^\/+/, '')}/${tenantId}.json`;
+  const res = await fetch(url);
+  
+  if (!res.ok) {
+    throw new Error(`[API 오류] ${url}에서 POST Mock 데이터를 찾을 수 없습니다.`);
+  }
+
+  return res.json();
 }

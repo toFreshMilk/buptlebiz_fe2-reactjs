@@ -36,7 +36,7 @@ export function OnlyofficeEditor({ documentServerUrl, config, height = '600px', 
   };
 
   const onError = (errorCode: number, errorDescription: string) => {
-    console.error(`[ONLYOFFICE] Error ${errorCode}: ${errorDescription}`);
+    console.error(`[ONLYOFFICE] 에러 ${errorCode}: ${errorDescription}`);
     setError(errorDescription);
     setLoading(false);
     onLoadComponentError?.(errorCode, errorDescription);
@@ -85,3 +85,4 @@ export function OnlyofficeEditor({ documentServerUrl, config, height = '600px', 
     </div>
   );
 }
+
