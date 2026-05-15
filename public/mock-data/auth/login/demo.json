@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "token": "demo-jwt-token-999",
+  "user": {
+    "id": "demo-user-01",
+    "name": "Demo Admin"
+  }
+}

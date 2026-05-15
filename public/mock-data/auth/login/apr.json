@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "token": "apr-jwt-token-777",
+  "user": {
+    "id": "apr-user-01",
+    "name": "APR Admin"
+  }
+}
