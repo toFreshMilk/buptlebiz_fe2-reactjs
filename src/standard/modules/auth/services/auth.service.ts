@@ -11,14 +11,28 @@ export interface LoginResponse {
 
 export class AuthService {
   static async login(tenantId: string, email: string, password: string): Promise<LoginResponse> {
-    // Mock 환경: 실제 POST 대신 GET으로 public 폴더의 Mock JSON을 불러옵니다.
-    console.log(`[AuthService] Login attempt - Email: ${email}`);
-    return await apiGet<LoginResponse>('/auth/login', tenantId);
+    console.log(`[AuthService] 로그인 시도 - 이메일: ${email}`);
+    const res = await apiGet<LoginResponse>('/auth/login', tenantId);
+    
+    // 비즈니스 로직(서비스)에서 데이터 저장 책임을 가집니다.
+    if (res.success && res.token) {
+      localStorage.setItem('auth_token', res.token);
+      localStorage.setItem('auth_user', JSON.stringify({ ...res.user, tenantId }));
+    }
+    
+    return res;
   }
 
   static async logout(tenantId: string): Promise<{ success: boolean }> {
-    console.log(`[AuthService] Logout attempt`);
-    return await apiGet<{ success: boolean }>('/auth/logout', tenantId);
+    console.log(`[AuthService] 로그아웃 시도`);
+    const res = await apiGet<{ success: boolean }>('/auth/logout', tenantId);
+    
+    if (res.success) {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('auth_user');
+    }
+    
+    return res;
   }
 }
 
