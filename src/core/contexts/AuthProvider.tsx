@@ -19,15 +19,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const login = (token: string, user: User) => {
-    localStorage.setItem(TOKEN_KEY, token);
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
     setIsAuthenticated(true);
     setUser(user);
   };
 
   const logout = () => {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
     setIsAuthenticated(false);
     setUser(null);
   };

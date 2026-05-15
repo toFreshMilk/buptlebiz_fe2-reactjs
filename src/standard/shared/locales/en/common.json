@@ -38,5 +38,7 @@
     "submit": "Sign In",
     "loading": "Signing in...",
     "error": "Invalid email or password."
-  }
+  },
+  "logout": "Logout",
+  "logout_error": "An error occurred during logout."
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
-import { getTenantService } from '@/core/config/tenant.config';
+import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Input } from '@/core/uikit/form/Input';
 import { Button } from '@/core/uikit/form/Button';
@@ -13,9 +13,10 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { lang } = useParams<{ lang: string }>();
   const { t } = useCoreTranslation(['common']);
-  
-  const [email, setEmail] = useState('admin@buptlebiz.com');
-  const [password, setPassword] = useState('password123');
+  const AuthServiceClass = useTenantService<typeof AuthService>('AuthService');
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -25,12 +26,8 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const AuthServiceClass = await getTenantService<typeof AuthService>(tenantId, 'AuthService');
-      
       const res = await AuthServiceClass.login(tenantId, email, password);
       if (res.success) {
-        localStorage.setItem('auth_token', res.token!);
-        localStorage.setItem('auth_user', JSON.stringify({ ...res.user, tenantId }));
         navigate(`/${lang}/contract`, { replace: true });
       } else {
         setError(t('login.error'));
