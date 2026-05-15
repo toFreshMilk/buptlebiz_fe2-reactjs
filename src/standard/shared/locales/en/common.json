@@ -32,5 +32,11 @@
     "notFound": "Page not found",
     "refresh": "Refresh Page",
     "goHome": "Go Home"
+  },
+  "login": {
+    "title": "Login",
+    "submit": "Sign In",
+    "loading": "Signing in...",
+    "error": "Invalid email or password."
   }
 }

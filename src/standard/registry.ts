@@ -51,7 +51,6 @@ export type StandardServiceKey = keyof typeof STANDARD_SERVICE_LOADERS;
  */
 export const STANDARD_I18N_OWNER_BY_NAMESPACE = {
   common: 'shared',
-  auth: 'modules/auth',
   contract: 'modules/contract',
 } as const satisfies Record<string, string>;
 
