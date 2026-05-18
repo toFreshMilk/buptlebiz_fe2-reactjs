@@ -40,13 +40,13 @@ const TopNavbar = () => {
       {/* Global Navigation */}
       <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
         <Link to={`/${currentLang}/contract`} className="hover:text-blue-600 transition-colors">
-          Contracts
+          {t('nav_contracts')}
         </Link>
         <Link to={`/${currentLang}/compliance`} className="hover:text-blue-600 transition-colors">
-          Compliance
+          {t('nav_compliance')}
         </Link>
         <Link to={`/${currentLang}/report`} className="hover:text-blue-600 transition-colors">
-          Reports
+          {t('nav_reports')}
         </Link>
       </nav>
 

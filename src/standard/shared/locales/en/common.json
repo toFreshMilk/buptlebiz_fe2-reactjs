@@ -40,5 +40,8 @@
     "error": "Invalid email or password."
   },
   "logout": "Logout",
-  "logout_error": "An error occurred during logout."
+  "logout_error": "An error occurred during logout.",
+  "nav_contracts": "Contracts",
+  "nav_compliance": "Compliance",
+  "nav_reports": "Reports"
 }
