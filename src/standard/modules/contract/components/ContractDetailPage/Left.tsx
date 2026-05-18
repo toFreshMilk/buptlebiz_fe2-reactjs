@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
-import type { StandardContractDto } from '@/standard/modules/contract/services/contract.service';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
+import type { StandardContractService } from '@/standard/modules/contract/services/contract.service';
 
 function formatAmount(v?: string) {
   if (!v) return '-';
@@ -31,14 +34,18 @@ function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
-interface Props {
-  data: StandardContractDto[];
-}
-
-export default function Left({ data }: Props) {
+export default function Left() {
   const { t } = useCoreTranslation('contract');
   const params = useParams<{ lang: string; id: string }>();
   const contractId = params?.id;
+  
+  const { tenantId } = useAppConfig();
+  const service = useTenantService<StandardContractService>('ContractService');
+
+  const { data } = useSuspenseQuery({
+    queryKey: ['contracts', tenantId],
+    queryFn: () => service.getContracts(tenantId),
+  });
 
   const contract = (data ?? []).find((r) => String(r.id) === String(contractId)) || null;
 

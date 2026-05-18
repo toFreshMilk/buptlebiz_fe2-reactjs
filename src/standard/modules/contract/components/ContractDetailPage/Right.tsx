@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { DateRange } from 'react-day-picker';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
-import type { StandardContractDto } from '@/standard/modules/contract/services/contract.service';
 import { Button } from '@/core/uikit/form/Button';
 import { Input } from '@/core/uikit/form/Input';
 import { Checkbox } from '@/core/uikit/form/Checkbox';
 import { DatePicker } from '@/core/uikit/calendar/DatePicker';
 import { BarChart } from '@/core/uikit/chart/BarChart';
+import type { StandardContractService } from '@/standard/modules/contract/services/contract.service';
 
 function safeText(v?: string) {
   return v && String(v).trim() ? v : '-';
@@ -30,21 +33,26 @@ function TimelineItem({ title, time }: { title: string; time: string }) {
   );
 }
 
-interface Props {
-  data: StandardContractDto[];
-}
-
 type WeeklyActivity = {
   week: string;
   comments: number;
   files: number;
 };
 
-export default function Right({ data }: Props) {
-  const { config } = useAppConfig();
+export default function Right() {
   const { t } = useCoreTranslation('contract');
+  const params = useParams<{ lang: string; id: string }>();
+  const contractId = params?.id;
+  
+  const { tenantId, config } = useAppConfig();
+  const service = useTenantService<StandardContractService>('ContractService');
 
-  const contract = data?.[0] || null;
+  const { data } = useSuspenseQuery({
+    queryKey: ['contractsDetail2', tenantId],
+    queryFn: () => service.getContractsDetail2(tenantId),
+  });
+
+  const contract = data?.find((r) => String(r.id) === String(contractId)) || data?.[0] || null;
 
   const base = contract ?? {
     id: '-',

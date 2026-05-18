@@ -1,28 +1,31 @@
 [
   {
     "id": 101,
-    "title": "[데모] 신규 플랫폼 개발 계약",
-    "status": "Review",
-    "partner": "데모 소프트",
-    "date": "2024-04-01",
-    "amount": "120,000,000",
-    "category": "IT 개발",
-    "templateName": "SW개발계약서",
-    "requester": "DemoUser1",
-    "reviewer": "Manager1",
-    "documentCode": "DEMO-2024-001"
+    "weeklyActivity": [
+      { "week": "1주차", "comments": 12, "files": 2 },
+      { "week": "2주차", "comments": 5, "files": 1 },
+      { "week": "3주차", "comments": 18, "files": 4 }
+    ],
+    "timeline": [
+      { "title": "계약서 초안 작성", "time": "2024-04-01 10:00" },
+      { "title": "법무팀 검토 시작", "time": "2024-04-02 14:30" },
+      { "title": "수정안 피드백", "time": "2024-04-05 09:15" }
+    ],
+    "signDate": "2024-04-10",
+    "reviewFrom": "2024-04-02",
+    "reviewTo": "2024-04-09",
+    "smartEmail": "dev-101@inbound.demo.com"
   },
   {
     "id": 102,
-    "title": "[데모] 사무실 임대차 계약",
-    "status": "Active",
-    "partner": "위워크 강남",
-    "date": "2024-04-15",
-    "amount": "5,000,000/월",
-    "category": "총무",
-    "templateName": "임대차계약서",
-    "requester": "DemoUser2",
-    "reviewer": "Manager2",
-    "documentCode": "DEMO-2024-002"
+    "weeklyActivity": [
+      { "week": "1주차", "comments": 3, "files": 1 }
+    ],
+    "timeline": [
+      { "title": "임대차 계약서 수령", "time": "2024-04-15 11:00" },
+      { "title": "날인 완료", "time": "2024-04-16 16:00" }
+    ],
+    "signDate": "2024-04-16",
+    "smartEmail": "rent-102@inbound.demo.com"
   }
 ]

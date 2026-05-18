@@ -1,10 +1,12 @@
 import { useState, useEffect, useActionState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
-import contractService, { type StandardContractDto } from '@/standard/modules/contract/services/contract.service';
 import { Button } from '@/core/uikit/form/Button';
 import Modal from '@/core/uikit/feedback/Modal';
+import type { StandardContractService } from '@/standard/modules/contract/services/contract.service';
 
 type StepKey = 'draft' | 'review' | 'active' | 'done';
 
@@ -21,16 +23,19 @@ function statusToStep(status: string): StepKey {
   return 'active';
 }
 
-interface Props {
-  data: StandardContractDto[];
-  contractId: string;
-}
-
-export default function Top({ data, contractId }: Props) {
-  const contract = data?.find(c => String(c.id) === String(contractId));
+export default function Top() {
+  const { id: contractId } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { tenantId, config } = useAppConfig();
   const { t } = useCoreTranslation('contract');
+  const service = useTenantService<StandardContractService>('ContractService');
+
+  const { data } = useSuspenseQuery({
+    queryKey: ['contractsDetail', tenantId],
+    queryFn: () => service.getContractsDetail(tenantId),
+  });
+
+  const contract = data?.find(c => String(c.id) === String(contractId));
   const [approveModalOpen, setApproveModalOpen] = useState(false);
 
   const step = statusToStep(contract?.status ?? '');
@@ -70,7 +75,7 @@ export default function Top({ data, contractId }: Props) {
     async () => {
       try {
         if (!contractId) throw new Error('계약 ID가 누락되었습니다.');
-        await contractService.approve(tenantId, contractId);
+        await service.approve(tenantId, contractId);
         return { success: true, ts: Date.now() };
       } catch (error: any) {
         return { error: error.message, ts: Date.now() };
