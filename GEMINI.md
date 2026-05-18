@@ -28,6 +28,12 @@
 - **Standard 코드 오염 금지:** `standard/` 파일 내부에 `if (tenant === 'apr')`와 같은 분기 처리를 절대 하지 마십시오.
 - **파일 단위 오버라이드 (Sparse Override):** 차별화가 필요하면 `src/custom/[tenant_id]/`에 파일을 만들고 `src/core/config/tenants/`에서 매핑을 업데이트하십시오. 당장 오버라이드하지 않는 도메인(예: `layouts`, `contract`)이나 빈 폴더를 무의미하게 미리 생성해두지 않고, 필요해진 순간에만 생성하여 저장소를 깔끔하게 유지합니다.
 
+### 3.3 Props 없는 슬롯 조립 (Autonomous Component) 패턴
+- **조립자(Assembler)로서의 `index.tsx`:** 각 기능 모듈의 페이지 진입점(`index.tsx`)은 레이아웃 뼈대와 슬롯(Slot) 위치만 잡아주는 오케스트레이터 역할을 합니다.
+- **Props 전달 금지:** 부모 컴포넌트(`index.tsx`)에서 자식 슬롯 컴포넌트로 데이터를 Props를 통해 내려주지 않습니다. 이를 통해 부모와 자식 간의 결합도를 끊고 테넌트별 커스텀 자유도를 극대화합니다.
+- **자율적 데이터 페칭:** 각 쪼개진 슬롯 컴포넌트(Smart Component)는 URL 파라미터(`useParams`, `nuqs`)를 단일 진실 공급원(SSOT)으로 삼아 읽어오고, 자신에게 필요한 데이터를 React Query를 통해 직접 페칭합니다. (React Query의 Request Deduplication 덕분에 동일 API 중복 호출에 따른 네트워크 성능 저하는 발생하지 않습니다.)
+- **순수 UI 예외:** `src/core/uikit`에 위치한 순수 UI 컴포넌트(Dumb Component)들은 예외적으로 Props를 통해 제어합니다.
+
 ## 4. 데이터 페칭 및 상태 관리
 
 ### 4.1 Server State (React Query)
