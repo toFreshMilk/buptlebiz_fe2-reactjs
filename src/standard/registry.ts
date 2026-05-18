@@ -29,6 +29,8 @@ export const STANDARD_COMPONENT_LOADERS = {
   ContractDetailTop: () => import('@/standard/modules/contract/components/ContractDetailPage/Top'),
   ContractDetailLeft: () => import('@/standard/modules/contract/components/ContractDetailPage/Left'),
   ContractDetailRight: () => import('@/standard/modules/contract/components/ContractDetailPage/Right'),
+  ContractHeader: () => import('@/standard/modules/contract/components/ContractPage/Header'),
+  ContractTabs: () => import('@/standard/modules/contract/components/ContractPage/Tabs'),
 } satisfies Record<string, ComponentLoader>;
 
 export const STANDARD_SERVICE_LOADERS = {

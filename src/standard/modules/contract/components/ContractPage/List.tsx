@@ -1,23 +1,34 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryState, parseAsString, parseAsStringEnum } from 'nuqs';
+import { useAppConfig } from '@/core/contexts/AppConfigContext';
+import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Button } from '@/core/uikit/form/Button';
+import type { StandardContractService } from '@/standard/modules/contract/services/contract.service';
+import { filterContracts, type TabKey } from './index';
 
-type ContractRow = {
-  id: number | string;
-  title: string;
-  partner?: string;
-  status: string;
-  date?: string;
-  amount?: string;
-};
-
-export default function List({ contracts }: { contracts?: ContractRow[] }) {
+export default function List() {
   const { t } = useCoreTranslation('contract');
   const navigate = useNavigate();
   const location = useLocation();
 
-  const rows: ContractRow[] = contracts ?? [];
+  const { tenantId } = useAppConfig();
+  const service = useTenantService<StandardContractService>('ContractService');
+
+  const { data: contracts } = useSuspenseQuery({
+    queryKey: ['contracts', tenantId],
+    queryFn: () => service.getContracts(tenantId),
+  });
+
+  const [query] = useQueryState('q', parseAsString.withDefault(''));
+  const [tab] = useQueryState(
+    'tab',
+    parseAsStringEnum<TabKey>(['all', 'draft', 'review', 'active']).withDefault('all')
+  );
+
+  const rows = filterContracts(contracts ?? [], query, tab as TabKey);
 
   const [, setPage] = useState(1);
 
