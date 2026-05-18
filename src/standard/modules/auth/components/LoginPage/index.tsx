@@ -15,8 +15,8 @@ export default function LoginPage() {
   const { t } = useCoreTranslation(['common']);
   const AuthServiceClass = useTenantService<typeof AuthService>('AuthService');
   
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('demo@buptlebiz.com');
+  const [password, setPassword] = useState('demo1234!');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-full min-h-[calc(100vh-4rem)] items-center justify-center p-4 bg-gray-50">
+    <div className="relative flex h-full min-h-[calc(100vh-4rem)] items-center justify-center p-4 bg-gray-50">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-900">
           {t('login.title')}
@@ -84,12 +84,16 @@ export default function LoginPage() {
             uniqueClassName="w-full mt-2" 
             disabled={loading}
           >
-            {loading ? t('login.loading') : t('login.submit')}
+            {t('login.submit')}
           </Button>
         </form>
       </div>
-      
-      {loading && <LoadingBar />}
+
+      {loading && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/50 backdrop-blur-sm">
+          <LoadingBar />
+        </div>
+      )}
     </div>
   );
 }
