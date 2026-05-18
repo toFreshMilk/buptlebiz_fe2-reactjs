@@ -3,8 +3,7 @@ import { RouteObject, Navigate } from 'react-router-dom';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useTenantComponent } from '@/core/hooks/useTenantModule';
 import { StandardComponentKey } from '@/standard/registry';
-import { AuthGuard } from '@/core/components/AuthGuard';
-import { AuthProvider } from '@/core/contexts/AuthProvider';
+import { AuthProvider, AuthGuard } from '@/core/contexts/AuthProvider';
 
 const TenantRoute = ({ name }: { name: StandardComponentKey }) => {
   const { Component } = useTenantComponent(name);
