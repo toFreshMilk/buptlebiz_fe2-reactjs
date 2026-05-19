@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('ContractMainTabs', () => {
+test.describe('ContractMainTabs - Demo', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://demo.localhost:3200/ko/login');
     await page.evaluate(() => {
@@ -24,12 +24,21 @@ test.describe('ContractMainTabs', () => {
     await expect(page.locator('.ui-standard-main-tab-all')).toBeVisible();
     await expect(page.locator('.ui-standard-main-tab-draft')).toBeVisible();
   });
+});
+
+test.describe('ContractMainTabs - APR', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://apr.localhost:3200/ko/login');
+    await page.evaluate(() => {
+      localStorage.setItem('auth_token', 'demo-jwt-token-999');
+      localStorage.setItem('auth_user', JSON.stringify({id: 'demo-user-01', name: 'Demo Admin'}));
+    });
+  });
 
   // apr / ko
   test('apr / ko renders ContractMainTabs', async ({ page }) => {
     await page.goto('http://apr.localhost:3200/ko/contract');
     await page.waitForLoadState('networkidle');
-    // The locator was .ui-apr-contract-create but the button text is also unique
     await expect(page.locator('button', { hasText: '계약 생성' }).first()).toBeVisible();
   });
 });
