@@ -24,3 +24,4 @@ const InternalLayout = () => {
 };
 
 export default InternalLayout;
+//레이아웃 레벨에서 헤더와 푸터를 규격화 할것.

@@ -31,6 +31,8 @@ export const STANDARD_COMPONENT_LOADERS = {
   ContractDetailRight: () => import('@/standard/modules/contract/components/ContractDetailPage/Right'),
   ContractHeader: () => import('@/standard/modules/contract/components/ContractPage/Header'),
   ContractTabs: () => import('@/standard/modules/contract/components/ContractPage/Tabs'),
+  ContractAprHeader: () => import('@/custom/apr/modules/contract/components/ContractPage/Header'),
+  ContractAprBoard: () => import('@/custom/apr/modules/contract/components/ContractPage/Board'),
 } satisfies Record<string, ComponentLoader>;
 
 export const STANDARD_SERVICE_LOADERS = {
