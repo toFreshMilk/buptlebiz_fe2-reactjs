@@ -16,7 +16,7 @@ const InternalError = () => {
     
     if (error.status === 404) {
       title = '404';
-      errorMessage = t('error.notFound') || '요청하신 페이지를 찾을 수 없습니다.';
+      errorMessage = t('error.notFound');
     }
   } else if (error instanceof Error) {
     errorMessage = error.message;
@@ -34,7 +34,7 @@ const InternalError = () => {
       
       {isRouteErrorResponse(error) && error.status === 404 ? (
         <Link to="/">
-          <Button>{t('error.goHome') || '홈으로'}</Button>
+          <Button>{t('error.goHome')}</Button>
         </Link>
       ) : (
         <Button onClick={() => window.location.reload()}>Refresh</Button>

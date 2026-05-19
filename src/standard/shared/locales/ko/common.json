@@ -43,5 +43,11 @@
   "logout_error": "로그아웃 처리 중 에러가 발생했습니다.",
   "nav_contracts": "계약",
   "nav_compliance": "컴플라이언스",
-  "nav_reports": "리포트"
+  "nav_reports": "리포트",
+  "footer": {
+    "rights": "All rights reserved.",
+    "terms": "이용약관",
+    "privacy": "개인정보 처리방침",
+    "contact": "고객센터"
+  }
 }

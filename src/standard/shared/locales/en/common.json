@@ -43,5 +43,11 @@
   "logout_error": "An error occurred during logout.",
   "nav_contracts": "Contracts",
   "nav_compliance": "Compliance",
-  "nav_reports": "Reports"
+  "nav_reports": "Reports",
+  "footer": {
+    "rights": "All rights reserved.",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us"
+  }
 }

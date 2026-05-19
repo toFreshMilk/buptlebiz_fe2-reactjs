@@ -10,6 +10,7 @@ export const STANDARD_COMPONENT_LOADERS = {
   // ===== Shared =====
   TopNavbar: () => import('@/standard/shared/components/TopNavbar'),
   WorkspaceBanner: () => import('@/standard/shared/components/WorkspaceBanner'),
+  GlobalFooter: () => import('@/standard/shared/components/GlobalFooter'),
 
   // ===== Layouts =====
   RootLayout: () => import('@/standard/layouts/RootLayout/index'),
