@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { DateRange } from 'react-day-picker';
 import { useAppConfig } from '@/core/contexts/AppConfigContext';
 import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Button } from '@/core/uikit/form/Button';
 import { Input } from '@/core/uikit/form/Input';
 import { Checkbox } from '@/core/uikit/form/Checkbox';
-import { DatePicker } from '@/core/uikit/calendar/DatePicker';
 import { BarChart } from '@/core/uikit/chart/BarChart';
 import type { StandardContractService } from '@/standard/modules/contract/services/contract.service';
 
@@ -39,7 +37,7 @@ type WeeklyActivity = {
   files: number;
 };
 
-export default function Right() {
+export default function RightActivity() {
   const { t } = useCoreTranslation('contract');
   const params = useParams<{ lang: string; id: string }>();
   const contractId = params?.id;
@@ -60,84 +58,14 @@ export default function Right() {
     status: 'Active',
   };
 
-  const defaultSignDate =
-    typeof base.signDate === 'string' && !Number.isNaN(new Date(base.signDate).getTime())
-      ? new Date(base.signDate)
-      : undefined;
-  const defaultReviewFrom =
-    typeof base.reviewFrom === 'string' && !Number.isNaN(new Date(base.reviewFrom).getTime())
-      ? new Date(base.reviewFrom)
-      : undefined;
-  const defaultReviewTo =
-    typeof base.reviewTo === 'string' && !Number.isNaN(new Date(base.reviewTo).getTime())
-      ? new Date(base.reviewTo)
-      : undefined;
-
   const weeklyActivityData: WeeklyActivity[] =
     Array.isArray(base.weeklyActivity) && base.weeklyActivity.length > 0 ? base.weeklyActivity : [];
   const timeline = Array.isArray(base.timeline) ? base.timeline : [];
 
   const [comment, setComment] = useState(t('detailRight.defaultComment'));
-  const [signDate, setSignDate] = useState<Date | undefined>(defaultSignDate);
-  const [reviewRange, setReviewRange] = useState<DateRange | undefined>(
-    defaultReviewFrom
-      ? {
-          from: defaultReviewFrom,
-          to: defaultReviewTo,
-        }
-      : undefined,
-  );
 
   return (
     <section className="space-y-4">
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
-        <div className="flex gap-2">
-          <Button fullWidth variant="outline" tone="slate" uniqueClassName="ui-standard-right-download">
-            {t('detailRight.downloadStamp')}
-          </Button>
-          <Button
-            fullWidth
-            tone="slate"
-            uniqueClassName="ui-standard-right-stamp-check"
-            style={{ backgroundColor: config.theme.primaryColor }}
-          >
-            {t('detailRight.confirmStamp')}
-          </Button>
-        </div>
-      </div>
-
-      <details className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" open>
-        <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between">
-          <div className="font-black text-slate-900">{t('detailRight.shareLegal')}</div>
-          <div className="text-slate-400">⌄</div>
-        </summary>
-        <div className="px-5 pb-5">
-          <div className="text-sm text-slate-500">{t('detailRight.shareLegalDesc')}</div>
-        </div>
-      </details>
-
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
-        <div className="text-sm font-black text-slate-900">{t('detailRight.schedule')}</div>
-        <DatePicker
-          mode="single"
-          label={t('detailRight.signDate')}
-          description={t('detailRight.signDateDesc')}
-          value={signDate}
-          onValueChange={setSignDate}
-          onDayClick={(day) => {
-            console.log('[DatePicker] sign date selected:', day);
-          }}
-        />
-        <DatePicker
-          mode="range"
-          label={t('detailRight.reviewRange')}
-          description={t('detailRight.reviewRangeDesc')}
-          value={reviewRange}
-          onValueChange={setReviewRange}
-          numberOfMonths={1}
-        />
-      </div>
-
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
         <div className="text-sm font-black text-slate-900 mb-2">{t('detailRight.weeklyActivity')}</div>
         <BarChart

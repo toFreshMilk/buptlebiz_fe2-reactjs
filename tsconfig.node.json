@@ -22,6 +22,8 @@
     "vite.config.ts",
     "vite-env.d.ts",
     "tailwind.config.ts",
-    "eslint.config.js" // JS파일이지만 포함해주면 좋음
+    "eslint.config.js",
+    "playwright.config.ts",
+    "e2e/**/*"
   ]
 }

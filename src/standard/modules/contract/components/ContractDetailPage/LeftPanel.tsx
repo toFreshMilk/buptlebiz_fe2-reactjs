@@ -34,7 +34,7 @@ function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
-export default function Left() {
+export default function LeftPanel() {
   const { t } = useCoreTranslation('contract');
   const params = useParams<{ lang: string; id: string }>();
   const contractId = params?.id;

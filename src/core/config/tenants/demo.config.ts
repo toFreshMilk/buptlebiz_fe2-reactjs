@@ -10,7 +10,7 @@ const config: TenantConfig = {
   // Demo는 Standard를 유지하고, 눈에 띄는 "부분 UI"만 교체하여 데모임을 표시
   components: {
     WorkspaceBanner: () => import('@/custom/demo/shared/components/WorkspaceBanner'),
-    ContractDetailLeft: () => import('@/custom/demo/modules/contract/components/ContractDetailPage/Left'),
+    ContractDetailLeftPanel: () => import('@/custom/demo/modules/contract/components/ContractDetailPage/Left'),
   },
 };
 export default config;
