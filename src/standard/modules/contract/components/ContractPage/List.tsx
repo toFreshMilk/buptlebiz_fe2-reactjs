@@ -7,7 +7,7 @@ import { useTenantService } from '@/core/hooks/useTenantModule';
 import { useCoreTranslation } from '@/core/hooks/useCoreTranslation';
 import { Button } from '@/core/uikit/form/Button';
 import type { StandardContractService } from '@/standard/modules/contract/services/contract.service';
-import { filterContracts, type TabKey } from './index';
+import type { TabKey } from './index';
 
 export default function List() {
   const { t } = useCoreTranslation('contract');
@@ -17,18 +17,18 @@ export default function List() {
   const { tenantId } = useAppConfig();
   const service = useTenantService<StandardContractService>('ContractService');
 
-  const { data: contracts } = useSuspenseQuery({
-    queryKey: ['contracts', tenantId],
-    queryFn: () => service.getContracts(tenantId),
-  });
-
   const [query] = useQueryState('q', parseAsString.withDefault(''));
   const [tab] = useQueryState(
     'tab',
     parseAsStringEnum<TabKey>(['all', 'draft', 'review', 'active']).withDefault('all')
   );
 
-  const rows = filterContracts(contracts ?? [], query, tab as TabKey);
+  const { data } = useSuspenseQuery({
+    queryKey: ['contracts', tenantId, query, tab],
+    queryFn: () => service.getContracts(tenantId, query, tab),
+  });
+
+  const rows = data.items;
 
   const [, setPage] = useState(1);
 
@@ -43,7 +43,7 @@ export default function List() {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden ui-standard-main-table">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>

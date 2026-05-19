@@ -1,6 +1,6 @@
 import { apiPost } from '@/core/service/apiClient';
 import { StandardContractService } from '@/standard/modules/contract/services/contract.service';
-import type { StandardContractDto } from '@/standard/modules/contract/services/contract.service';
+import type { StandardContractDto, ContractListResponseDto } from '@/standard/modules/contract/services/contract.service';
 
 //
 // 🔴 단점 (Cons)
@@ -39,10 +39,28 @@ export class AprContractService extends StandardContractService {
   }
 
   // 2. 상속받은 메서드 오버라이딩 (Core 대신 Custom 메서드 사용)
-  override async getContracts(tenantId: string): Promise<StandardContractDto[]> {
+  override async getContracts(tenantId: string, q?: string, tab?: string): Promise<ContractListResponseDto> {
     console.log('[APR] 계약 목록은 우리만의 특별한 통신 API를 탑니다.');
     // 부모가 쓰던 apiGet 대신 내가 만든 customApiGet 호출
-    return await this.customApiGet<StandardContractDto[]>('/contracts', tenantId);
+    const allData = await this.customApiGet<StandardContractDto[]>('/contracts', tenantId);
+    
+    const query = (q || '').trim().toLowerCase();
+    const currentTab = (tab || 'all').toLowerCase();
+
+    const filtered = allData.filter((c) => {
+      const matchQ = !query || c.title.toLowerCase().includes(query);
+      const matchTab =
+        currentTab === 'all' ||
+        (currentTab === 'draft' && c.status.toLowerCase() === 'draft') ||
+        (currentTab === 'review' && c.status.toLowerCase() === 'review') ||
+        (currentTab === 'active' && c.status.toLowerCase() === 'active');
+      return matchQ && matchTab;
+    });
+
+    return {
+      totalCount: filtered.length,
+      items: filtered,
+    };
   }
 
   override async approve(tenant: string, contractId: string): Promise<void> {

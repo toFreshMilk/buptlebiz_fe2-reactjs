@@ -4,6 +4,14 @@ const TENANTS = ['demo', 'apr'];
 const LANGUAGES = ['ko', 'en'];
 
 test.describe('e1 (Custom E2E Suite)', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://demo.localhost:3200/ko/login');
+    await page.evaluate(() => {
+      localStorage.setItem('auth_token', 'demo-jwt-token-999');
+      localStorage.setItem('auth_user', JSON.stringify({id: 'demo-user-01', name: 'Demo Admin'}));
+    });
+  });
+
   for (const tenant of TENANTS) {
     for (const lang of LANGUAGES) {
       test(`[${tenant}] / [${lang}] - Contract page rendering, row click, and language switch`, async ({ page }) => {

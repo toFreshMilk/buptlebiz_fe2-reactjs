@@ -1,6 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('ContractMainTabs', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://demo.localhost:3200/ko/login');
+    await page.evaluate(() => {
+      localStorage.setItem('auth_token', 'demo-jwt-token-999');
+      localStorage.setItem('auth_user', JSON.stringify({id: 'demo-user-01', name: 'Demo Admin'}));
+    });
+  });
+
   // demo / ko
   test('demo / ko renders ContractMainTabs', async ({ page }) => {
     await page.goto('http://demo.localhost:3200/ko/contract');

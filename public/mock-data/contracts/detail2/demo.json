@@ -2,30 +2,74 @@
   {
     "id": 101,
     "weeklyActivity": [
-      { "week": "1주차", "comments": 12, "files": 2 },
-      { "week": "2주차", "comments": 5, "files": 1 },
-      { "week": "3주차", "comments": 18, "files": 4 }
+      { "week": "Week 1", "comments": 4, "files": 2 },
+      { "week": "Week 2", "comments": 7, "files": 1 }
     ],
     "timeline": [
-      { "title": "계약서 초안 작성", "time": "2024-04-01 10:00" },
-      { "title": "법무팀 검토 시작", "time": "2024-04-02 14:30" },
-      { "title": "수정안 피드백", "time": "2024-04-05 09:15" }
+      { "title": "Draft Created", "time": "2024-04-01 10:00" },
+      { "title": "Sent for Review", "time": "2024-04-02 09:30" },
+      { "title": "Manager Reviewing", "time": "2024-04-05 14:00" }
     ],
-    "signDate": "2024-04-10",
+    "signDate": null,
     "reviewFrom": "2024-04-02",
-    "reviewTo": "2024-04-09",
-    "smartEmail": "dev-101@inbound.demo.com"
+    "reviewTo": null,
+    "smartEmail": "dev@demosoft.com"
   },
   {
     "id": 102,
     "weeklyActivity": [
-      { "week": "1주차", "comments": 3, "files": 1 }
+      { "week": "Week 1", "comments": 1, "files": 1 }
     ],
     "timeline": [
-      { "title": "임대차 계약서 수령", "time": "2024-04-15 11:00" },
-      { "title": "날인 완료", "time": "2024-04-16 16:00" }
+      { "title": "Draft Created", "time": "2024-04-15 11:00" },
+      { "title": "Reviewed", "time": "2024-04-19 16:30" },
+      { "title": "Signed", "time": "2024-04-20 10:00" }
     ],
-    "signDate": "2024-04-16",
-    "smartEmail": "rent-102@inbound.demo.com"
+    "signDate": "2024-04-20",
+    "reviewFrom": "2024-04-16",
+    "reviewTo": "2024-04-19",
+    "smartEmail": "gangnam@wework.com"
+  },
+  {
+    "id": 103,
+    "weeklyActivity": [
+      { "week": "Week 1", "comments": 2, "files": 0 },
+      { "week": "Week 2", "comments": 5, "files": 3 }
+    ],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-05-01 09:15" },
+      { "title": "CEO Reviewed", "time": "2024-05-09 17:00" },
+      { "title": "Approved", "time": "2024-05-10 13:00" }
+    ],
+    "signDate": "2024-05-10",
+    "reviewFrom": "2024-05-02",
+    "reviewTo": "2024-05-09",
+    "smartEmail": "contact@yulchon.com"
+  },
+  {
+    "id": 104,
+    "weeklyActivity": [],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-05-15 15:45" }
+    ],
+    "signDate": null,
+    "reviewFrom": null,
+    "reviewTo": null,
+    "smartEmail": "sales@goodscompany.co.kr"
+  },
+  {
+    "id": 105,
+    "weeklyActivity": [
+      { "week": "Week 1", "comments": 12, "files": 4 }
+    ],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-05-10 10:00" },
+      { "title": "Review Started", "time": "2024-05-11 11:00" },
+      { "title": "Rejected", "time": "2024-05-12 16:20" }
+    ],
+    "signDate": null,
+    "reviewFrom": "2024-05-11",
+    "reviewTo": "2024-05-12",
+    "smartEmail": "audit@secguard.net"
   }
 ]

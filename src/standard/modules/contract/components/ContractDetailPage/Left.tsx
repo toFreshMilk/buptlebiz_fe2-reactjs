@@ -47,7 +47,7 @@ export default function Left() {
     queryFn: () => service.getContracts(tenantId),
   });
 
-  const contract = (data ?? []).find((r) => String(r.id) === String(contractId)) || null;
+  const contract = (data?.items ?? []).find((r) => String(r.id) === String(contractId)) || null;
 
   const base = contract ?? {
     id: contractId ?? '-',

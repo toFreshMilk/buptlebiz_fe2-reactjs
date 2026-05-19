@@ -1,14 +1,7 @@
 [
-  {
-    "id": 101,
-    "title": "[데모] 신규 플랫폼 개발 계약",
-    "status": "Review",
-    "smartEmail": "review-101@buptlebiz.com"
-  },
-  {
-    "id": 102,
-    "title": "[데모] 사무실 임대차 계약",
-    "status": "Active",
-    "smartEmail": "active-102@buptlebiz.com"
-  }
+  { "id": 101, "title": "[데모] 신규 플랫폼 개발 계약", "status": "Review", "smartEmail": "dev@demosoft.com" },
+  { "id": 102, "title": "[데모] 사무실 임대차 계약", "status": "Active", "smartEmail": "gangnam@wework.com" },
+  { "id": 103, "title": "[데모] 법률 자문 연간 계약", "status": "APPROVED", "smartEmail": "contact@yulchon.com" },
+  { "id": 104, "title": "[데모] 신입사원 웰컴키트 제작", "status": "Draft", "smartEmail": "sales@goodscompany.co.kr" },
+  { "id": 105, "title": "[데모] 사내 네트워크 보안 감사 용역", "status": "REJECTED", "smartEmail": "audit@secguard.net" }
 ]

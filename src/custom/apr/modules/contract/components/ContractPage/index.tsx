@@ -88,11 +88,6 @@ const ContractPageContent = () => {
   const { tenantId, config } = useAppConfig();
   const service = useTenantService('ContractService');
 
-  const { data: contracts } = useSuspenseQuery({
-    queryKey: ['contracts', tenantId],
-    queryFn: () => service.getContracts(tenantId),
-  });
-
   const { Component: Sidebar } = useTenantComponent('ContractSidebar');
 
   const { t } = useCoreTranslation('contract');
@@ -102,18 +97,13 @@ const ContractPageContent = () => {
 
   const query = (searchParams.get('q') ?? '').trim().toLowerCase();
   const tab = (searchParams.get('tab') ?? 'all').toLowerCase();
-  const list = contracts || [];
 
-  const filtered = list.filter((c: ContractItem) => {
-    const s = normalizeStatus(c.status);
-    const matchQ =
-      !query ||
-      String(c.title ?? '')
-        .toLowerCase()
-        .includes(query);
-    const matchTab = tab === 'all' || s === tab;
-    return matchQ && matchTab;
+  const { data } = useSuspenseQuery({
+    queryKey: ['contracts', tenantId, query, tab],
+    queryFn: () => service.getContracts(tenantId, query, tab),
   });
+
+  const filtered = data?.items || [];
 
   const active = filtered.filter((c: ContractItem) => normalizeStatus(c.status) === 'active');
   const review = filtered.filter((c: ContractItem) => normalizeStatus(c.status) === 'review');
@@ -184,37 +174,6 @@ const ContractPageContent = () => {
           <StatCard label={t('apr.stat.active')} value={active.length} accent="#16a34a" />
           <StatCard label={t('apr.stat.review')} value={review.length} accent="#f59e0b" />
           <StatCard label={t('apr.stat.draft')} value={draft.length} accent="#64748b" />
-        </div>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm">
-            <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.chart_title')}</div>
-            <BarChart
-              data={statusChartData}
-              xKey="status"
-              series={[{ dataKey: 'count', name: t('main.chart_count'), color: config.theme.primaryColor }]}
-              height={220}
-              onBarClick={({ row }) => {
-                const status = String(row.status ?? '').toLowerCase();
-                if (!status) return;
-                const next = new URLSearchParams(searchParams.toString());
-                next.set('tab', status);
-                navigate(`${location.pathname}?${next.toString()}`, { replace: true });
-              }}
-            />
-          </div>
-
-          <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm">
-            <div className="mb-2 text-sm font-bold text-slate-800">{t('apr.table_title')}</div>
-            <DataTable
-              data={filtered}
-              columns={tableColumns}
-              globalFilterPlaceholder={t('main.table_search_placeholder')}
-              onRowClick={(row) => navigate(`${location.pathname}/${row.id}`)}
-              uniqueClassName="ui-apr-main-table"
-              tableUniqueClassName="border-rose-200"
-            />
-          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4">

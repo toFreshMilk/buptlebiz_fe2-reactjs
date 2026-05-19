@@ -1,14 +1,12 @@
 [
-  {
-    "id": 1,
-    "title": "[APR] 에이피알 글로벌 라이선스 계약",
-    "status": "APPROVED",
-    "smartEmail": "apr-global-01@apr.com"
-  },
-  {
-    "id": 2,
-    "title": "[APR] 국내 마케팅 대행 계약",
-    "status": "Review",
-    "smartEmail": "apr-mkt-02@apr.com"
-  }
+  { "id": 201, "title": "[APR] 2024 글로벌 뷰티 파트너십", "status": "Active", "smartEmail": "partnership@globalbeauty.inc" },
+  { "id": 202, "title": "[APR] 메디큐브 광고 모델 계약", "status": "APPROVED", "smartEmail": "model@star-ent.co.kr" },
+  { "id": 203, "title": "[APR] 물류 창고 확장 공사 계약", "status": "Review", "smartEmail": "construct-a@build.com" },
+  { "id": 204, "title": "[APR] 널디 2024 S/S 컬렉션 원단 공급 계약", "status": "Draft", "smartEmail": "sales@jeilfabric.com" },
+  { "id": 205, "title": "[APR] 에이피알 사내 카페테리아 위탁 운영", "status": "REJECTED", "smartEmail": "b2b@wellstory.com" },
+  { "id": 206, "title": "[APR] 글로벌 IT 인프라 클라우드 이전", "status": "Active", "smartEmail": "aws-apr@amazon.com" },
+  { "id": 207, "title": "[APR] 메디큐브 신제품 임상 실험 용역", "status": "APPROVED", "smartEmail": "clinic@kiscs.re.kr" },
+  { "id": 208, "title": "[APR] 포맨트 여름 향수 디자인 패키징", "status": "Review", "smartEmail": "contact@studio-b.com" },
+  { "id": 209, "title": "[APR] 2024년 3분기 온라인 퍼포먼스 마케팅 대행", "status": "Draft", "smartEmail": "hello@admax.kr" },
+  { "id": 210, "title": "[APR] 에이피알 미국 법인 신규 오피스 임대", "status": "Active", "smartEmail": "leasing@nyrealestate.com" }
 ]

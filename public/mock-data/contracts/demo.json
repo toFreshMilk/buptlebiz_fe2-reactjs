@@ -10,7 +10,20 @@
     "templateName": "SW개발계약서",
     "requester": "DemoUser1",
     "reviewer": "Manager1",
-    "documentCode": "DEMO-2024-001"
+    "documentCode": "DEMO-2024-001",
+    "smartEmail": "dev@demosoft.com",
+    "signDate": null,
+    "reviewFrom": "2024-04-02",
+    "reviewTo": null,
+    "weeklyActivity": [
+      { "week": "Week 1", "comments": 4, "files": 2 },
+      { "week": "Week 2", "comments": 7, "files": 1 }
+    ],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-04-01 10:00" },
+      { "title": "Sent for Review", "time": "2024-04-02 09:30" },
+      { "title": "Manager Reviewing", "time": "2024-04-05 14:00" }
+    ]
   },
   {
     "id": 102,
@@ -23,6 +36,90 @@
     "templateName": "임대차계약서",
     "requester": "DemoUser2",
     "reviewer": "Manager2",
-    "documentCode": "DEMO-2024-002"
+    "documentCode": "DEMO-2024-002",
+    "smartEmail": "gangnam@wework.com",
+    "signDate": "2024-04-20",
+    "reviewFrom": "2024-04-16",
+    "reviewTo": "2024-04-19",
+    "weeklyActivity": [
+      { "week": "Week 1", "comments": 1, "files": 1 }
+    ],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-04-15 11:00" },
+      { "title": "Reviewed", "time": "2024-04-19 16:30" },
+      { "title": "Signed", "time": "2024-04-20 10:00" }
+    ]
+  },
+  {
+    "id": 103,
+    "title": "[데모] 법률 자문 연간 계약",
+    "status": "APPROVED",
+    "partner": "법무법인 율촌",
+    "date": "2024-05-01",
+    "amount": "60,000,000",
+    "category": "법무",
+    "templateName": "자문계약서",
+    "requester": "Legal Dept",
+    "reviewer": "CEO",
+    "documentCode": "DEMO-2024-003",
+    "smartEmail": "contact@yulchon.com",
+    "signDate": "2024-05-10",
+    "reviewFrom": "2024-05-02",
+    "reviewTo": "2024-05-09",
+    "weeklyActivity": [
+      { "week": "Week 1", "comments": 2, "files": 0 },
+      { "week": "Week 2", "comments": 5, "files": 3 }
+    ],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-05-01 09:15" },
+      { "title": "CEO Reviewed", "time": "2024-05-09 17:00" },
+      { "title": "Approved", "time": "2024-05-10 13:00" }
+    ]
+  },
+  {
+    "id": 104,
+    "title": "[데모] 신입사원 웰컴키트 제작",
+    "status": "Draft",
+    "partner": "굿즈컴퍼니",
+    "date": "2024-05-15",
+    "amount": "15,000,000",
+    "category": "인사",
+    "templateName": "물품제작계약서",
+    "requester": "HR Team",
+    "reviewer": "HR Manager",
+    "documentCode": "DEMO-2024-004",
+    "smartEmail": "sales@goodscompany.co.kr",
+    "signDate": null,
+    "reviewFrom": null,
+    "reviewTo": null,
+    "weeklyActivity": [],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-05-15 15:45" }
+    ]
+  },
+  {
+    "id": 105,
+    "title": "[데모] 사내 네트워크 보안 감사 용역",
+    "status": "REJECTED",
+    "partner": "시큐리티 가드",
+    "date": "2024-05-10",
+    "amount": "30,000,000",
+    "category": "보안",
+    "templateName": "보안감사계약서",
+    "requester": "Infosec Team",
+    "reviewer": "CISO",
+    "documentCode": "DEMO-2024-005",
+    "smartEmail": "audit@secguard.net",
+    "signDate": null,
+    "reviewFrom": "2024-05-11",
+    "reviewTo": "2024-05-12",
+    "weeklyActivity": [
+      { "week": "Week 1", "comments": 12, "files": 4 }
+    ],
+    "timeline": [
+      { "title": "Draft Created", "time": "2024-05-10 10:00" },
+      { "title": "Review Started", "time": "2024-05-11 11:00" },
+      { "title": "Rejected", "time": "2024-05-12 16:20" }
+    ]
   }
 ]

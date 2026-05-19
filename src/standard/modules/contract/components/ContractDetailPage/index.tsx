@@ -1,31 +1,19 @@
-import { useTenantComponent } from '@/core/hooks/useTenantModule';
-import { Suspense } from 'react';
-import { LoadingBar } from '@/core/uikit/feedback/LoadingBar';
+import { Slot } from '@/core/uikit/layout/Slot';
 
-const ContractDetailPageContent = () => {
-  const { Component: Top } = useTenantComponent('ContractDetailTop');
-  const { Component: Left } = useTenantComponent('ContractDetailLeft');
-  const { Component: Right } = useTenantComponent('ContractDetailRight');
-
+const ContractDetailPage = () => {
   return (
     <div className="p-6 lg:p-10 space-y-6">
-      <Top />
+      <Slot name="ContractDetailTop" />
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 min-w-0">
-          <Left />
+          <Slot name="ContractDetailLeft" />
         </div>
         <div className="w-full lg:w-105 shrink-0">
-          <Right />
+          <Slot name="ContractDetailRight" />
         </div>
       </div>
     </div>
   );
 };
-
-const ContractDetailPage = () => (
-  <Suspense fallback={<LoadingBar />}>
-    <ContractDetailPageContent />
-  </Suspense>
-);
 
 export default ContractDetailPage;

@@ -1,6 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('ContractMain', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://demo.localhost:3200/ko/login');
+    await page.evaluate(() => {
+      localStorage.setItem('auth_token', 'demo-jwt-token-999');
+      localStorage.setItem('auth_user', JSON.stringify({id: 'demo-user-01', name: 'Demo Admin'}));
+    });
+  });
+
   test('demo / ko renders ContractMain', async ({ page }) => {
     await page.goto('http://demo.localhost:3200/ko/contract');
     // Use h1 and correct title from contract.json

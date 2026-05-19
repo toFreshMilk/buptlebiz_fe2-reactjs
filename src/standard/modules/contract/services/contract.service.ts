@@ -29,9 +29,32 @@ export interface StandardContractDto {
   }>;
 }
 
+export interface ContractListResponseDto {
+  totalCount: number;
+  items: StandardContractDto[];
+}
+
 export class StandardContractService {
-  async getContracts(tenant: string): Promise<StandardContractDto[]> {
-    return await apiGet<StandardContractDto[]>('/contracts', tenant);
+  async getContracts(tenant: string, q?: string, tab?: string): Promise<ContractListResponseDto> {
+    const allData = await apiGet<StandardContractDto[]>('/contracts', tenant);
+    
+    const query = (q || '').trim().toLowerCase();
+    const currentTab = (tab || 'all').toLowerCase();
+
+    const filtered = allData.filter((c) => {
+      const matchQ = !query || c.title.toLowerCase().includes(query);
+      const matchTab =
+        currentTab === 'all' ||
+        (currentTab === 'draft' && c.status.toLowerCase() === 'draft') ||
+        (currentTab === 'review' && c.status.toLowerCase() === 'review') ||
+        (currentTab === 'active' && c.status.toLowerCase() === 'active');
+      return matchQ && matchTab;
+    });
+
+    return {
+      totalCount: filtered.length,
+      items: filtered,
+    };
   }
 
   async getContractsDetail(tenant: string): Promise<StandardContractDto[]> {

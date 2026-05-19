@@ -10,12 +10,24 @@
     "templateName": "Partnership Agreement En",
     "requester": "James Kim",
     "reviewer": "Sarah Lee",
-    "documentCode": "APR-2024-001"
+    "documentCode": "APR-2024-001",
+    "smartEmail": "partnership@globalbeauty.inc",
+    "signDate": "2024-01-25",
+    "reviewFrom": "2024-01-21",
+    "reviewTo": "2024-01-24",
+    "weeklyActivity": [
+      { "week": "W1", "comments": 2, "files": 1 },
+      { "week": "W2", "comments": 5, "files": 3 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-01-20 10:00" },
+      { "title": "Review started", "time": "2024-01-21 09:30" }
+    ]
   },
   {
     "id": 202,
     "title": "[APR] 메디큐브 광고 모델 계약",
-    "status": "Done",
+    "status": "APPROVED",
     "partner": "스타 엔터테인먼트",
     "date": "2024-02-28",
     "amount": "300,000,000",
@@ -23,7 +35,18 @@
     "templateName": "모델출연계약서",
     "requester": "Marketing Team",
     "reviewer": "Legal Team",
-    "documentCode": "APR-2024-002"
+    "documentCode": "APR-2024-002",
+    "smartEmail": "model@star-ent.co.kr",
+    "signDate": "2024-03-05",
+    "reviewFrom": "2024-02-29",
+    "reviewTo": "2024-03-04",
+    "weeklyActivity": [
+      { "week": "W1", "comments": 10, "files": 2 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-02-28 14:00" },
+      { "title": "Approved", "time": "2024-03-05 11:00" }
+    ]
   },
   {
     "id": 203,
@@ -36,6 +59,189 @@
     "templateName": "공사도급계약서",
     "requester": "Facility Mgr",
     "reviewer": "Finance Mgr",
-    "documentCode": "APR-2024-003"
+    "documentCode": "APR-2024-003",
+    "smartEmail": "construct-a@build.com",
+    "signDate": null,
+    "reviewFrom": "2024-03-11",
+    "reviewTo": null,
+    "weeklyActivity": [
+      { "week": "W1", "comments": 1, "files": 5 },
+      { "week": "W2", "comments": 8, "files": 2 },
+      { "week": "W3", "comments": 4, "files": 0 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-03-10 09:00" },
+      { "title": "Review started", "time": "2024-03-11 10:15" },
+      { "title": "Finance review", "time": "2024-03-15 13:00" }
+    ]
+  },
+  {
+    "id": 204,
+    "title": "[APR] 널디 2024 S/S 컬렉션 원단 공급 계약",
+    "status": "Draft",
+    "partner": "제일직물",
+    "date": "2024-04-05",
+    "amount": "120,000,000",
+    "category": "구매",
+    "templateName": "물품공급계약서",
+    "requester": "Fashion SCM",
+    "reviewer": "Legal Team",
+    "documentCode": "APR-2024-004",
+    "smartEmail": "sales@jeilfabric.com",
+    "signDate": null,
+    "reviewFrom": null,
+    "reviewTo": null,
+    "weeklyActivity": [],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-04-05 16:30" }
+    ]
+  },
+  {
+    "id": 205,
+    "title": "[APR] 에이피알 사내 카페테리아 위탁 운영",
+    "status": "REJECTED",
+    "partner": "웰스토리",
+    "date": "2024-04-12",
+    "amount": "80,000,000",
+    "category": "총무",
+    "templateName": "위탁운영계약서",
+    "requester": "HR Team",
+    "reviewer": "Finance Mgr",
+    "documentCode": "APR-2024-005",
+    "smartEmail": "b2b@wellstory.com",
+    "signDate": null,
+    "reviewFrom": "2024-04-13",
+    "reviewTo": "2024-04-15",
+    "weeklyActivity": [
+      { "week": "W1", "comments": 15, "files": 1 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-04-12 11:20" },
+      { "title": "Review started", "time": "2024-04-13 09:00" },
+      { "title": "Rejected", "time": "2024-04-15 14:45" }
+    ]
+  },
+  {
+    "id": 206,
+    "title": "[APR] 글로벌 IT 인프라 클라우드 이전",
+    "status": "Active",
+    "partner": "AWS Korea",
+    "date": "2024-04-20",
+    "amount": "$1,200,000",
+    "category": "IT",
+    "templateName": "클라우드서비스계약",
+    "requester": "IT Dept",
+    "reviewer": "CTO",
+    "documentCode": "APR-2024-006",
+    "smartEmail": "aws-apr@amazon.com",
+    "signDate": "2024-04-25",
+    "reviewFrom": "2024-04-21",
+    "reviewTo": "2024-04-24",
+    "weeklyActivity": [
+      { "week": "W1", "comments": 3, "files": 2 },
+      { "week": "W2", "comments": 12, "files": 8 },
+      { "week": "W3", "comments": 1, "files": 0 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-04-20 15:00" },
+      { "title": "CTO Review", "time": "2024-04-23 10:00" },
+      { "title": "Approved & Signed", "time": "2024-04-25 17:30" }
+    ]
+  },
+  {
+    "id": 207,
+    "title": "[APR] 메디큐브 신제품 임상 실험 용역",
+    "status": "APPROVED",
+    "partner": "한국피부임상과학연구소",
+    "date": "2024-05-02",
+    "amount": "45,000,000",
+    "category": "R&D",
+    "templateName": "용역계약서",
+    "requester": "R&D Center",
+    "reviewer": "Legal Team",
+    "documentCode": "APR-2024-007",
+    "smartEmail": "clinic@kiscs.re.kr",
+    "signDate": "2024-05-10",
+    "reviewFrom": "2024-05-03",
+    "reviewTo": "2024-05-09",
+    "weeklyActivity": [
+      { "week": "W1", "comments": 6, "files": 4 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-05-02 09:30" },
+      { "title": "Review completed", "time": "2024-05-09 16:00" },
+      { "title": "Approved", "time": "2024-05-10 11:15" }
+    ]
+  },
+  {
+    "id": 208,
+    "title": "[APR] 포맨트 여름 향수 디자인 패키징",
+    "status": "Review",
+    "partner": "디자인스튜디오 B",
+    "date": "2024-05-12",
+    "amount": "25,000,000",
+    "category": "디자인",
+    "templateName": "디자인용역계약서",
+    "requester": "Forment Team",
+    "reviewer": "Design Lead",
+    "documentCode": "APR-2024-008",
+    "smartEmail": "contact@studio-b.com",
+    "signDate": null,
+    "reviewFrom": "2024-05-13",
+    "reviewTo": null,
+    "weeklyActivity": [
+      { "week": "W1", "comments": 22, "files": 10 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-05-12 13:00" },
+      { "title": "Design Lead Review", "time": "2024-05-13 14:30" }
+    ]
+  },
+  {
+    "id": 209,
+    "title": "[APR] 2024년 3분기 온라인 퍼포먼스 마케팅 대행",
+    "status": "Draft",
+    "partner": "애드맥스 코리아",
+    "date": "2024-05-18",
+    "amount": "500,000,000",
+    "category": "마케팅",
+    "templateName": "광고대행계약서",
+    "requester": "Performance Mkt",
+    "reviewer": "Marketing Director",
+    "documentCode": "APR-2024-009",
+    "smartEmail": "hello@admax.kr",
+    "signDate": null,
+    "reviewFrom": null,
+    "reviewTo": null,
+    "weeklyActivity": [],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-05-18 10:00" }
+    ]
+  },
+  {
+    "id": 210,
+    "title": "[APR] 에이피알 미국 법인 신규 오피스 임대",
+    "status": "Active",
+    "partner": "NY Real Estate",
+    "date": "2024-05-01",
+    "amount": "$25,000/month",
+    "category": "해외법인",
+    "templateName": "Lease Agreement",
+    "requester": "US Branch",
+    "reviewer": "Legal Team",
+    "documentCode": "APR-2024-010",
+    "smartEmail": "leasing@nyrealestate.com",
+    "signDate": "2024-05-15",
+    "reviewFrom": "2024-05-02",
+    "reviewTo": "2024-05-14",
+    "weeklyActivity": [
+      { "week": "W1", "comments": 5, "files": 3 },
+      { "week": "W2", "comments": 2, "files": 1 }
+    ],
+    "timeline": [
+      { "title": "Draft created", "time": "2024-05-01 09:00" },
+      { "title": "Legal Review", "time": "2024-05-05 10:00" },
+      { "title": "Signed", "time": "2024-05-15 15:30" }
+    ]
   }
 ]
