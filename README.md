@@ -4,9 +4,9 @@ https://demo.buptlebiz-fe2.pages.dev/ko/contract
 1. 에러로그 및 에러 페이지 시스템 점검할것(로그인 붙인 후)
 
 
-# 📝 BuptleBiz FE 2.0 (법틀비즈 프론트엔드 v2)
+# 📝 리액트 19 어플리케이션 
 
-BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는 B2B SaaS 프론트엔드 애플리케이션입니다.
+기업용 계약 및 법무 관리 솔루션을 제공하는 B2B SaaS 프론트엔드 애플리케이션입니다.
 
 ## 🚀 Tech Stack
 
@@ -27,7 +27,7 @@ BuptleBiz FE 2.0은 기업용 계약 및 법무 관리 솔루션을 제공하는
 ## 🏗️ Architecture Highlights
 
 ### 1. Multi-tenant System (멀티 테넌트)
-`buptlebiz_fe2`는 서브도메인(예: `apr.buptlebiz.com`, `demo.buptlebiz.com`)을 기반으로 고객사를 식별하고, 각 고객사에 맞는 설정과 UI 컴포넌트를 동적으로 주입합니다.
+서브도메인(예: `apr.buptlebiz.com`, `demo.buptlebiz.com`)을 기반으로 고객사를 식별하고, 각 고객사에 맞는 설정과 UI 컴포넌트를 동적으로 주입합니다.
 
 - **`src/standard/`**: 모든 고객사가 공통으로 사용하는 표준 비즈니스 로직과 UI 컴포넌트 (`Base`)
 - **`src/custom/{tenantId}/`**: 특정 고객사(예: `apr`, `demo`)만을 위한 커스텀 로직과 UI 오버라이드
@@ -64,8 +64,6 @@ pnpm run build
 # 코드 린트 검사
 pnpm run lint
 
-# 빌드 결과물 로컬 프리뷰
-pnpm run preview
 ```
 
 ---
